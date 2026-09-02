@@ -57,6 +57,7 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="use bfloat16 autocast for forward and loss computation (default: FP32)",
     )
+    parser.add_argument("--flash-attention", action="store_true", help="use PyTorch SDPA attention (FlashAttention kernel when supported)")
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--max-train-records", type=int)
     parser.add_argument("--max-dev-records", type=int)
@@ -281,6 +282,7 @@ def run(args: argparse.Namespace) -> Path:
         num_labels=len(TAGS),
         id2label=id2label,
         label2id=label2id,
+        **({"attn_implementation": "sdpa"} if args.flash_attention else {}),
     ).to(device)
     optimizer = AdamW(
         model.parameters(),
@@ -320,6 +322,8 @@ def run(args: argparse.Namespace) -> Path:
         "stride": args.stride,
         "seed": args.seed,
         "bf16": args.bf16,
+        "flash_attention": args.flash_attention,
+        "attention_implementation": "sdpa" if args.flash_attention else "default",
     }
     training_started_at = time.perf_counter()
     global_step = 0
