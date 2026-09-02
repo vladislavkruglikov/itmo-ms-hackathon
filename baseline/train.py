@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import time
+from contextlib import nullcontext
 from pathlib import Path
 from typing import Any
 
@@ -50,6 +52,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--stride", type=int, default=DEFAULT_STRIDE)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
+    parser.add_argument(
+        "--bf16",
+        action="store_true",
+        help="use bfloat16 autocast for forward and loss computation (default: FP32)",
+    )
+    parser.add_argument(
+        "--tensorboard-log-dir",
+        type=Path,
+        help="write TensorBoard event files to this directory (disabled by default)",
+    )
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--max-train-records", type=int)
     parser.add_argument("--max-dev-records", type=int)
@@ -110,11 +122,21 @@ def _loss_weight(batch: dict[str, torch.Tensor]) -> int:
     return int((batch["labels"] != -100).sum().item())
 
 
+def _autocast_context(device: torch.device, bf16: bool):
+    """Включает опциональный bfloat16 autocast, сохраняя FP32 по умолчанию."""
+
+    if not bf16:
+        return nullcontext()
+    return torch.autocast(device_type=device.type, dtype=torch.bfloat16)
+
+
 @torch.inference_mode()
 def evaluate_loss(
     model: torch.nn.Module,
     loader: DataLoader,
     device: torch.device,
+    *,
+    bf16: bool,
 ) -> float:
     """Считает средний dev loss с весом по числу размеченных токенов."""
 
@@ -123,7 +145,8 @@ def evaluate_loss(
     token_count = 0
     for batch in tqdm(loader, desc="Dev loss", unit="batch", leave=False):
         batch = _move_batch(batch, device)
-        output = model(**batch)
+        with _autocast_context(device, bf16):
+            output = model(**batch)
         weight = _loss_weight(batch)
         weighted_loss += float(output.loss.item()) * weight
         token_count += weight
@@ -141,6 +164,7 @@ def train_epoch(
     *,
     gradient_accumulation_steps: int,
     max_grad_norm: float,
+    bf16: bool,
 ) -> float:
     """Выполняет одну эпоху обучения и возвращает средний token loss."""
 
@@ -152,7 +176,8 @@ def train_epoch(
     progress = tqdm(loader, desc="Train", unit="batch", leave=False)
     for batch_index, batch in enumerate(progress, start=1):
         batch = _move_batch(batch, device)
-        output = model(**batch)
+        with _autocast_context(device, bf16):
+            output = model(**batch)
         loss = output.loss
         group_start = ((batch_index - 1) // gradient_accumulation_steps) * (
             gradient_accumulation_steps
@@ -274,6 +299,19 @@ def run(args: argparse.Namespace) -> Path:
     print(f"Train: {len(train_records)} documents, {len(train_dataset)} windows")
     print(f"Dev: {len(dev_records)} documents, {len(dev_dataset)} windows")
 
+    writer = None
+    if args.tensorboard_log_dir is not None:
+        try:
+            from torch.utils.tensorboard import SummaryWriter
+        except ModuleNotFoundError as error:
+            raise ValueError(
+                "TensorBoard logging requires the 'tensorboard' package; "
+                "install project requirements first"
+            ) from error
+        tensorboard_log_dir = args.tensorboard_log_dir.expanduser().resolve()
+        tensorboard_log_dir.mkdir(parents=True, exist_ok=True)
+        writer = SummaryWriter(log_dir=tensorboard_log_dir)
+
     model_dir = output_dir / "model"
     history: list[dict[str, float | int]] = []
     best_dev_loss = float("inf")
@@ -284,7 +322,9 @@ def run(args: argparse.Namespace) -> Path:
         "max_length": args.max_length,
         "stride": args.stride,
         "seed": args.seed,
+        "bf16": args.bf16,
     }
+    training_started_at = time.perf_counter()
     for epoch in range(1, args.epochs + 1):
         train_loss = train_epoch(
             model,
@@ -294,13 +334,23 @@ def run(args: argparse.Namespace) -> Path:
             device,
             gradient_accumulation_steps=args.gradient_accumulation_steps,
             max_grad_norm=args.max_grad_norm,
+            bf16=args.bf16,
         )
-        dev_loss = evaluate_loss(model, dev_loader, device)
+        dev_loss = evaluate_loss(model, dev_loader, device, bf16=args.bf16)
         history.append({"epoch": epoch, "train_loss": train_loss, "dev_loss": dev_loss})
         print(f"Epoch {epoch}: train_loss={train_loss:.6f}, dev_loss={dev_loss:.6f}")
         if dev_loss < best_dev_loss:
             best_dev_loss = dev_loss
             _save_model(model, tokenizer, model_dir, baseline_config)
+        if writer is not None:
+            writer.add_scalar("loss/train", train_loss, epoch)
+            writer.add_scalar("loss/dev", dev_loss, epoch)
+            writer.add_scalar("learning_rate", scheduler.get_last_lr()[0], epoch)
+    training_time_seconds = time.perf_counter() - training_started_at
+    if writer is not None:
+        writer.add_scalar("training/time_seconds", training_time_seconds, args.epochs)
+        writer.flush()
+        writer.close()
 
     run_summary = {
         **baseline_config,
@@ -315,6 +365,12 @@ def run(args: argparse.Namespace) -> Path:
         "weight_decay": args.weight_decay,
         "warmup_ratio": args.warmup_ratio,
         "best_dev_loss": best_dev_loss,
+        "training_time_seconds": training_time_seconds,
+        "tensorboard_log_dir": (
+            str(args.tensorboard_log_dir.expanduser().resolve())
+            if args.tensorboard_log_dir is not None
+            else None
+        ),
         "history": history,
     }
     (output_dir / "training_summary.json").write_text(
