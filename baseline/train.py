@@ -57,11 +57,6 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="use bfloat16 autocast for forward and loss computation (default: FP32)",
     )
-    parser.add_argument(
-        "--tensorboard-log-dir",
-        type=Path,
-        help="write TensorBoard event files to this directory (disabled by default)",
-    )
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--max-train-records", type=int)
     parser.add_argument("--max-dev-records", type=int)
@@ -165,8 +160,10 @@ def train_epoch(
     gradient_accumulation_steps: int,
     max_grad_norm: float,
     bf16: bool,
-) -> float:
-    """Выполняет одну эпоху обучения и возвращает средний token loss."""
+    writer: Any = None,
+    global_step: int = 0,
+) -> tuple[float, int]:
+    """Выполняет эпоху и возвращает средний token loss и номер шага оптимизатора."""
 
     model.train()
     optimizer.zero_grad(set_to_none=True)
@@ -194,11 +191,15 @@ def train_epoch(
             optimizer.step()
             scheduler.step()
             optimizer.zero_grad(set_to_none=True)
+            global_step += 1
+            if writer is not None:
+                writer.add_scalar("loss/train_step", loss.detach().item(), global_step)
+                writer.add_scalar("learning_rate/step", scheduler.get_last_lr()[0], global_step)
         progress.set_postfix(loss=f"{loss.detach().item():.4f}")
 
     if not token_count:
         raise RuntimeError("train dataset contains no labeled tokens")
-    return weighted_loss / token_count
+    return weighted_loss / token_count, global_step
 
 
 def _save_model(
@@ -299,18 +300,14 @@ def run(args: argparse.Namespace) -> Path:
     print(f"Train: {len(train_records)} documents, {len(train_dataset)} windows")
     print(f"Dev: {len(dev_records)} documents, {len(dev_dataset)} windows")
 
-    writer = None
-    if args.tensorboard_log_dir is not None:
-        try:
-            from torch.utils.tensorboard import SummaryWriter
-        except ModuleNotFoundError as error:
-            raise ValueError(
-                "TensorBoard logging requires the 'tensorboard' package; "
-                "install project requirements first"
-            ) from error
-        tensorboard_log_dir = args.tensorboard_log_dir.expanduser().resolve()
-        tensorboard_log_dir.mkdir(parents=True, exist_ok=True)
-        writer = SummaryWriter(log_dir=tensorboard_log_dir)
+    try:
+        from torch.utils.tensorboard import SummaryWriter
+    except ModuleNotFoundError as error:
+        raise ValueError(
+            "TensorBoard logging requires the 'tensorboard' package; "
+            "install project requirements first"
+        ) from error
+    writer = SummaryWriter(log_dir=output_dir)
 
     model_dir = output_dir / "model"
     history: list[dict[str, float | int]] = []
@@ -325,8 +322,9 @@ def run(args: argparse.Namespace) -> Path:
         "bf16": args.bf16,
     }
     training_started_at = time.perf_counter()
+    global_step = 0
     for epoch in range(1, args.epochs + 1):
-        train_loss = train_epoch(
+        train_loss, global_step = train_epoch(
             model,
             train_loader,
             optimizer,
@@ -335,6 +333,8 @@ def run(args: argparse.Namespace) -> Path:
             gradient_accumulation_steps=args.gradient_accumulation_steps,
             max_grad_norm=args.max_grad_norm,
             bf16=args.bf16,
+            writer=writer,
+            global_step=global_step,
         )
         dev_loss = evaluate_loss(model, dev_loader, device, bf16=args.bf16)
         history.append({"epoch": epoch, "train_loss": train_loss, "dev_loss": dev_loss})
@@ -366,11 +366,7 @@ def run(args: argparse.Namespace) -> Path:
         "warmup_ratio": args.warmup_ratio,
         "best_dev_loss": best_dev_loss,
         "training_time_seconds": training_time_seconds,
-        "tensorboard_log_dir": (
-            str(args.tensorboard_log_dir.expanduser().resolve())
-            if args.tensorboard_log_dir is not None
-            else None
-        ),
+        "tensorboard_log_dir": str(output_dir),
         "history": history,
     }
     (output_dir / "training_summary.json").write_text(
