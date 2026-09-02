@@ -59,6 +59,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--flash-attention", action="store_true", help="use PyTorch SDPA attention (FlashAttention kernel when supported)")
     parser.add_argument("--num-workers", type=int, default=0)
+    parser.add_argument("--prefetch-factor", type=int, default=2)
+    parser.add_argument("--persistent-workers", action="store_true")
+    parser.add_argument("--fused-adamw", action="store_true", help="use fused CUDA AdamW")
     parser.add_argument("--max-train-records", type=int)
     parser.add_argument("--max-dev-records", type=int)
     parser.add_argument("--overwrite-output-dir", action="store_true")
@@ -84,6 +87,8 @@ def _validate_args(args: argparse.Namespace) -> None:
     for name, value in optional_positive.items():
         if value is not None and value < 1:
             raise ValueError(f"{name} must be positive")
+    if args.prefetch_factor < 1:
+        raise ValueError("prefetch-factor must be positive")
     if args.num_workers < 0:
         raise ValueError("num-workers must be non-negative")
     if args.learning_rate <= 0:
@@ -109,7 +114,7 @@ def _prepare_output_dir(path: Path, overwrite: bool) -> None:
 def _move_batch(batch: dict[str, torch.Tensor], device: torch.device) -> dict[str, torch.Tensor]:
     """Переносит все тензоры batch на выбранное устройство."""
 
-    return {key: value.to(device) for key, value in batch.items()}
+    return {key: value.to(device, non_blocking=True) for key, value in batch.items()}
 
 
 def _loss_weight(batch: dict[str, torch.Tensor]) -> int:
@@ -124,6 +129,20 @@ def _autocast_context(device: torch.device, bf16: bool):
     if not bf16:
         return nullcontext()
     return torch.autocast(device_type=device.type, dtype=torch.bfloat16)
+
+
+_H100_DENSE_BF16_FLOPS = 989e12
+
+
+def _estimate_hfu(model: torch.nn.Module, input_tokens: int, elapsed_seconds: float, device: torch.device) -> float:
+    """Estimates hardware FLOPs utilization for transformer training."""
+
+    if device.type != "cuda" or elapsed_seconds <= 0 or input_tokens <= 0:
+        return 0.0
+    peak_flops = _H100_DENSE_BF16_FLOPS if "H100" in torch.cuda.get_device_name(device) else 1e12
+    # Standard training estimate: forward + backward ~= 6 FLOPs per parameter/token.
+    estimated_flops = 6.0 * sum(parameter.numel() for parameter in model.parameters()) * input_tokens
+    return estimated_flops / (peak_flops * elapsed_seconds)
 
 
 @torch.inference_mode()
@@ -163,16 +182,18 @@ def train_epoch(
     bf16: bool,
     writer: Any = None,
     global_step: int = 0,
-) -> tuple[float, int]:
+) -> tuple[float, int, int]:
     """Выполняет эпоху и возвращает средний token loss и номер шага оптимизатора."""
 
     model.train()
     optimizer.zero_grad(set_to_none=True)
     weighted_loss = 0.0
     token_count = 0
+    input_tokens = 0
 
     progress = tqdm(loader, desc="Train", unit="batch", leave=False)
     for batch_index, batch in enumerate(progress, start=1):
+        input_tokens += int(batch["attention_mask"].sum())
         batch = _move_batch(batch, device)
         with _autocast_context(device, bf16):
             output = model(**batch)
@@ -183,8 +204,8 @@ def train_epoch(
         group_size = min(gradient_accumulation_steps, len(loader) - group_start)
         (loss / group_size).backward()
 
-        weight = _loss_weight(batch)
-        weighted_loss += float(loss.detach().item()) * weight
+        weight = int((batch["labels"] != -100).sum())
+        weighted_loss += loss.detach() * weight
         token_count += weight
         should_step = batch_index % gradient_accumulation_steps == 0 or batch_index == len(loader)
         if should_step:
@@ -196,11 +217,12 @@ def train_epoch(
             if writer is not None:
                 writer.add_scalar("loss/train_step", loss.detach().item(), global_step)
                 writer.add_scalar("learning_rate/step", scheduler.get_last_lr()[0], global_step)
-        progress.set_postfix(loss=f"{loss.detach().item():.4f}")
+        if batch_index % 10 == 0 or batch_index == len(loader):
+            progress.set_postfix(loss=f"{loss.detach().item():.4f}")
 
     if not token_count:
         raise RuntimeError("train dataset contains no labeled tokens")
-    return weighted_loss / token_count, global_step
+    return float((weighted_loss / token_count).item()), global_step, input_tokens
 
 
 def _save_model(
@@ -218,6 +240,7 @@ def _save_model(
         json.dumps(config, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+
 
 
 def run(args: argparse.Namespace) -> Path:
@@ -259,13 +282,19 @@ def run(args: argparse.Namespace) -> Path:
     collator = DataCollatorForTokenClassification(tokenizer=tokenizer, padding=True)
     generator = torch.Generator()
     generator.manual_seed(args.seed)
+    loader_options = {
+        "collate_fn": collator,
+        "num_workers": args.num_workers,
+        "pin_memory": device.type == "cuda",
+        "persistent_workers": args.persistent_workers and args.num_workers > 0,
+        **({"prefetch_factor": args.prefetch_factor} if args.num_workers > 0 else {}),
+    }
     train_loader = DataLoader(
         train_dataset,
         batch_size=args.batch_size,
         shuffle=True,
-        collate_fn=collator,
-        num_workers=args.num_workers,
         generator=generator,
+        **loader_options,
     )
     dev_loader = DataLoader(
         dev_dataset,
@@ -273,6 +302,9 @@ def run(args: argparse.Namespace) -> Path:
         shuffle=False,
         collate_fn=collator,
         num_workers=args.num_workers,
+        pin_memory=device.type == "cuda",
+        persistent_workers=args.persistent_workers and args.num_workers > 0,
+        **({"prefetch_factor": args.prefetch_factor} if args.num_workers > 0 else {}),
     )
 
     id2label = dict(enumerate(TAGS))
@@ -284,11 +316,10 @@ def run(args: argparse.Namespace) -> Path:
         label2id=label2id,
         **({"attn_implementation": "sdpa"} if args.flash_attention else {}),
     ).to(device)
-    optimizer = AdamW(
-        model.parameters(),
-        lr=args.learning_rate,
-        weight_decay=args.weight_decay,
-    )
+    optimizer_kwargs = {"lr": args.learning_rate, "weight_decay": args.weight_decay}
+    if args.fused_adamw:
+        optimizer_kwargs["fused"] = True
+    optimizer = AdamW(model.parameters(), **optimizer_kwargs)
     updates_per_epoch = math.ceil(len(train_loader) / args.gradient_accumulation_steps)
     total_updates = updates_per_epoch * args.epochs
     warmup_steps = int(total_updates * args.warmup_ratio)
@@ -322,13 +353,17 @@ def run(args: argparse.Namespace) -> Path:
         "stride": args.stride,
         "seed": args.seed,
         "bf16": args.bf16,
+        "fused_adamw": args.fused_adamw,
         "flash_attention": args.flash_attention,
         "attention_implementation": "sdpa" if args.flash_attention else "default",
     }
     training_started_at = time.perf_counter()
     global_step = 0
+    total_input_tokens = 0
+    train_compute_seconds = 0.0
     for epoch in range(1, args.epochs + 1):
-        train_loss, global_step = train_epoch(
+        epoch_started_at = time.perf_counter()
+        train_loss, global_step, epoch_input_tokens = train_epoch(
             model,
             train_loader,
             optimizer,
@@ -340,6 +375,8 @@ def run(args: argparse.Namespace) -> Path:
             writer=writer,
             global_step=global_step,
         )
+        train_compute_seconds += time.perf_counter() - epoch_started_at
+        total_input_tokens += epoch_input_tokens
         dev_loss = evaluate_loss(model, dev_loader, device, bf16=args.bf16)
         history.append({"epoch": epoch, "train_loss": train_loss, "dev_loss": dev_loss})
         print(f"Epoch {epoch}: train_loss={train_loss:.6f}, dev_loss={dev_loss:.6f}")
@@ -351,8 +388,10 @@ def run(args: argparse.Namespace) -> Path:
             writer.add_scalar("loss/dev", dev_loss, epoch)
             writer.add_scalar("learning_rate", scheduler.get_last_lr()[0], epoch)
     training_time_seconds = time.perf_counter() - training_started_at
+    hfu = _estimate_hfu(model, total_input_tokens, train_compute_seconds, device)
     if writer is not None:
         writer.add_scalar("training/time_seconds", training_time_seconds, args.epochs)
+        writer.add_scalar("training/hfu", hfu, args.epochs)
         writer.flush()
         writer.close()
 
@@ -370,6 +409,11 @@ def run(args: argparse.Namespace) -> Path:
         "warmup_ratio": args.warmup_ratio,
         "best_dev_loss": best_dev_loss,
         "training_time_seconds": training_time_seconds,
+        "training_compute_seconds": train_compute_seconds,
+        "training_input_tokens": total_input_tokens,
+        "num_workers": args.num_workers,
+        "prefetch_factor": args.prefetch_factor,
+        "hfu": hfu,
         "tensorboard_log_dir": str(output_dir),
         "history": history,
     }
@@ -377,6 +421,7 @@ def run(args: argparse.Namespace) -> Path:
         json.dumps(run_summary, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    print(f"HFU: {hfu:.4f}")
     print(f"Best model: {model_dir}")
     return model_dir
 
