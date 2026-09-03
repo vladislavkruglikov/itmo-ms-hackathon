@@ -211,7 +211,7 @@ records.
 The semantic pass has continued through rank 200 of the full 13,000-record
 uncertainty ranking. The ledger now contains 199 decisions (the rank-1 item is
 not present in this ranking); 7 records have explicit span replacements or
-additions and 48 clearly low-context advertisements, lists, tag/link dumps, or directories
+additions and 47 clearly low-context advertisements, lists, tag/link dumps, or directories
 are excluded. Substantive news, interviews, and fictional passages are kept
 for full reannotation rather than guessed partial edits. The current materialized
-output is `data/train_manual_reviewed_batch001.jsonl` with 12,952 records.
+output is `data/train_manual_reviewed_batch001.jsonl` with 12,953 records.
