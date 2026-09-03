@@ -1288,3 +1288,23 @@
 {"hash":"01a6533efb24615f973d86e87b5fe91420260311","action":"keep_original","reason":"Проверено: Swindon Town размечен как ORG; LegacySiu выглядит username и не добавлен."}
 {"hash":"01acc8f4d3b09d386d5090e34032e34b20260308","action":"keep_original","reason":"Проверено: BYU, Texas Tech и Florida уже размечены; общие спортивные слова не добавлены."}
 {"hash":"01e229a073d35e8398a561b3809d2aee20260309","action":"keep_original","reason":"Проверено: Garmon Natural размечен с корректной границей."}
+{"hash":"021b2d0348d8467352288ccfc132079620260307","action":"keep_original","reason":"Проверено: CLEAN CAM, Kim Sejeong, Longchamp и Harper's Bazaar/Bazaar уже размечены корректно."}
+{"hash":"024888d2ab8453cc37e7d4ce1f746ec820260310","action":"keep_original","reason":"Проверено: Arsenal, Bayer Leverkusen и Arteta уже покрыты текущими 4 сущностями."}
+{"hash":"02685ac3ae3af2466967d69377476a0520260303","action":"keep_original","reason":"Проверено: Qoʻqon/текущая GEO размечена; hashtags и usernames недвижимости не добавлены."}
+{"hash":"02aec74580ea611c5e156b20b07f9bfa20260311","action":"keep_original","reason":"Проверено: HYBE/текущая ORG сохранена; Meg username и ARMY-фраза не добавлены."}
+{"hash":"02b0d062dbd110d3ba437aa4cd790b4720260314","action":"keep_original","reason":"Проверено: Denis Y и Jessica Abduraim уже размечены как NAME; SALUT TAGI не сущность."}
+{"hash":"0334d4128f7d9d6eb4c19556633a408c20260308","action":"keep_original","reason":"Проверено: Xondamirovna/текущая NAME сохранена; поздравительная фраза не добавлена."}
+{"hash":"03bb5a0e23aba0e9775aa64927c9167620260305","action":"keep_original","reason":"Проверено: текущая сущность Osun/текст сохранены; usernames и общая фраза не добавлены."}
+{"hash":"03c3a8f360d3cbacdfe76d5450363d5f20260314","action":"keep_original","reason":"Проверено: Kenneth Walker и текущая сущность размечены; Madden и хэштеги не добавлены."}
+{"hash":"040ea826d024f88f1cc3b9986bc096ef20260311","action":"keep_original","reason":"Проверено: Valverde и Manchester City уже размечены; разговорная часть не добавлена."}
+{"hash":"0430fdcc547c1bb6b0c6a806f8db43d520260302","action":"keep_original","reason":"Проверено: Jungkook, Calvin Klein и текущая третья сущность согласованы; usernames не добавлены."}
+{"hash":"046c1ebd21322b1825c92b107074ba7520260302","action":"keep_original","reason":"Проверено: четыре именные сущности религиозного вопроса уже размечены; служебный текст не добавлен."}
+{"hash":"0483773f70f04bd6ab2da507505d037a20260309","action":"keep_original","reason":"Проверено: Chosun news/текущая ORG размечена; username не добавлен."}
+{"hash":"0484cb7cbf234c100dd0e404a431563420260304","action":"keep_original","reason":"Проверено: Kitob, Shahrisabz и Toshkent/текущие GEO уже размечены; маршрутные слова не добавлены."}
+{"hash":"04efcfdfe6a9535ca69a616c454d5f3e20260305","action":"keep_original","reason":"Проверено: hybe уже размечен полной границей; аккаунты и Inkigayo не добавлены без уверенной политики для упоминаний."}
+{"hash":"04fd0d464b44bc2ce7a57eba93a5a21220260302","action":"keep_original","reason":"Проверено: newcastleuzbekistan уже размечен полной границей; частичное выделение модели исправлено сохранением gold."}
+{"hash":"05b32198105cdc8d31acfc50c01b04ed20260314","action":"keep_original","reason":"Проверено: Eto'o, Japan/текущие сущности сохранены; игровые и торговые слова не добавлены."}
+{"hash":"05d464d0fcfa820a3d2daf3cbd54305220260308","action":"keep_original","reason":"Проверено: текущая спортивная сущность сохранена; usernames и неоднозначный Gordon не добавлены."}
+{"hash":"05d81ed3981df040f4a0aa240bf50cad20260211","action":"review_required","reason":"Длинная новость о пожаре с 7 сущностями: требуется полная сверка органов, метро, города и объекта."}
+{"hash":"05eb14de8a47d64c6451f8add0ee33f420260304","action":"keep_original","reason":"Проверено: строка содержит username и контактную фразу, уверенных именованных сущностей нет."}
+{"hash":"05ed21d1b6284b7355b730a1e4f84e0f20260314","action":"keep_original","reason":"Проверено: Graham Donnelly и Fofana/текущие 2 сущности согласованы."}
