@@ -66,13 +66,32 @@ def _validate_args(args: argparse.Namespace) -> None:
 
 
 def _model_labels(model: torch.nn.Module) -> dict[int, str]:
-    """Извлекает и проверяет BIO-метки из model config."""
+    """Извлекает BIO-метки и приводит распространённые NER-классы к схеме кейса."""
 
     labels = {int(index): str(label) for index, label in model.config.id2label.items()}
-    expected = set(TAGS)
-    if set(labels.values()) != expected or set(labels) != set(range(len(TAGS))):
-        raise ValueError(f"model labels must be exactly {list(TAGS)}")
-    return labels
+    aliases = {"PERSON": "NAME", "PER": "NAME", "LOCATION": "GEO", "LOC": "GEO"}
+    ignored = {"DATE", "MISC", "TIME"}
+    normalized: dict[int, str] = {}
+    for index, label in labels.items():
+        if label == "O":
+            normalized[index] = label
+            continue
+        try:
+            prefix, entity_type = label.split("-", 1)
+        except ValueError as error:
+            raise ValueError(f"unsupported model label {label!r}") from error
+        entity_type = aliases.get(entity_type, entity_type)
+        if entity_type in ignored:
+            normalized[index] = "O"
+        elif prefix in {"B", "I"} and entity_type in {"ORG", "NAME", "GEO"}:
+            normalized[index] = f"{prefix}-{entity_type}"
+        else:
+            raise ValueError(f"unsupported model label {label!r}")
+
+    required = set(TAGS)
+    if set(normalized.values()) != required:
+        raise ValueError(f"model labels must cover {list(TAGS)} after normalization")
+    return normalized
 
 
 def _build_windows(

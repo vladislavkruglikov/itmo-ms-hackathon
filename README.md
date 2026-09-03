@@ -24,6 +24,8 @@
 - `scripts/evaluate_service.py` — прогон HTTP-сервиса и расчёт метрик;
 - `API.md` — обязательный контракт HTTP API и Docker-контейнера;
 - `requirements.txt` — зависимости baseline.
+- [`EXPERIMENTS.md`](EXPERIMENTS.md) — реестр запусков, гиперпараметров,
+  метрик качества и скорости обучения.
 
 ## Формат данных
 

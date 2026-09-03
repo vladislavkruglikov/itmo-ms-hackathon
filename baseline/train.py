@@ -57,7 +57,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="use bfloat16 autocast for forward and loss computation (default: FP32)",
     )
-    parser.add_argument("--flash-attention", action="store_true", help="use PyTorch SDPA attention (FlashAttention kernel when supported)")
+    parser.add_argument(
+        "--flash-attention",
+        action="store_true",
+        help="use FlashAttention 2 with variable-length unpadding (requires CUDA and --bf16)",
+    )
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--prefetch-factor", type=int, default=2)
     parser.add_argument("--persistent-workers", action="store_true")
@@ -99,6 +103,8 @@ def _validate_args(args: argparse.Namespace) -> None:
         raise ValueError("warmup-ratio must be in [0, 1)")
     if args.max_grad_norm <= 0:
         raise ValueError("max-grad-norm must be positive")
+    if args.flash_attention and not args.bf16:
+        raise ValueError("flash-attention requires --bf16")
 
 
 def _prepare_output_dir(path: Path, overwrite: bool) -> None:
@@ -240,9 +246,6 @@ def _save_model(
         json.dumps(config, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-
-
-
 def run(args: argparse.Namespace) -> Path:
     """Обучает baseline и сохраняет checkpoint с минимальным dev loss."""
 
@@ -314,7 +317,8 @@ def run(args: argparse.Namespace) -> Path:
         num_labels=len(TAGS),
         id2label=id2label,
         label2id=label2id,
-        **({"attn_implementation": "sdpa"} if args.flash_attention else {}),
+        **({"attn_implementation": "flash_attention_2"} if args.flash_attention else {}),
+        **({"dtype": torch.bfloat16} if args.flash_attention and args.bf16 else {}),
     ).to(device)
     optimizer_kwargs = {"lr": args.learning_rate, "weight_decay": args.weight_decay}
     if args.fused_adamw:
@@ -355,7 +359,7 @@ def run(args: argparse.Namespace) -> Path:
         "bf16": args.bf16,
         "fused_adamw": args.fused_adamw,
         "flash_attention": args.flash_attention,
-        "attention_implementation": "sdpa" if args.flash_attention else "default",
+        "attention_implementation": "flash_attention_2" if args.flash_attention else "default",
     }
     training_started_at = time.perf_counter()
     global_step = 0

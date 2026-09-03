@@ -1,0 +1,195 @@
+# Эксперименты
+
+Этот файл — реестр экспериментов обучения NER-моделей. Основная метрика качества —
+`exact-span micro-F1` на `data/dev.jsonl`; сущность засчитывается только при полном
+совпадении `hash`, класса и символьных границ.
+
+## Общие условия
+
+- GPU: NVIDIA H100 80 GB HBM3, один ускоритель.
+- Обучающая выборка: 13 000 документов; число окон зависит от tokenizer модели.
+- Валидационная выборка: 1 500 документов; число окон зависит от tokenizer модели.
+- `max_length=256`, `stride=64`, `seed=42`.
+- PyTorch 2.6.0+cu124, Transformers 5.14.1; FlashAttention 2.7.4.post1 там,
+  где явно указан FA2.
+- `weight_decay=0.01`, `warmup_ratio=0.1`, линейный decay learning rate,
+  `max_grad_norm=1.0`.
+- Если не указано иное: 3 эпохи, BF16 autocast, gradient accumulation 1,
+  `persistent_workers=true` при `num_workers > 0`.
+- Время включает train/dev-loss и сохранение лучшей модели. Compute time исключает
+  валидацию и сохранение модели.
+- `—` означает, что значение не было рассчитано или соответствующий артефакт был
+  удалён. Значения не восстанавливаются приблизительно.
+
+## Полные эксперименты с сохранёнными результатами
+
+| Run | Model | BS | LR | Epochs | Attention / weights | AdamW | Batching | Workers / prefetch | Best dev loss | Micro-F1 | Macro-F1 | Train time, s | Compute, s | HFU |
+|---|---|---:|---:|---:|---|---|---|---|---:|---:|---:|---:|---:|---:|
+| `xl-bs28-lr5e-5` | `facebook/xlm-roberta-xl` | 28 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | **0.06507** | **0.85609** | **0.85708** | 836.65 | 750.88 | 20.51% |
+| `large-bs192-lr2e-4-w2p1` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.07018 | **0.85450** | **0.85530** | 117.06 | 104.13 | 23.78% |
+| `large-bs192-lr2e-4-sortish20` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | sortish pool ×20 | 2 / 1 | **0.06840** | 0.84848 | 0.84875 | **70.26** | **57.22** | **43.27%** |
+| `large-bs192-lr1.5e-4-fa-varlen` | `FacebookAI/xlm-roberta-large` | 192 | 1.5e-4 | 3 | FA2 varlen, direct BF16 weights | fused | dynamic padding | 2 / 1 | **0.06342** | 0.84719 | 0.84873 | 102.44 | 95.19 | 26.01% |
+| `large-bs192-lr2e-4-fa-varlen-unfused` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | FA2 varlen, FP32 weights + BF16 AMP | unfused | dynamic padding | 2 / 1 | 0.07142 | 0.84463 | 0.84553 | 113.47 | 99.69 | 24.84% |
+| `large-bs192-lr2e-4-fa-varlen` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | FA2 varlen, direct BF16 weights | fused | dynamic padding | 2 / 1 | 0.06447 | 0.84041 | 0.84135 | 102.13 | 94.67 | 26.15% |
+| `large-bs192-lr2e-4-sortish5` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | sortish pool ×5 | 2 / 1 | 0.07158 | 0.83975 | 0.84057 | 77.67 | 64.39 | 38.45% |
+| `xl-bs28-lr2e-5` | `facebook/xlm-roberta-xl` | 28 | 2e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.08878 | 0.82219 | 0.82351 | 825.53 | 746.55 | 20.63% |
+| `tahrirchi-bs512-lr2.5e-4` | `tahrirchi/tahrirchi-bert-base` | 512 | 2.5e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.13498 | **0.71972** | **0.72240** | 40.18 | 36.36 | 13.54% |
+| `tahrirchi-bs512-lr2e-4` | `tahrirchi/tahrirchi-bert-base` | 512 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | **0.13074** | 0.71730 | 0.71969 | 40.56 | 36.58 | 13.46% |
+| `tahrirchi-bs512-lr3e-4` | `tahrirchi/tahrirchi-bert-base` | 512 | 3e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.13310 | 0.71421 | 0.71656 | 40.39 | 36.44 | 13.51% |
+| `tahrirchi-bs512-lr2.5e-4-e5` | `tahrirchi/tahrirchi-bert-base` | 512 | 2.5e-4 | 5 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.13297 | 0.70064 | 0.70366 | 64.75 | 60.44 | 13.58% |
+| `m-distilbert-bs1024-lr2e-4` | `distilbert/distilbert-base-multilingual-cased` | 1024 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | **0.11970** | **0.68568** | **0.68919** | 24.91 | 20.60 | 35.05% |
+| `tahrirchi-bs512-lr1e-4` | `tahrirchi/tahrirchi-bert-base` | 512 | 1e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.13655 | 0.68450 | 0.68767 | 40.00 | 36.40 | 13.52% |
+| `uztext-bs1024-lr4e-4` | `rifkat/uztext-3Gb-BPE-Roberta` | 1024 | 4e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | **0.16225** | **0.62739** | **0.62672** | 20.66 | 17.53 | 15.75% |
+| `m-distilbert-bs1024-lr4e-4` | `distilbert/distilbert-base-multilingual-cased` | 1024 | 4e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.13874 | 0.60901 | 0.61303 | 25.12 | 20.66 | 34.95% |
+| `bertbek-sft-bs512-lr2e-4` | `elmurod1202/bertbek-ner-uznews` | 512 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | **0.20376** | **0.59090** | **0.59042** | 42.23 | 38.44 | 14.17% |
+| `m-distilbert-bs1024-lr1e-4` | `distilbert/distilbert-base-multilingual-cased` | 1024 | 1e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.15027 | 0.58920 | 0.59492 | 25.45 | 20.63 | 34.99% |
+| `uztext-bs1024-lr2e-4` | `rifkat/uztext-3Gb-BPE-Roberta` | 1024 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.17614 | 0.58318 | 0.58332 | 20.72 | 17.54 | 15.74% |
+| `bertbek-sft-bs512-lr5e-5` | `elmurod1202/bertbek-ner-uznews` | 512 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.24041 | 0.51053 | 0.51019 | 42.25 | 38.41 | 14.18% |
+| `uztext-bs1024-lr8e-4` | `rifkat/uztext-3Gb-BPE-Roberta` | 1024 | 8e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.52630 | 0.00000 | 0.00000 | 19.64 | 17.50 | 15.77% |
+| `large-bs192-lr2e-4-fixed` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | fixed padding 256 | 2 / 1 | 0.07018 | — | — | 117.72 | 103.97 | 23.81% |
+
+Лучший сохранённый результат по качеству — `xl-bs28-lr5e-5`; он улучшил
+micro-F1 относительно `large-bs192-lr2e-4-w2p1` с 0.85450 до 0.85609.
+Sortish batching был значительно быстрее, но менял порядок и token composition
+батчей и снижал exact-span F1. FlashAttention varlen повышал throughput, но в
+проверенных конфигурациях также не превзошёл SDPA по F1.
+
+### Loss по эпохам
+
+| Run | Epoch 1 train/dev | Epoch 2 train/dev | Epoch 3 train/dev |
+|---|---:|---:|---:|
+| `large-bs192-lr2e-4-w2p1` | 0.31515 / 0.11980 | 0.06352 / 0.07387 | 0.03321 / 0.07018 |
+| `large-bs192-lr2e-4-fixed` | 0.31515 / 0.11980 | 0.06352 / 0.07387 | 0.03321 / 0.07018 |
+| `large-bs192-lr2e-4-sortish20` | 0.53877 / 0.14633 | 0.09323 / 0.08796 | 0.05507 / 0.06840 |
+| `large-bs192-lr2e-4-sortish5` | 0.50421 / 0.17254 | 0.11779 / 0.08554 | 0.05565 / 0.07158 |
+| `large-bs192-lr2e-4-fa-varlen-unfused` | 0.27298 / 0.10464 | 0.06575 / 0.07638 | 0.03682 / 0.07142 |
+| `large-bs192-lr2e-4-fa-varlen` | 0.38927 / 0.09155 | 0.05695 / 0.06447 | 0.03682 / 0.06546 |
+| `large-bs192-lr1.5e-4-fa-varlen` | 0.39653 / 0.07439 | 0.05537 / 0.06342 | 0.03854 / 0.06440 |
+| `xl-bs28-lr2e-5` | 0.53206 / 0.16107 | 0.11153 / 0.09873 | 0.07213 / 0.08878 |
+| `xl-bs28-lr5e-5` | 0.37404 / 0.08790 | 0.05799 / 0.06693 | 0.03082 / 0.06507 |
+| `tahrirchi-bs512-lr1e-4` | 0.49410 / 0.17629 | 0.14059 / 0.14152 | 0.10688 / 0.13655 |
+| `tahrirchi-bs512-lr2e-4` | 0.46384 / 0.20938 | 0.13171 / 0.13829 | 0.08948 / 0.13074 |
+| `tahrirchi-bs512-lr2.5e-4` | 0.49631 / 0.19493 | 0.13202 / 0.13908 | 0.08676 / 0.13498 |
+| `tahrirchi-bs512-lr3e-4` | 0.48642 / 0.22107 | 0.13508 / 0.13847 | 0.08631 / 0.13310 |
+| `tahrirchi-bs512-lr2.5e-4-e5` | 0.46523 / 0.20534 | 0.13104 / 0.13297 | 0.08133 / 0.13378 (epoch 4: 0.05406 / 0.13829; epoch 5: 0.03849 / 0.14919) |
+| `uztext-bs1024-lr2e-4` | 0.77676 / 0.28530 | 0.22589 / 0.19024 | 0.16932 / 0.17614 |
+| `uztext-bs1024-lr4e-4` | 0.93978 / 0.24156 | 0.19236 / 0.17164 | 0.13773 / 0.16225 |
+| `uztext-bs1024-lr8e-4` | 1.28296 / 0.52630 | 0.49767 / 0.53790 | 0.52137 / 0.55644 |
+| `m-distilbert-bs1024-lr1e-4` | 0.71160 / 0.30885 | 0.21596 / 0.17233 | 0.14736 / 0.15027 |
+| `m-distilbert-bs1024-lr2e-4` | 0.60843 / 0.21862 | 0.16058 / 0.13383 | 0.10962 / 0.11970 |
+| `m-distilbert-bs1024-lr4e-4` | 0.66351 / 0.36357 | 0.23285 / 0.17496 | 0.13435 / 0.13874 |
+| `bertbek-sft-bs512-lr5e-5` | 0.40597 / 0.27910 | 0.24307 / 0.25646 | 0.21566 / 0.24041 |
+| `bertbek-sft-bs512-lr2e-4` | 0.35821 / 0.25587 | 0.19867 / 0.20757 | 0.16027 / 0.20376 |
+
+### Детальные метрики новых моделей
+
+В ячейках классов указан формат `Precision / Recall / F1`.
+
+| Run | ORG | NAME | GEO | Micro P/R/F1 | Macro P/R/F1 |
+|---|---:|---:|---:|---:|---:|
+| `xl-bs28-lr5e-5` | .7966/.8484/.8217 | .8596/.8952/.8771 | .8649/.8801/.8724 | .8392/.8737/.8561 | .8404/.8746/.8571 |
+| `tahrirchi-bs512-lr1e-4` | .5365/.6721/.5967 | .6733/.7766/.7213 | .7180/.7743/.7451 | .6370/.7397/.6845 | .6426/.7410/.6877 |
+| `tahrirchi-bs512-lr2e-4` | .5838/.7386/.6522 | .6939/.7809/.7348 | .7525/.7926/.7721 | .6710/.7705/.7173 | .6767/.7707/.7197 |
+| `tahrirchi-bs512-lr2.5e-4` | .5867/.7281/.6498 | .7047/.7883/.7441 | .7596/.7875/.7733 | .6778/.7672/.7197 | .6836/.7680/.7224 |
+| `tahrirchi-bs512-lr3e-4` | .5815/.7315/.6479 | .6896/.7693/.7273 | .7609/.7886/.7745 | .6712/.7631/.7142 | .6773/.7631/.7166 |
+| `tahrirchi-bs512-lr2.5e-4-e5` | .5644/.7067/.6276 | .6753/.7831/.7252 | .7546/.7618/.7581 | .6580/.7492/.7006 | .6648/.7505/.7037 |
+| `uztext-bs1024-lr2e-4` | .4622/.5848/.5164 | .4875/.6235/.5472 | .6523/.7243/.6864 | .5317/.6458/.5832 | .5340/.6442/.5833 |
+| `uztext-bs1024-lr4e-4` | .5290/.6277/.5741 | .5160/.6658/.5814 | .6933/.7588/.7246 | .5784/.6855/.6274 | .5795/.6841/.6267 |
+| `uztext-bs1024-lr8e-4` | 0/0/0 | 0/0/0 | 0/0/0 | 0/0/0 | 0/0/0 |
+| `m-distilbert-bs1024-lr1e-4` | .4421/.5182/.4771 | .6629/.7421/.7003 | .5912/.6243/.6073 | .5588/.6231/.5892 | .5654/.6282/.5949 |
+| `m-distilbert-bs1024-lr2e-4` | .5605/.6337/.5949 | .7247/.7934/.7575 | .6945/.7371/.7152 | .6558/.7184/.6857 | .6599/.7214/.6892 |
+| `m-distilbert-bs1024-lr4e-4` | .4893/.5773/.5297 | .6536/.7210/.6857 | .5838/.6695/.6237 | .5705/.6532/.6090 | .5756/.6559/.6130 |
+| `bertbek-sft-bs512-lr5e-5` | .4174/.5299/.4669 | .4451/.6244/.5197 | .4759/.6346/.5439 | .4469/.5953/.5105 | .4461/.5963/.5102 |
+| `bertbek-sft-bs512-lr2e-4` | .5038/.6420/.5646 | .5084/.6628/.5754 | .5792/.6937/.6313 | .5307/.6665/.5909 | .5305/.6662/.5904 |
+
+## Zero-shot `bertbek-ner-uznews`
+
+Метки исходной модели нормализованы как `PERSON -> NAME`, `LOCATION -> GEO`,
+`ORG -> ORG`; `DATE`, `MISC` и `TIME` считаются `O`. На полной dev-выборке:
+
+- ORG P/R/F1: 0.1438 / 0.1023 / 0.1196;
+- NAME P/R/F1: 0.1143 / 0.1574 / 0.1324;
+- GEO P/R/F1: 0.2837 / 0.2886 / 0.2861;
+- micro P/R/F1: 0.1811 / 0.1847 / 0.1829;
+- macro P/R/F1: 0.1806 / 0.1828 / 0.1794;
+- end-to-end inference: 12.516 s for 1 500 documents / 2 159 windows
+  (119.8 documents/s, including model load and tokenization; batch size 256).
+
+Для SFT исходные строки classifier для `ORG`, `PERSON`, `LOCATION` и `O` были
+перенесены в семиклассовую схему кейса, то есть pretrained NER head не
+переинициализировалась. Лучший из двух SFT запусков (`lr=2e-4`) дал micro-F1
+0.5909; end-to-end inference занял 12.925 s (116.1 documents/s).
+
+## Одноэпоховые и диагностические прогоны
+
+Эти результаты нельзя напрямую сравнивать с полными экспериментами.
+
+| Run | Model / data | BS | LR | Attention / weights | AdamW | Train/dev loss | Time, s | Compute, s | HFU | Result |
+|---|---|---:|---:|---|---|---:|---:|---:|---:|---|
+| `large-fa-varlen-unfused-e1` | large, full data | 192 | 2e-4 | FA2, FP32 + AMP | unfused | 0.26691 / 0.08033 | 37.90 | 33.42 | 24.70% | completed, metrics not calculated |
+| `large-fa-varlen-bf16-fused-e1` | large, full data | 192 | 2e-4 | FA2, direct BF16 | fused | 0.27113 / 0.07693 | 34.99 | 32.00 | 25.79% | completed, metrics not calculated |
+| `xl-sdpa-bs16-probe` | XL, 192/64 documents | 16 | 2e-5 | SDPA, FP32 + AMP | fused | 1.83939 / 1.72090 | 23.54 | 4.59 | 10.67% | capacity probe only |
+| `xl-sdpa-bs24-probe` | XL, 192/64 documents | 24 | 2e-5 | SDPA, FP32 + AMP | fused | 1.88758 / 1.82079 | — | — | — | trained; save failed: no disk space |
+| `xl-fa-bs32-probe` | XL, 192/64 documents | 32 | 5e-5 | FA2, direct BF16 | fused | 1.86000 / 1.83839 | — | — | 14.79% | capacity probe only |
+| `xl-fa-bs64-probe` | XL, 256/64 documents | 64 | 5e-5 | FA2, direct BF16 | fused | 1.86974 / 1.84715 | — | — | 18.24% | capacity probe only |
+
+## Неуспешные и прерванные эксперименты
+
+| Run/configuration | Result |
+|---|---|
+| XL FA2, BS128 | OOM on first step at about 79.08 GiB |
+| XL FA2, BS112 | OOM on first step at about 79.06 GiB |
+| XL FA2, BS80 | OOM after first optimizer step at about 78.93 GiB |
+| XL FA2, BS64 on full dataset | OOM on first long batch at about 79.08 GiB |
+| XL FA2, BS48, LR 2e-5 | stopped in epoch 2; epoch 1 train/dev loss 1.05665 / 0.65579, unhealthy optimization |
+| XL SDPA, BS20, LR 2e-5 | stable at about 3.42 batches/s; deliberately stopped at step 108/923 to test BS28 |
+| Large `torch.compile` | failed because Triton/CUDA toolkit 13.1 did not match PyTorch CUDA 12.4 |
+| Large FA2 with fused AdamW and FP32 master weights | did not converge; fixed operationally by direct BF16 weights, which reduced F1 |
+
+## Исторические конфигурации без сохранённых результатов
+
+Для следующих каталогов результаты были удалены при очистке воспроизводимых
+checkpoint-ов и сейчас не могут быть достоверно внесены в метрики. Имена
+сохраняются как журнал того, что конфигурации запускались или планировались.
+
+| Artifact directory | Recoverable configuration |
+|---|---|
+| `base-facebookAI-xlm-roberta-large-bf16-b128-lr1e-4` | large, BF16, BS128, LR 1e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4` | large, BF16, BS192, LR 2e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-bucket` | large, BF16, BS192, LR 2e-4, naive length buckets |
+| `base-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-fa` | large, BF16, BS192, LR 2e-4, earlier SDPA/Flash kernel experiment |
+| `base-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-fused` | large, BF16, BS192, LR 2e-4, fused AdamW |
+| `base-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-hfu` | large, BF16, BS192, LR 2e-4, HFU instrumentation baseline |
+| `base-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-opt1` | large, BF16, BS192, LR 2e-4, first throughput optimizations |
+| `base-facebookAI-xlm-roberta-large-bf16-bs224-lr1e-4` | large, BF16, BS224, LR 1e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs224-lr2e-4` | large, BF16, BS224, LR 2e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs224-lr2.5e-4` | large, BF16, BS224, LR 2.5e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs224-lr2.5e-4-epochs5` | large, BF16, BS224, LR 2.5e-4, 5 epochs |
+| `base-facebookAI-xlm-roberta-large-bf16-bs224-lr3e-4` | large, BF16, BS224, LR 3e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs240-lr2.5e-4` | large, BF16, BS240, LR 2.5e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs256-lr2e-4` | large, BF16, BS256, LR 2e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs64-lr1e-4` | large, BF16, BS64, LR 1e-4 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs64-lr5e-5` | large, BF16, BS64, LR 5e-5 |
+| `base-facebookAI-xlm-roberta-large-bf16-bs8-lr5e-5` | large, BF16, BS8, LR 5e-5 |
+| `tune-xlmr-large-bf16-b4-lr2e-5` | large, BF16, BS4, LR 2e-5 |
+| `tune-xlmr-large-bf16-bs128-lr2e-4` | large, BF16, BS128, LR 2e-4 |
+| `tune-xlmr-large-bf16-bs32-lr5e-5-e5` | large, BF16, BS32, LR 5e-5, 5 epochs |
+| `tune-xlmr-large-bf16-bs64-lr3e-5-e5` | large, BF16, BS64, LR 3e-5, 5 epochs |
+
+## Исправление координат для XLM-R XL
+
+Первоначальная оценка XL ошибочно дала micro-F1 0.15365. Причиной был tokenizer
+backend модели `facebook/xlm-roberta-xl`: он включал разделяющий пробел в offset
+следующего токена, например `(17, 25)` для слова, реально расположенного в
+`(18, 25)`. После удаления ведущего и завершающего whitespace из token offsets
+получены корректные micro-F1 0.82219 и macro-F1 0.82351 без переобучения.
+
+## Как обновлять таблицу
+
+После каждого полного эксперимента необходимо сохранить:
+
+1. `training_summary.json` из каталога запуска;
+2. `dev_predictions.jsonl`;
+3. `dev_metrics.json`, рассчитанный `scripts/evaluate.py`;
+4. строку в основной таблице этого файла, включая не только F1, но и loss,
+   wall/compute time, HFU и все параметры, отличающиеся от общих условий.

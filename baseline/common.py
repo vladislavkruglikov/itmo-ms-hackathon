@@ -199,7 +199,18 @@ def tokenize_windows(
                 continue
             values = encoded[key]
             feature[key] = values[chunk_index] if values and isinstance(values[0], list) else values
-        windows.append((feature, [(int(start), int(end)) for start, end in offsets]))
+        normalized_offsets: Offsets = []
+        for raw_start, raw_end in offsets:
+            start, end = int(raw_start), int(raw_end)
+            # Some fast-tokenizer backends include the word-separating whitespace
+            # in the following token's offset. Entity spans never include leading
+            # or trailing whitespace, so remove it before label alignment/decoding.
+            while start < end and text[start].isspace():
+                start += 1
+            while end > start and text[end - 1].isspace():
+                end -= 1
+            normalized_offsets.append((start, end))
+        windows.append((feature, normalized_offsets))
     return windows
 
 
