@@ -1908,3 +1908,23 @@
 {"hash":"0111f91b93c008ed4ec83d7959fc1d1920260306","action":"keep_original","reason":"Проверено: Fozil aka корректно выделен как NAME по текущей границе; уважительное обращение не добавлено."}
 {"hash":"011241377d2912e706520410ceaaa38020260312","action":"keep_original","reason":"Проверено: короткая строка с username/именем не содержит достаточно надёжной сущности."}
 {"hash":"011859db228e5b68eb5d67379192420020260312","action":"replace_entities","entities":[{"label":"NAME","text":"Аброр Ким"}],"reason":"Исправлена граница: полное имя «Аброр Ким» должно быть одной NAME, а не только «Аброр»."}
+{"hash":"012604641464c24885e9ce590e7c1ab520260311","action":"keep_original","reason":"Проверено: шумный комментарий и usernames не содержат надёжной сущности."}
+{"hash":"012f6b08407407bc56c4008c3d9bc24620260308","action":"keep_original","reason":"Проверено: эмоциональный комментарий без сущностей."}
+{"hash":"0167f31344cdb309d56d81eb48aed21f20260309","action":"keep_original","reason":"Проверено: Jaap Stam, Thomas Vermaelen и Petr Čech корректно выделены полными NAME; игровые hashtags не добавлены."}
+{"hash":"01a874e4edbcdc8dc3dd5a3eb56f4b6320260301","action":"keep_original","reason":"Проверено: Asal и Muhamadhabibni сохранены как имена; обращение и пожелание не расширены."}
+{"hash":"021e4b9b8ba04b8f0225aee52f27e62520260311","action":"keep_original","reason":"Проверено: короткий искажённый текст не содержит надёжно идентифицируемой сущности."}
+{"hash":"022fe51d4075ba3ec178c687a0ae8efe20260303","action":"keep_original","reason":"Проверено: TararAttaullah, CHATGPT и lil Haq в данном фрагменте не дают надёжной разметки организации."}
+{"hash":"02398fb045252ba90b7429f7e3f492aa20260307","action":"keep_original","reason":"Проверено: Qarindoshlar kanali выглядит как username/название канала без надёжного контекста; лишняя сущность не добавлена."}
+{"hash":"023cbc22151a77767d6b83e33fdff0ad20260313","action":"keep_original","reason":"Проверено: имя Canan в username-подобном фрагменте не размечено без надёжного контекста."}
+{"hash":"0263087554f0d66d192c885628a2285020260305","action":"keep_original","reason":"Проверено: общий комментарий без сущностей."}
+{"hash":"026dac86d12c89b3b3886de8db9b20a320260228","action":"keep_original","reason":"Проверено: Blackpink, Itzy, Everglow, Gidle и aespa корректно выделены как ORG; DreamCJen не добавлен как username."}
+{"hash":"026e89f8ce77c69761676e5f803118f720260308","action":"review_required","reason":"Короткий спортивный пост с 8 сущностями и слитными хэштегами: нужна сверка Dortmund/blackstars, стран и границ имён."}
+{"hash":"0279155c7ccefdea90dd47267fcc70ec20260310","action":"keep_original","reason":"Проверено: usernames, имена персонажей и общие слова не дают надёжной сущности в этом фрагменте."}
+{"hash":"029c6650cede75efb9958583983bd7a020260228","action":"keep_original","reason":"Проверено: общий фрагмент без названий, которые можно уверенно размечать как сущности."}
+{"hash":"02a86c5467540d5c8c27d350440546ab20260305","action":"add_entities","entities":[{"label":"ORG","text":"USB Rubber Ducky"}],"reason":"Добавлен пропущенный бренд/название продукта USB Rubber Ducky в рекламном анонсе; остальные текущие бренды сохранены."}
+{"hash":"02a944cff0642a33c280780b768c944220260308","action":"keep_original","reason":"Проверено: usernames и искажённый разговорный текст не содержат надёжной сущности."}
+{"hash":"02d369b3f17cb718","action":"review_required","reason":"Длинная новость о поставках с 9 сущностями: нужна построчная сверка стран, областей, ведомств, персон и медиа."}
+{"hash":"02dbb945075cd50bd05f81f8702f922120260305","action":"keep_original","reason":"Проверено: рекламно-поздравительный текст без сущностей."}
+{"hash":"0374b58f255fce2a00aed82135b2667820260301","action":"keep_original","reason":"Проверено: username и короткое приветствие не содержат сущности."}
+{"hash":"037de2092983355b3da486515403c59420260302","action":"keep_original","reason":"Проверено: BMT и перечисленные страны корректно размечены; оценочные слова и этнонимы не добавлены."}
+{"hash":"03b06b42ab85d128917ec0fd388bb1e420260303","action":"review_required","reason":"Объявление аренды с 5 сущностями: нужна сверка районов, адресного объекта, университета и метро, включая возможные пропуски."}
