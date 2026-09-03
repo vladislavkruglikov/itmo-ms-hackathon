@@ -215,3 +215,15 @@ additions and 47 clearly low-context advertisements, lists, tag/link dumps, or d
 are excluded. Substantive news, interviews, and fictional passages are kept
 for full reannotation rather than guessed partial edits. The current materialized
 output is `data/train_manual_reviewed_batch001.jsonl` with 12,953 records.
+
+### Data-policy correction and keep-social control
+
+The earlier `exclude_record` decisions were a review mistake for this task:
+advertisements, social posts, and lists are valid production input and should
+remain as negative or positive NER examples based on their entities, not their
+genre. `scripts/apply_manual_review.py --keep-excluded` materializes a policy
+variant that retains all 13,000 original records while applying only the seven
+explicit span replacements/additions. One XL epoch plus the existing XL/large
+constrained ensemble scored **0.8828 micro-F1**, below the 0.8868 baseline, so
+that run is not the best checkpoint. Future review is restricted to entity
+boundary errors, missed real brands/organizations, and false entity spans.

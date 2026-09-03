@@ -33,13 +33,18 @@ def main():
     p.add_argument("--input", type=Path, required=True)
     p.add_argument("--decisions", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
+    p.add_argument(
+        "--keep-excluded",
+        action="store_true",
+        help="retain records marked exclude_record; useful for comparing data-policy variants",
+    )
     args = p.parse_args()
     decisions = {row["hash"]: row for row in read(args.decisions)}
     output = []
     changed = 0
     for row in read(args.input):
         decision = decisions.get(row["hash"])
-        if decision and decision["action"] == "exclude_record":
+        if decision and decision["action"] == "exclude_record" and not args.keep_excluded:
             changed += 1
             continue
         updated = dict(row)
