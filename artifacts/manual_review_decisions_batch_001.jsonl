@@ -1988,3 +1988,23 @@
 {"hash":"16aa68554efd691865066e923d89fd6120260310","action":"keep_original","reason":"Проверено: Mickey употреблён как общее имя персонажа без надёжного контекста сущности."}
 {"hash":"16da00b8dae96be1","action":"review_required","reason":"Футбольная новость с 9 сущностями: требуется сверка клубов, национальной команды, игроков, Москвы и агентства."}
 {"hash":"16eca6bad1e999c1cd1aa6ae07da85be20260312","action":"keep_original","reason":"Проверено: общий административный текст без конкретных имён, организаций или географических названий."}
+{"hash":"17156502ca8cf8e332888006861e22f820260301","action":"keep_original","reason":"Проверено: Черкаси корректно выделены как GEO; usernames и служебные слова не добавлены."}
+{"hash":"174dd67190438af70b4863682be7c88e20260428","action":"review_required","reason":"Большая двуязычная публикация с 6 сущностями: нужна сверка двух вариантов университета, министерства, филиала и соцсетей."}
+{"hash":"1761963abba00862b77b22bc3eec1c5d20260301","action":"review_required","reason":"Музыкальная строка: требуется проверить, должна ли Dior быть ORG, а также границы имён исполнителей."}
+{"hash":"17906b97f14bd374c6b1d94ac359afd720260306","action":"keep_original","reason":"Проверено: Kim Guilfoyle корректно выделено полным NAME; BillKristol выглядит username."}
+{"hash":"1838c13cd2b682d82d3f03d56bf8835120260307","action":"keep_original","reason":"Проверено: два употребления Abror и Oʻzbekiston корректно сохранены; оскорбительные общие слова не размечены."}
+{"hash":"19338f6846f3a0d8f36bbf762ad2c27d20260310","action":"review_required","reason":"Текст теста с потенциальными названиями Arab alifbosi, Testlar_bazasii и att_taqva: нужна проверка, являются ли они ORG или usernames."}
+{"hash":"1937e471cabc4caac255f5a54654976520260305","action":"review_required","reason":"Смешанная статья с 2 GEO и упоминаниями IRIS Dena/MILAN: требуется проверить пропущенные названия судна/операции и границы стран."}
+{"hash":"194a2c13883400582dee24c02813e33120260308","action":"keep_original","reason":"Проверено: Жуманиёзова корректно выделена как NAME; слова директор и школа общие."}
+{"hash":"19e85920fa2b26315f3d5ecf6cd0e49c20260309","action":"review_required","reason":"Короткая строка с United Arab и Epstein: нужно проверить GEO/NAME, а также отделить usernames от сущностей."}
+{"hash":"1b3368e3039836e8bfaa04e2c878624520260308","action":"keep_original","reason":"Проверено: рекламная строка без надёжно идентифицируемой сущности."}
+{"hash":"1b87eb5c339d003da9d1378b158dcd3020260310","action":"keep_original","reason":"Проверено: username и бытовой комментарий без сущностей."}
+{"hash":"1b8c46c02e5f902855d46b384ced711b20260312","action":"review_required","reason":"Поздравительная фраза с именем и обращением Хожи: требуется проверить полную границу имени Шокиржон Хожи."}
+{"hash":"1b8c65fed40cad18a343afa16199e27720260304","action":"keep_original","reason":"Проверено: FB/IG, Северная Корея, KCNA, Reuters, BBC и Kim Jong Un сохранены по контексту; username не добавлен."}
+{"hash":"1c4b64f79d4af7b84b550ae7666865ba20260303","action":"keep_original","reason":"Проверено: Leeds корректно выделен как ORG; счёт и username не размечены."}
+{"hash":"1c6763a24e4e9078a40274e7c887465420260311","action":"keep_original","reason":"Проверено: NFL корректно выделен как ORG; MikeGarafolo и Scat Pat выглядят usernames/текстом без надёжной разметки."}
+{"hash":"1cdedb6e83555cfc6bc24f167e57df3720260305","action":"keep_original","reason":"Проверено: username и общее слово Brit не содержат надёжной сущности."}
+{"hash":"1d0001fed3cc671a26c622910000f6f420260301","action":"keep_original","reason":"Проверено: Caicedo корректно выделен как NAME; PoojaMedia — username."}
+{"hash":"1d0545ee84afb7f6185496a7d4fbb46220260302","action":"keep_original","reason":"Проверено: PennStateGOP и penn_state — usernames, а искажённая фраза не содержит надёжной сущности."}
+{"hash":"1d3323cdde1f2600cbaa00fa285c2af220260308","action":"keep_original","reason":"Проверено: араблар как общий этноним не размечен, Iran и США корректно сохранены как GEO."}
+{"hash":"1d3c2586883b74d205aae0e935c0da8320260302","action":"keep_original","reason":"Проверено: Văn Sinh корректно выделен как NAME; Pattaya Open — название турнира без дополнительной разметки."}
