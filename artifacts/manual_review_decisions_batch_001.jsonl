@@ -2108,6 +2108,26 @@
 {"hash":"bfd4f246aaa82605f25677404947fa8320260206","action":"keep_original","reason":"Проверено: Minor mall и бренды/каналы текущей разметки сохранены; расписание и служебные usernames не добавлены."}
 {"hash":"c093e1cc5953370d1637b08234b298f920260220","action":"keep_original","reason":"Проверено: SAFIA, Olmazor и Medgorodok корректно выделены; телефон, зарплата и usernames не размечены."}
 {"hash":"c103bea0a25fba84bfa79946e3553cc120260523","action":"review_required","reason":"Большой список министерств с 19 сущностями: требуется построчная сверка всех ведомств и границ текста изображения."}
+{"hash":"c186ebc234ef9737429324e078774efb20260220","action":"add_entities","entities":[{"label":"ORG","text":"Howo-T7S"},{"label":"ORG","text":"PMP"},{"label":"ORG","text":"Sinotruk"}],"reason":"Добавлены пропущенные реальные бренды/производители техники Howo, PMP и Sinotruk; технические характеристики не размечены."}
+{"hash":"c18c771c851d66baf461ff180514885520260217","action":"review_required","reason":"Официальная публикация о Jasorat maktabi с 8 сущностями: нужна сверка названия учреждения, города, имени и соцсетей."}
+{"hash":"c37c8dee06fcf53aa133b3888fdad3de20260308","action":"keep_original","reason":"Проверено: Alibaba и разбойники в литературной/метафорической фразе не требуют сущности в данном контексте."}
+{"hash":"c56ae7033ecfd9f9","action":"review_required","reason":"Длинная криминальная новость с 4 ORG: требуется сверка ведомств, Vatanparvar, автошколы и возможных пропусков персон."}
+{"hash":"d433f1d2e2023994d97e00d1e528086320260202","action":"keep_original","reason":"Проверено: Darxon bozor, Toshkent и Navoiy сохранены как GEO/ORG; адрес и цена не добавлены."}
+{"hash":"d4feebde5ef8a51025f87cebac51bd6620260509","action":"keep_original","reason":"Проверено: Pepsi и Chihiro корректно сохранены; Billie Eilish и hashtags в этой записи не расширены без подтверждения."}
+{"hash":"d6657e179b230a45","action":"add_entities","entities":[{"label":"ORG","text":"Speedtest Global Index"}],"reason":"Добавлено пропущенное название сервиса/рейтинга Speedtest Global Index; Ookla и страны сохранены."}
+{"hash":"dd26cb05a282791721fbf2e3146d0f3820250718","action":"review_required","reason":"Длинная статья и хвост hashtags о строительстве с 3 сущностями: требуется сверка Murad Buildings, Nest One, NRG и брендов в username-подобной части."}
+{"hash":"e29f8d8ce8255d444d3f537f2dc5ca3220260204","action":"add_entities","entities":[{"label":"ORG","text":"Valdus Smart"}],"reason":"Добавлено пропущенное название бренда/модели Valdus Smart в объявлении; адресные GEO/ORG сохранены."}
+{"hash":"e3524473c2ff13952c101f298da99a7120250825","action":"review_required","reason":"Длинная рекламная публикация жилого комплекса с 6 сущностями: нужна сверка Soy Boʻyi, Murad Buildings, районов и адреса."}
+{"hash":"e467958d9c1e58632648f3789b4485cc20251224","action":"keep_original","reason":"Проверено: Chilonzor, Green City, Murad Buildings, Gʻafur Gʻulom и Mirzo Ulugʻbek сохранены; мебель и техника не добавлены."}
+{"hash":"e4974536aee51e08c0f59ac25bcbd82d20260603","action":"keep_original","reason":"Проверено: Pepsi корректно выделен как ORG; музыкальные слова и hashtags не размечены."}
+{"hash":"e7fdb12dff4decf984bbc62796ce5fd120260303","action":"keep_original","reason":"Проверено: короткая фраза с Tapir не содержит надёжной сущности."}
+{"hash":"ebb8da320a16361392c99a38b185a45b20260208","action":"keep_original","reason":"Проверено: KFC, Lamongan Plaza и повторный KFC корректно сохранены; цены и промотекст не добавлены."}
+{"hash":"f014cb9d9dfea95bd79b0c94f0b954c220260601","action":"keep_original","reason":"Проверено: Fayzullaxon и Pepsi корректно сохранены; названия блюд, суммы и дата не размечены."}
+{"hash":"f50d6799ef555b329a04a9c7d12ccad820260301","action":"keep_original","reason":"Проверено: Andijon, Navruz Mall, KFC, Toshkentdagi KFC и West корректно сохранены; разговорный текст не расширен."}
+{"hash":"f779a10efc2c592d0e8c30bef2f6e2b220250909","action":"review_required","reason":"Текст на изображении о жилом комплексе: нужно проверить Murad Buildi и Tabiat Residence, включая границы текущего GEO."}
+{"hash":"f85541cd5eeb0c6eba2e16a16c0ab21020260213","action":"keep_original","reason":"Проверено: APLUS корректно выделен как ORG, Худойберди как NAME; модель и размеры не добавлены."}
+{"hash":"fab0b4bd96fe987b88749b05657db93120260225","action":"add_entities","entities":[{"label":"ORG","text":"Iwatch T800 ultra"}],"reason":"Добавлено пропущенное название товара/бренда Iwatch T800 ultra в рекламном тексте; соцсети и GEO сохранены."}
+{"hash":"ff4cffdaa572287ab36b6f74381cfcfd20260217","action":"keep_original","reason":"Проверено: KFC корректно выделен как ORG; hashtags, usernames и общие названия блюд не добавлены."}
 {"hash":"1d55181d40f1d7fa5803106198eaec8f20260303","action":"add_entities","entities":[{"label":"GEO","text":"Qator"}],"reason":"Добавлена пропущенная явная GEO Qator в тексте; IMO_Qatar оставлен username-подобным фрагментом."}
 {"hash":"1d674153d074966a5da1ed355b406fa220260301","action":"keep_original","reason":"Проверено: короткий фрагмент с прозвищем/словом Бутчер не содержит надёжно размечаемой сущности."}
 {"hash":"1d822ad168c5ba0a5043f3a057e90c4a20260303","action":"review_required","reason":"Длинная футбольная статья с 7 сущностями: нужна сверка клубов, городов и повторов Milan/Bavariya."}
