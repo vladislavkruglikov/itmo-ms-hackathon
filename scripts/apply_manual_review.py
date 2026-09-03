@@ -30,6 +30,9 @@ def main():
     changed = 0
     for row in read(args.input):
         decision = decisions.get(row["hash"])
+        if decision and decision["action"] == "exclude_record":
+            changed += 1
+            continue
         updated = dict(row)
         if decision and decision["action"] == "replace_entities":
             entities = []

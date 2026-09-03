@@ -340,3 +340,8 @@ The keyword/search-list record was marked `review_required` and left
 unchanged because its annotation policy is ambiguous. The full 1000-record
 manual review remains in progress; no automatic consensus labels are included
 in this manual batch.
+
+Manual batch 001 was extended to four explicit decisions: one roster
+replacement, two scraped keyword/social-tag records excluded from training, and
+one keyword-list record retained as `review_required`. The materialized dataset
+contains 12,998 records; the original 13,000-record training file is untouched.

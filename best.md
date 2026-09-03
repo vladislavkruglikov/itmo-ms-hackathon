@@ -189,3 +189,7 @@ store explicit decisions, and `scripts/apply_manual_review.py` to materialize
 only those decisions. Batch 001 contains two inspected candidates: one
 football roster was manually reannotated with complete person names, while a
 keyword-list record was left unchanged and marked `review_required`.
+The batch now has four decisions total: the roster replacement, two scraped
+keyword/social-tag records excluded from training, and the retained uncertain
+record. The resulting dataset has 12,998 records; the original train file is
+unchanged.
