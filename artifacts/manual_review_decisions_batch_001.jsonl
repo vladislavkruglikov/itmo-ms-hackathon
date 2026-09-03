@@ -1588,3 +1588,23 @@
 {"hash":"0b27770c52430ce8e9dc01e0e744a1ff20260324","action":"review_required","reason":"Очень длинный художественный текст с 9 сущностями: требуется полная сверка персонажей и границ."}
 {"hash":"0b8801e7ed2a094492a1043ab217c81d20260313","action":"review_required","reason":"Длинная религиозная публикация с 7 сущностями: нужна построчная сверка цитаты, дат и времени/места."}
 {"hash":"0bc87704edaff37c658b0bb59cfe005720260228","action":"keep_original","reason":"Проверено: текущие две сущности сохранены; оценочная и оскорбительная лексика не добавлена."}
+{"hash":"0d3883cb57510c8d8f09075b0825b2f320260306","action":"review_required","reason":"Длинная военная публикация с 21 сущностью: требуется полная сверка стран, городов, СМИ и организаций."}
+{"hash":"0f581ffff107cdd143b34c136a18819620260311","action":"keep_original","reason":"Проверено: ALDO и текущая сущность спортивной записи сохранены; username не добавлен."}
+{"hash":"1059d556d0e9024cdad17b6987ea7b2b20260314","action":"keep_original","reason":"Проверено: четыре именные сущности сохранены; разговорные слова и вопросительная часть не добавлены."}
+{"hash":"1170582121abeed59c3d1de9f9ac23d920260304","action":"keep_original","reason":"Проверено: Bishkek/текущая GEO сохранена; размер и цена не добавлены."}
+{"hash":"137622079da5b0f22116d24d7c22615520260307","action":"keep_original","reason":"Проверено: Arsenal, Tonali, Martinez, Mount, Real Madrid и Liverpool/текущие 6 ORG/NAME сохранены."}
+{"hash":"139545fa6025b0ac36be31a24495250920260303","action":"keep_original","reason":"Проверено: Moniepoint и текущая вторая сущность сохранены; usernames и контактные детали не добавлены."}
+{"hash":"1404edea0c65341d80cd8bdf69b6af8320260314","action":"keep_original","reason":"Проверено: Macron, WEF, Soros и Rothschild/текущие 4 сущности сохранены."}
+{"hash":"1491a2a56e862e3f0dc350513cbe4b0720260221","action":"keep_original","reason":"Проверено: короткая строка с username и игровой фразой, текущая сущность сохранена."}
+{"hash":"151338093266c4c6908cb6a71788ad6920260302","action":"keep_original","reason":"Проверено: Sputnik, Chabad и Putin/текущие сущности сохранены; оценочное слово не добавлено."}
+{"hash":"1565070db3474547b0c528052d88dcc620260603","action":"keep_original","reason":"Проверено: Pepsi и &TEAM/текущие 2 сущности сохранены; hashtags не добавлены."}
+{"hash":"1804373d9c17f81241ca3608039b096a20260310","action":"keep_original","reason":"Проверено: Billie Eilish и XXXTentacion/текущие 2 NAME сохранены."}
+{"hash":"188c53acbf27f9f97d0bed14172a303c20260302","action":"keep_original","reason":"Проверено: Urumchi/текущая GEO сохранена; код рейса и числа не добавлены."}
+{"hash":"19d176092d0b1532b86ecf4db3b49d1c20260303","action":"keep_original","reason":"Проверено: текущая сущность рекламной строки сохранена; username и общие слова не добавлены."}
+{"hash":"1a2a1d095ad2866ffa6bd626468aaa7820260301","action":"keep_original","reason":"Проверено: Depay и Lingard/текущие 2 NAME сохранены."}
+{"hash":"1a4c7667d705f53042ce96ea6412235320260307","action":"review_required","reason":"Длинная повторяющаяся публикация о патенте и пограничных ограничениях с 8 сущностями: нужна полная сверка."}
+{"hash":"1ad2716fa6bf07db64d0b9c76c14a64020260309","action":"review_required","reason":"Длинная политическая новость с 21 сущностью: требуется построчная сверка BBC, стран, городов и организаций."}
+{"hash":"1d5c6b65376a1ea77124b7ac3e4bb59220260310","action":"review_required","reason":"Рекламно-образовательная запись с 1 gold и несколькими названиями брендов: требуется отдельная сверка политики товарных брендов."}
+{"hash":"1e1cacc27139f255e4b5082290d1928a20260310","action":"keep_original","reason":"Проверено: спам-рекомендации и имена групп не размечены в gold; не добавляю случайные сущности."}
+{"hash":"2285b0f702793264482289fb84ee86c120260315","action":"keep_original","reason":"Проверено: Uzbekistan/Nestone и текущая сущность сохранены; usernames и служебные слова не добавлены."}
+{"hash":"22a379ecf20bc7a121051f37de49b7b220260304","action":"keep_original","reason":"Проверено: Park filial, P. Mahmud и Amir-Temur/текущие 3 сущности сохранены; номер дома не добавлен."}
