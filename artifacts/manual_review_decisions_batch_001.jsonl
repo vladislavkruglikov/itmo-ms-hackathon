@@ -1968,3 +1968,23 @@
 {"hash":"0f43bffe1a374c9d15c6ebaba4065d3b20260302","action":"review_required","reason":"Короткий серверный пост: нужно проверить, является ли PODOLSK GEO, а Misha_Popovych — только username или NAME."}
 {"hash":"0f6750c6ac86f02a99ef73217d3d8f4420260303","action":"keep_original","reason":"Проверено: Barselona, Atletiko и Rafinya корректно размечены; счёт и служебный эфир не добавлены."}
 {"hash":"104061dedbcee47ea376695000a43edd20260306","action":"keep_original","reason":"Проверено: Минаб, США, Израиль и начальная школа корректно сохранены; дата и число погибших не размечены."}
+{"hash":"10414ee5aebb9c17c9362a9a013e3c6920260303","action":"keep_original","reason":"Проверено: username и короткий ответ не содержат сущностей."}
+{"hash":"105bbe343004c4df36f813253731818e20260511","action":"keep_original","reason":"Проверено: маршрутные GEO и повторяющийся груз Pepsi сохранены; тоннаж, цены, телефоны и транспорт не размечены."}
+{"hash":"10f37093fd1bc8eddd40f07bf1e1e25220260305","action":"keep_original","reason":"Проверено: Sabahattin Ali корректно выделен как NAME в названии произведения; Madonna и название книги не расширены без контекста."}
+{"hash":"113b0ba33d4a0b89c13b3a1a8e41f45b20260308","action":"review_required","reason":"Короткий шумный спортивный фрагмент: нужно проверить, являются ли Trichy и TVK реальными GEO/ORG, а не частью username."}
+{"hash":"12a6f37835a6a9582bf68b3aaa8b5fde20260307","action":"keep_original","reason":"Проверено: Polda Lampung корректно выделен как ORG; Bravo — общее слово."}
+{"hash":"12d96e42881f9cfc3c607f075e93316620260227","action":"keep_original","reason":"Проверено: Beeline корректно выделен как ORG; технические обозначения сети не добавлены."}
+{"hash":"144fc22c22e3f53359592ee52655949c20260305","action":"keep_original","reason":"Проверено: Florida выделена как GEO, Disney, Universal Studios и Airbnb как ORG; служебные слова не добавлены."}
+{"hash":"14ff5e7304fa3112db2fb73d3a52c99920260306","action":"keep_original","reason":"Проверено: общий разговорный текст без конкретных сущностей."}
+{"hash":"156525e5eb80829b548c6ebe7f75549b20260311","action":"keep_original","reason":"Проверено: Сахарликдан, Андижондан и Тошкент шахарга корректно сохранены как маршрутные GEO; время и машина не добавлены."}
+{"hash":"1579ee6c2354acb1683c7b6032bd9b3d20260305","action":"review_required","reason":"Длинный список аэропорта, авиакомпаний и моделей: нужна построчная сверка границ Narita, перевозчиков, аэропортов и техники."}
+{"hash":"1589e0650b63f62cf335c7abba4edfef20260313","action":"keep_original","reason":"Проверено: Real корректно выделен как ORG; Baylando и разговорная связка не дают надёжной сущности."}
+{"hash":"15a02ad1f4dc972070d29cb1958e495120260314","action":"keep_original","reason":"Проверено: шутливое упоминание Марса не является сущностью в данном контексте."}
+{"hash":"15a92efd797b4ccc3b3ec7f5b399016220260312","action":"keep_original","reason":"Проверено: UZPES_SALE корректно выделен как ORG; тарифы, цены и usernames не добавлены."}
+{"hash":"15b67475517b69368910eb06f99073b520260331","action":"keep_original","reason":"Проверено: Belousova Alena корректно выделена полным NAME; Lenokpl выглядит как username."}
+{"hash":"15e5fd996d07df85f0825c96960dc0a420260312","action":"keep_original","reason":"Проверено: искажённая разговорная фраза не содержит надёжной сущности."}
+{"hash":"1611fa31f3e628723ac793a1ae79ab9f20260311","action":"keep_original","reason":"Проверено: Imron корректно выделен как NAME; дата и время не размечены."}
+{"hash":"16a38ad4ce25d15d0c281fe64f20b0c120260312","action":"keep_original","reason":"Проверено: username-подобные названия и приветствие не содержат надёжной сущности."}
+{"hash":"16aa68554efd691865066e923d89fd6120260310","action":"keep_original","reason":"Проверено: Mickey употреблён как общее имя персонажа без надёжного контекста сущности."}
+{"hash":"16da00b8dae96be1","action":"review_required","reason":"Футбольная новость с 9 сущностями: требуется сверка клубов, национальной команды, игроков, Москвы и агентства."}
+{"hash":"16eca6bad1e999c1cd1aa6ae07da85be20260312","action":"keep_original","reason":"Проверено: общий административный текст без конкретных имён, организаций или географических названий."}
