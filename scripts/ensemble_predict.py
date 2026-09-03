@@ -42,6 +42,9 @@ def constrained_ids(logits: torch.Tensor, labels: dict[int, str]) -> list[int]:
     dp = torch.full_like(logits, neg_inf)
     back = torch.zeros(logits.shape, dtype=torch.long)
     dp[0] = logits[0]
+    for label_id, tag in labels.items():
+        if tag.startswith("I-"):
+            dp[0, label_id] = neg_inf
     for pos in range(1, logits.shape[0]):
         for current, tag in labels.items():
             allowed = [previous for previous, previous_tag in labels.items()

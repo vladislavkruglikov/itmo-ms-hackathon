@@ -207,3 +207,11 @@ The manual ledger currently covers ranks 1–110. It has produced seven direct
 span-repair decisions, excluded 22 clearly low-context records, and marked the
 remaining records for complete review; the current output contains 12,978
 records.
+
+The semantic pass has continued through rank 160 of the full 13,000-record
+uncertainty ranking. The ledger now contains 159 decisions (the rank-1 item is
+not present in this ranking); 7 records have explicit span replacements or
+additions and 37 clearly low-context advertisements, lists, tag/link dumps, or directories
+are excluded. Substantive news, interviews, and fictional passages are kept
+for full reannotation rather than guessed partial edits. The current materialized
+output is `data/train_manual_reviewed_batch001.jsonl` with 12,970 records.
