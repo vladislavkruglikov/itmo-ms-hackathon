@@ -243,6 +243,13 @@ The resulting complete-corpus file is
 `data/train_manual_entity_corrected_v1.jsonl`; its XL control run is in
 progress.
 
+The manual entity pass has now reached ranks 201–260. It has recorded 271
+audited decisions in the ledger; all materialized variants retain 13,000
+records, including social posts and advertisements. High-confidence additions
+in these batches include product/brand and organization names such as Pepsi,
+Lay's, KFC, TWICE, Sunrise City, and SOF EXPO Samarkand; ambiguous substantive
+documents remain retained for further span review.
+
 The first entity-corrected XL checkpoint scored 0.8858 micro-F1 in the
 three-model ensemble at weight 0.25 and 0.8865 at weight 0.10, both below the
 0.8868 two-model baseline. It is retained as an experiment, not promoted.
