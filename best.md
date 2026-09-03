@@ -243,7 +243,7 @@ The resulting complete-corpus file is
 `data/train_manual_entity_corrected_v1.jsonl`; its XL control run is in
 progress.
 
-The manual entity pass has now reached ranks 201–1800. It has recorded 1810
+The manual entity pass has now reached ranks 201–1820. It has recorded 1830
 audited decisions in the ledger; all materialized variants retain 13,000
 records, including social posts and advertisements. High-confidence additions
 in these batches include product/brand and organization names such as Pepsi,
