@@ -193,3 +193,7 @@ The batch now has four decisions total: the roster replacement, two scraped
 keyword/social-tag records excluded from training, and the retained uncertain
 record. The resulting dataset has 12,998 records; the original train file is
 unchanged.
+The ledger has since added four ranked decisions: one duplicated bilingual
+calendar scrape excluded from training and two long documents marked
+`review_required`; the materialized manually decided output now has 12,997
+records.

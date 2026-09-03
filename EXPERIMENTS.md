@@ -345,3 +345,7 @@ Manual batch 001 was extended to four explicit decisions: one roster
 replacement, two scraped keyword/social-tag records excluded from training, and
 one keyword-list record retained as `review_required`. The materialized dataset
 contains 12,998 records; the original 13,000-record training file is untouched.
+After the next four ranked candidates were inspected, one duplicated bilingual
+calendar scrape was also excluded and two long editorial/scraped documents
+were marked `review_required`. The current manually decided output therefore
+contains 12,997 records; only explicit ledger actions are applied.
