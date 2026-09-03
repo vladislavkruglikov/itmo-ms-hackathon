@@ -19,6 +19,15 @@ def all_occurrences(text: str, value: str):
         start += len(value)
 
 
+def non_overlapping(entities):
+    selected = []
+    for entity in sorted(entities, key=lambda e: (e["start"], -(e["end"] - e["start"]), e["label"])):
+        if any(entity["start"] < other["end"] and other["start"] < entity["end"] for other in selected):
+            continue
+        selected.append(entity)
+    return sorted(selected, key=lambda e: (e["start"], e["end"], e["label"]))
+
+
 def main():
     p = argparse.ArgumentParser(description="Apply explicit human review decisions.")
     p.add_argument("--input", type=Path, required=True)
@@ -43,7 +52,7 @@ def main():
                     if value not in existing:
                         entities.append({"label": item["label"], "start": start, "end": end})
                         existing.add(value)
-            updated["entities"] = sorted(entities, key=lambda e: (e["start"], e["end"], e["label"]))
+            updated["entities"] = non_overlapping(entities)
             changed += 1
         output.append(updated)
     args.output.parent.mkdir(parents=True, exist_ok=True)

@@ -357,3 +357,7 @@ The manual ledger now covers ranks 1–110. It contains explicit decisions for
 22 excluded low-context records, seven direct span-repair records, one
 keep-original record, and the remainder marked `review_required` pending full
 context annotation. The current materialized dataset has 12,978 records.
+The manually reviewed dataset was trained for one epoch after fixing nested
+span validation and freeing rejected generated checkpoints for disk space. It
+reached train/dev loss 0.369857/0.149388; its constrained ensemble scored
+0.8858, below the 0.8868 baseline, and was rejected for production.
