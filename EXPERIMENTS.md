@@ -276,3 +276,15 @@ backend модели `facebook/xlm-roberta-xl`: он включал раздел
 3. `dev_metrics.json`, рассчитанный `scripts/evaluate.py`;
 4. строку в основной таблице этого файла, включая не только F1, но и loss,
    wall/compute time, HFU и все параметры, отличающиеся от общих условий.
+
+## Additional experiments 2026-09-03
+
+| Run | Configuration | Micro-F1 | Result |
+|---|---|---:|---|
+| logit-xl | Existing XL checkpoint; overlapping-window logit averaging | 0.86040 | Small improvement over probability averaging |
+| xl-original-script-balanced-1e | XL, original train with Cyrillic/mixed oversampling, 1 epoch, BS12/GA3, LR 5e-5 | 0.77370 | Rejected; duplication destabilized the classifier |
+| ensemble-xl-large-0.75 | XL checkpoint + saved XLM-R large checkpoint; averaged logits, weights 1.0/0.75 | 0.87330 | Current best |
+| ensemble-xl-tuned-large | XL checkpoint + tuned large checkpoint; averaged logits, weights 1.0/0.75 | 0.87240 | Rejected; slightly below current best |
+| gazetteer-m2-p100 | Current-best ensemble plus exact training-surface gazetteer | 0.36780 | Rejected; unacceptable false-positive rate |
+
+Current-best inference uses scripts/ensemble_predict.py with the XL checkpoint weight 1.0 and the saved large checkpoint weight 0.75, followed by scripts/evaluate.py.
