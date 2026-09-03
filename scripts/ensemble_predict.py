@@ -37,6 +37,27 @@ def predict_model(model, tokenizer, windows, record_count, batch_size, device):
     return scores
 
 
+def constrained_ids(logits: torch.Tensor, labels: dict[int, str]) -> list[int]:
+    neg_inf = -1e9
+    dp = torch.full_like(logits, neg_inf)
+    back = torch.zeros(logits.shape, dtype=torch.long)
+    dp[0] = logits[0]
+    for pos in range(1, logits.shape[0]):
+        for current, tag in labels.items():
+            allowed = [previous for previous, previous_tag in labels.items()
+                       if not tag.startswith("I-") or previous_tag in {"B-" + tag[2:], tag}]
+            values = dp[pos - 1, allowed]
+            best = int(values.argmax())
+            back[pos, current] = allowed[best]
+            dp[pos, current] = values[best] + logits[pos, current]
+    current = int(dp[-1].argmax())
+    result = [current]
+    for pos in range(logits.shape[0] - 1, 0, -1):
+        current = int(back[pos, current])
+        result.append(current)
+    return result[::-1]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Weighted logit ensemble for exact-span NER.")
     parser.add_argument("--input", type=Path, required=True)
@@ -46,7 +67,14 @@ def main() -> int:
     parser.add_argument("--max-length", type=int, default=256)
     parser.add_argument("--stride", type=int, default=64)
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
+    parser.add_argument("--constrained", action="store_true")
+    parser.add_argument("--label-bias", nargs="*", default=[], metavar="LABEL:BIAS",
+                        help="Add a constant to selected label logits before decoding.")
     args = parser.parse_args()
+    label_bias = {}
+    for item in args.label_bias:
+        name, value = item.rsplit(":", 1)
+        label_bias[name] = float(value)
     device = resolve_device(args.device)
     records = read_records(args.input, require_entities=False)
     model_specs = [item.rsplit(":", 1) if ":" in item else (item, "1") for item in args.models]
@@ -73,7 +101,13 @@ def main() -> int:
     assert id2label is not None and total_weight > 0
     predictions = []
     for record, record_scores in zip(records, combined, strict=True):
-        tagged = [(start, end, id2label[int((value / total_weight).argmax())]) for (start, end), value in sorted(record_scores.items())]
+        ordered = sorted(record_scores.items())
+        logits = torch.stack([value / total_weight for _, value in ordered])
+        for label_id, label in id2label.items():
+            if label in label_bias:
+                logits[:, label_id] += label_bias[label]
+        ids = constrained_ids(logits, id2label) if args.constrained else [int(value.argmax()) for value in logits]
+        tagged = [(start, end, id2label[label_id]) for (start, end), label_id in zip((key for key, _ in ordered), ids, strict=True)]
         predictions.append({"hash": record["hash"], "entities": decode_bio_tokens(tagged)})
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", encoding="utf-8") as stream:

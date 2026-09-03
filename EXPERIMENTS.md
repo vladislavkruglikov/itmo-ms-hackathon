@@ -288,3 +288,20 @@ backend модели `facebook/xlm-roberta-xl`: он включал раздел
 | gazetteer-m2-p100 | Current-best ensemble plus exact training-surface gazetteer | 0.36780 | Rejected; unacceptable false-positive rate |
 
 Current-best inference uses scripts/ensemble_predict.py with the XL checkpoint weight 1.0 and the saved large checkpoint weight 0.75, followed by scripts/evaluate.py.
+
+## Active learning and constrained decoding follow-up
+
+| Run | Configuration | Micro-F1 | Result |
+|---|---|---:|---|
+| ensemble-xl-large-0.75-constrained | Existing XL + large logit ensemble, legal BIO Viterbi decoding | 0.8868 | New best; kept |
+| xl-active-filtered250 | Original train minus top 250 train examples ranked by model disagreement/error, XL, 3 epochs, BS12/GA3, LR 5e-5 | 0.8434 | Rejected standalone |
+| ensemble-active-filtered250 | Existing ensemble plus filtered-data XL checkpoint at weight 0.5, constrained | 0.8862 | Rejected; below constrained best |
+| calibration-global-minus0.15 | Existing ensemble, constrained, -0.15 bias on all entity labels | 0.8865 | Rejected |
+| calibration-global-plus0.15 | Existing ensemble, constrained, +0.15 bias on all entity labels | 0.8866 | Rejected |
+
+The active-learning report (`scripts/mine_active_learning.py`) identified a
+large concentration of long news, advertising, foreign-language and duplicate
+stories among high-disagreement training examples. Removing them as a single
+batch did not improve generalization, so the filtered dataset is not part of
+the production recipe. The report and filter remain available for manual
+review rather than automatic deletion.

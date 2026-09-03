@@ -111,3 +111,45 @@ GEO:  0.887049
 ```
 
 The original training summaries are stored in each component artifact's `training_summary.json`; the final ensemble score is stored in `artifacts/ensemble-xl-large-0.75.metrics.json`.
+
+## 5. Current constrained-decoder best
+
+The best verified result is the same two-model logit ensemble with legal BIO
+transition decoding enabled. It scores **0.8868 exact-span micro-F1** on the
+development set (precision 0.8874, recall 0.8862). Reproduce it with:
+
+```bash
+python scripts/ensemble_predict.py \
+  --input data/dev.jsonl \
+  --output artifacts/ensemble-xl-large-0.75-constrained.jsonl \
+  --models \
+    artifacts/base-facebook-xlm-roberta-xl-bf16-bs12-ga3-ebs36-lr5e-5/model:1 \
+    artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.75 \
+  --batch-size 32 \
+  --constrained
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --pred artifacts/ensemble-xl-large-0.75-constrained.jsonl
+```
+
+The active-learning experiment is reproducible with:
+
+```bash
+python scripts/mine_active_learning.py \
+  --gold data/train.jsonl \
+  --pred artifacts/active_train_ensemble.jsonl \
+  --output artifacts/active_learning_train.jsonl \
+  --limit 1000
+
+python scripts/filter_active.py \
+  --input data/train.jsonl \
+  --active-report artifacts/active_learning_train.jsonl \
+  --exclude-top 250 \
+  --output data/train_active_filtered_250.jsonl
+```
+
+Training on that filtered set produced a standalone constrained score of
+0.8434 and adding it to the production ensemble produced 0.8862, so it is
+retained as an experiment but not used in the best recipe. Small global label
+logit calibration sweeps also did not beat 0.8868 (best 0.8866).
