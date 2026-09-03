@@ -1148,3 +1148,23 @@
 {"hash":"10c4b5b29dedbe3ef975033823fe450020260307","action":"keep_original","reason":"Проверено: Milan, Serie A и Massimiliano Allegri размечены корректно; лишнее предсказание дублирует контекст."}
 {"hash":"111bb1b1fbb312cfe16b322f0bc3147f20260310","action":"review_required","reason":"Рекламное объявление недвижимости с каналами и офисом: возможны пропущенные ORG, нужна полная сверка границ."}
 {"hash":"15f9f2f0ad3bc748a5c8f01d01d2b83120260310","action":"review_required","reason":"Длинный футбольный анонс с 29 gold NAME/ORG: требуется построчная сверка составов и клубов, без рискованного массового добавления."}
+{"hash":"166f6338cd51e657807e31bade2b965320260309","action":"keep_original","reason":"Проверено: Wuthering Heights — название произведения в неоднозначной короткой строке; текущие модельные NAME не добавлены."}
+{"hash":"17170dd83baad2252717f96282104bb420260306","action":"review_required","reason":"Фрагмент с персонажами/терминами из художественного произведения: требуется отдельная сверка, чтобы не смешать имена и нарицательные названия."}
+{"hash":"1813959cb33fe4c4f90de72e995c647320260306","action":"keep_original","reason":"Проверено: OFC — сокращение, уверенных именованных сущностей нет."}
+{"hash":"1845b1a19c0c1a6fded8d8efdb4dbf9c20260302","action":"keep_original","reason":"Проверено: Karina Beltran размечена как NAME; @Jesus J. Pérez и @Itzy — упоминания аккаунтов без безопасного добавления."}
+{"hash":"18964d8a7ab18ea2279d8a0c564ccc5420260305","action":"keep_original","reason":"Проверено: Fubon Angels и имена участниц/хэштеги в целом согласованы; лишние фрагменты не добавлены."}
+{"hash":"1896ceaa52597456f102399e100750a020260314","action":"keep_original","reason":"Проверено: Marcelo, Ronaldo и футбольные бренды уже покрыты gold; хэштеги не добавлены."}
+{"hash":"19c39599d34d4679c6e2106468e163c320260310","action":"keep_original","reason":"Проверено: исторический текст с Kokand/Bukhara/Khiva/Russia/Turkestan уже содержит согласованные gold-сущности."}
+{"hash":"1a72ca52d77e978b85d532ff1cf0f3a020260303","action":"keep_original","reason":"Проверено: текущие GEO/ORG/NAME границы в рекламной строке согласованы; лишние модельные фрагменты не добавлены."}
+{"hash":"1aaca27e8120a0b7dc6f4a743421680720260206","action":"keep_original","reason":"Проверено: Akane и Miyo в короткой неоднозначной фразе не дают надёжного исправления."}
+{"hash":"1ad1dda73cc6b45027d8b92e2c77fcc420260313","action":"add_entities","entities":[{"label":"ORG","text":"CharlotteFC"}],"reason":"Добавлена пропущенная команда CharlotteFC; MLS уже размечена."}
+{"hash":"1afa00456fde7ca4e132b796deb64b3720260312","action":"keep_original","reason":"Проверено: заголовок про новую партию без конкретного имени организации; сущности модели ложные."}
+{"hash":"1bda41d0e9643604c3358b3c01d433b320260303","action":"add_entities","entities":[{"label":"ORG","text":"PlusVerite"}],"reason":"Добавлен явно именованный медиа/бренд PlusVerite; Iran уже размечен как GEO."}
+{"hash":"1c27e9a611c53010e85d9d883930a65920260307","action":"keep_original","reason":"Проверено: сатирический текст с повторяющимся Шавкатия не даёт безопасных дополнительных сущностей."}
+{"hash":"206cff30442d2cc65331aa47478e525e20260228","action":"review_required","reason":"Спортивная строка с Rooney, UCL, Barcelona и Wembley: нужна отдельная проверка типов и границ, не меняю gold вслепую."}
+{"hash":"209f37661dc8bb085c0b9506bc372c6220260227","action":"keep_original","reason":"Проверено: Oʻzbekiston уже размечен; второе слово не является сущностью."}
+{"hash":"20e66ebee195c5c31e216422dd416e6e20260305","action":"keep_original","reason":"Проверено: Chelsea, Aston Villa, повторные клубные названия и игроки размечены; premier/слипшиеся слова модели ложные."}
+{"hash":"2208e17379314b3d545418dd4d18022520260313","action":"review_required","reason":"Объявление маршрута с намеренно раздельно написанными названиями городов; нужна проверка, считать ли такие GEO сущностями в этой схеме."}
+{"hash":"223e6382155cff6551805332be3fcd9420260223","action":"review_required","reason":"Строка с моделями мотоциклов/брендами: возможны пропущенные ORG, но требуется сверка политики для товарных названий."}
+{"hash":"228e98041bef5d3bf746bc04201e2b1220260310","action":"keep_original","reason":"Проверено: именные сущности в историко-религиозном тексте уже размечены; дополнительные фрагменты не добавлены."}
+{"hash":"2358a1bcf21170f8613ffe79674198d820260304","action":"add_entities","entities":[{"label":"ORG","text":"Chatgpt"}],"reason":"Добавлен явно названный продукт/бренд Chatgpt; слитные usernames MusaddiqBangash и SajSadiqCricket не добавлены."}
