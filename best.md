@@ -246,3 +246,10 @@ progress.
 The first entity-corrected XL checkpoint scored 0.8858 micro-F1 in the
 three-model ensemble at weight 0.25 and 0.8865 at weight 0.10, both below the
 0.8868 two-model baseline. It is retained as an experiment, not promoted.
+
+The follow-up v2 corrections (`билан` removed as a false GEO, `dargoh`
+removed as a false ORG, and `Yaponiya` relabeled ORG→GEO in two records) gave
+the same 0.8865 micro-F1 at ensemble weight 0.10 with constrained decoding
+(TP 6819, FP 867, FN 879). The v2 checkpoint is retained for audit but is not
+promoted. A train-derived ORG gazetteer was also tested; it added 319 spans
+and fell to 0.8704 micro-F1, so it was rejected.
