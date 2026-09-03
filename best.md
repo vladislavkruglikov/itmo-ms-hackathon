@@ -263,3 +263,11 @@ the same 0.8865 micro-F1 at ensemble weight 0.10 with constrained decoding
 (TP 6819, FP 867, FN 879). The v2 checkpoint is retained for audit but is not
 promoted. A train-derived ORG gazetteer was also tested; it added 319 spans
 and fell to 0.8704 micro-F1, so it was rejected.
+
+The latest training run uses the current new dataset `data/train_manual_entity_corrected_v100.jsonl` (13,000 records),
+with `facebook/xlm-roberta-xl`, max length 256, stride 64, 3 epochs, batch size 12, gradient accumulation 3,
+BF16, fused AdamW, learning rate 5e-5, weight decay 0.01, warmup ratio 0.1, seed 42. The best checkpoint is
+`artifacts/xl-manual-v100-bs12-ga3-lr5e-5-e3/model`; training summary is in the same artifact directory.
+Epoch losses were 0.422152/0.104543, 0.069628/0.071119, and 0.038631/0.069212 (train/dev).
+Constrained dev decoding scored 0.8750 micro-F1 (ORG 0.8471, NAME 0.8963, GEO 0.8845), below the 0.8868 baseline,
+so this checkpoint is retained as an experiment and is not promoted.
