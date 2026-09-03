@@ -2088,6 +2088,26 @@
 {"hash":"827874794f0d7f5ae6bfb050a297fee520260221","action":"review_required","reason":"Длинный религиозно-политический текст с 6 сущностями: требуется проверить пропуски организаций/брендов и границы GEO."}
 {"hash":"886fac60f7e8ba5f91db251dd7e3152a20251217","action":"keep_original","reason":"Проверено: Murod building корректно выделен как ORG; поздравительный текст и название канала не добавлены."}
 {"hash":"8b7cc479bb902e6a7ea217c9a1528a2d20260222","action":"review_required","reason":"Длинная реклама клининговой компании с 5 сущностями: нужна сверка Ideal Wash, Karpaks, Angren и возможных пропущенных брендов."}
+{"hash":"94a37330ea0e10d944c6a3936156146c20260305","action":"keep_original","reason":"Проверено: короткая фраза без надёжно идентифицируемой сущности."}
+{"hash":"986e63c12efc6fff214faf9b9c82b1a920250719","action":"review_required","reason":"Длинный смешанный текст с 7 сущностями: требуется сверка Murod Nazarov, Murad Buildings, Kun.uz и географических границ."}
+{"hash":"9cd4b41f39697b959dae56b4d800145b20260309","action":"keep_original","reason":"Проверено: время, дата и короткая строка не содержат надёжной сущности."}
+{"hash":"9e43bb2e263664b7edd28f01f1dabde520260228","action":"review_required","reason":"Большое объявление маршрутов с 17 сущностями: нужна построчная сверка городов, районов, памятников и служебных каналов."}
+{"hash":"9fb46f0227a975d8ae16a78a21e9d3da20260203","action":"keep_original","reason":"Проверено: Bang Jo, Evos и Emperor корректно сохранены; игровые usernames не расширены."}
+{"hash":"a2916232bb334105","action":"review_required","reason":"Длинная международная новость с 13 GEO и ведомством: требуется сверка стран, городов, Калининграда и названия Black Hawk."}
+{"hash":"a3549c5cfb78e99c723a16929849059420250709","action":"review_required","reason":"Длинная рекламно-интервьюшная публикация с 12 сущностями: нужна сверка персон, Ibrat, Oxford, Murad Buildings и Tsubaka."}
+{"hash":"a8b2a96f81fd7abeb702a347d20b3ce720250720","action":"keep_original","reason":"Проверено: Murod Nazarov и Oʻzbekiston корректно выделены; общие слова о строительстве не добавлены."}
+{"hash":"a8bafcf34bd13e1c1c5420b71929d5e720260307","action":"keep_original","reason":"Проверено: эмоциональная строка с username и emoji не содержит сущностей."}
+{"hash":"ae493f33dbbba22138e141903906832820260210","action":"add_entities","entities":[{"label":"ORG","text":"AKFA"}],"reason":"Добавлен пропущенный реальный бренд AKFA в объявлении; текущие GEO Mirzo Ulugʻbek сохранены."}
+{"hash":"b0063fc8f08eb153","action":"keep_original","reason":"Проверено: Toshkent metropoliteni корректно выделен как ORG, Oʻzbekistonda как GEO; время и температура не добавлены."}
+{"hash":"b1eede2169e94f9855bf5896b14535cc20260305","action":"keep_original","reason":"Проверено: искажённая разговорная фраза без надёжной сущности."}
+{"hash":"b55a5dd5f59c15fcec60b1698a1d305b20260102","action":"review_required","reason":"Длинный текст о Hyundai и строительных компаниях: требуется сверка корейских названий, географии и Murad Building."}
+{"hash":"b6a2f3dec2d3e5242f8a6e223a58242020260130","action":"review_required","reason":"Смешанный длинный текст с 6 сущностями: нужна сверка персон, организаций и названий Иман/России."}
+{"hash":"b91c8f735aa696d4406a96df5518e35620260203","action":"keep_original","reason":"Проверено: Навои корректно выделен как GEO, перечень ресторанов сохранён отдельными ORG до KFC; служебные слова не добавлены."}
+{"hash":"baa74b4490aad2d79661d55a03f7ef5820260522","action":"keep_original","reason":"Проверено: Kun.uz, Bunyodkor и Samarqand/города сохранены; ссылка и номер статьи не размечены."}
+{"hash":"bc2e96b2ed6c9246c40adf17fe9a24ff20260603","action":"keep_original","reason":"Проверено: Pepsi и Fifty Fifty корректно выделены как ORG; музыкальные hashtags не добавлены."}
+{"hash":"bfd4f246aaa82605f25677404947fa8320260206","action":"keep_original","reason":"Проверено: Minor mall и бренды/каналы текущей разметки сохранены; расписание и служебные usernames не добавлены."}
+{"hash":"c093e1cc5953370d1637b08234b298f920260220","action":"keep_original","reason":"Проверено: SAFIA, Olmazor и Medgorodok корректно выделены; телефон, зарплата и usernames не размечены."}
+{"hash":"c103bea0a25fba84bfa79946e3553cc120260523","action":"review_required","reason":"Большой список министерств с 19 сущностями: требуется построчная сверка всех ведомств и границ текста изображения."}
 {"hash":"1d55181d40f1d7fa5803106198eaec8f20260303","action":"add_entities","entities":[{"label":"GEO","text":"Qator"}],"reason":"Добавлена пропущенная явная GEO Qator в тексте; IMO_Qatar оставлен username-подобным фрагментом."}
 {"hash":"1d674153d074966a5da1ed355b406fa220260301","action":"keep_original","reason":"Проверено: короткий фрагмент с прозвищем/словом Бутчер не содержит надёжно размечаемой сущности."}
 {"hash":"1d822ad168c5ba0a5043f3a057e90c4a20260303","action":"review_required","reason":"Длинная футбольная статья с 7 сущностями: нужна сверка клубов, городов и повторов Milan/Bavariya."}
