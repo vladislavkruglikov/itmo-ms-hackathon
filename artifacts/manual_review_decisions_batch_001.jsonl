@@ -2048,6 +2048,26 @@
 {"hash":"3bd722f87b8b320c0db14509ac68715520260602","action":"keep_original","reason":"Проверено: mobiuz.uzbekistan корректно выделен как ORG без символа @; жалоба и телефоны не добавлены."}
 {"hash":"3c5229c693e369a55fe2a7396632858e20260308","action":"review_required","reason":"Тестовый религиозно-исторический фрагмент с множественными названиями Bayat и Hudaybiya: нужна проверка пропущенных GEO/ORG."}
 {"hash":"3d91ad7276a50b4d11007b143811c58520260528","action":"keep_original","reason":"Проверено: Pepsi корректно выделен как ORG; товарные слова и цены не размечены."}
+{"hash":"3f2f90e4777018caa6fdfdfb5ecd70d720260303","action":"keep_original","reason":"Проверено: Liverpool корректно выделен как ORG; счёт и букмекерский текст не добавлены."}
+{"hash":"438deae8470e61bc7f3017ae0cd3e7ec20260202","action":"review_required","reason":"Длинная официальная публикация с 5 сущностями: требуется сверка Jizzax, имени и депутатского объединения, включая составные границы."}
+{"hash":"44ddfbfa79a353652974d952e2865b0920260418","action":"review_required","reason":"Официальная спортивная публикация с 2 ORG: нужна проверка названий подразделений и возможных пропущенных организаций."}
+{"hash":"44fe1a667fe0dc88341ae52cb1564adc20260226","action":"keep_original","reason":"Проверено: Солиқ қўмитаси и Москва корректно выделены; общие слова, даты и блогеры не добавлены."}
+{"hash":"4511f2bb2d271504dd258ce6632fab6c20260522","action":"keep_original","reason":"Проверено: пепси корректно выделен как ORG; название песни и номер не размечены."}
+{"hash":"45fb57b48f17b89641db78eb73d13ee120260301","action":"keep_original","reason":"Проверено: KGB корректно выделен как ORG; описательные слова и звание не добавлены."}
+{"hash":"48821a91a127339a8f24e616b23871b820260511","action":"keep_original","reason":"Проверено: username mobiuz и разговорный текст без надёжной дополнительной сущности."}
+{"hash":"48904540bd141f458429116055c0744920260420","action":"add_entities","entities":[{"label":"ORG","text":"Enter engenering"}],"reason":"Добавлена пропущенная реальная строительная компания Enter engenering в контексте жалобы; текущие органы сохранены."}
+{"hash":"493c51ae0eb48e7083f34c6b6baacece20260520","action":"add_entities","entities":[{"label":"ORG","text":"Kid Security"}],"reason":"Добавлен пропущенный бренд/сервис Kid Security на изображении; текущие Mobiuz и mobi.uz сохранены."}
+{"hash":"49c1f4533dcb95e9e35d3d255d4e74a720260312","action":"keep_original","reason":"Проверено: Google lens корректно выделен как ORG; AI и LLC в данном контексте не расширены."}
+{"hash":"49ed05b4bd777d3466f4d33145b7fcc020251103","action":"add_entities","entities":[{"label":"ORG","text":"Mybach"},{"label":"ORG","text":"Mersades"}],"reason":"Добавлены пропущенные обозначения реальных автомобильных брендов/моделей Maybach и Mercedes в их исходном искажённом написании."}
+{"hash":"4a83651909421762","action":"review_required","reason":"Длинная футбольная статья с 25 сущностями: требуется построчная сверка клубов, игроков, лиг и составных названий."}
+{"hash":"4b68d6a009f591dfbfa197881779776420260217","action":"review_required","reason":"Объявление недвижимости с 3 GEO: нужна проверка границ Shofirkon, Savrak MFY и Oybek ko‘chasi."}
+{"hash":"4c861f1c77c63f3a576f5a4a32d27d2e20260301","action":"keep_original","reason":"Проверено: Konimex tumani, Birlik MFY и Bobur ko‘chasi сохранены в текущих GEO-границах; цена и мебель не размечены."}
+{"hash":"50aae3d9c2114dbac9133824f0b3417620260204","action":"review_required","reason":"Рекламная публикация с 9 GEO и Hassons: нужно проверить составные районы/города и возможный бренд MindYourBusiness."}
+{"hash":"5127b81f16b4fb37","action":"review_required","reason":"Длинная криминальная новость с 7 сущностями: нужна сверка ведомств, Казахстана, Шымкента, районов и границ названий."}
+{"hash":"515d7da7a8e299c4f05d209e288a8da520260128","action":"keep_original","reason":"Проверено: EVOS, RostdanMI и DERAZA сохранены как текущие ORG; цены, даты и тип блюда не добавлены."}
+{"hash":"53c704de96025fd6","action":"review_required","reason":"Длинная статья об автопроизводстве с 7 сущностями: требуется сверка заводов, брендов MAN/LS и географических границ."}
+{"hash":"572734c3d37385a742bdd1f7d3efe3a020260313","action":"keep_original","reason":"Проверено: NAMANGAN, Иваново и два маршрутных фрагмента сохранены; груз, тоннаж и usernames не добавлены."}
+{"hash":"59ccf3f9ca2348bb34a260da36fa2b2720260222","action":"keep_original","reason":"Проверено: NL и NL DA сохранены как ORG, страны корректно размечены GEO; категории товаров не добавлены."}
 {"hash":"1d55181d40f1d7fa5803106198eaec8f20260303","action":"add_entities","entities":[{"label":"GEO","text":"Qator"}],"reason":"Добавлена пропущенная явная GEO Qator в тексте; IMO_Qatar оставлен username-подобным фрагментом."}
 {"hash":"1d674153d074966a5da1ed355b406fa220260301","action":"keep_original","reason":"Проверено: короткий фрагмент с прозвищем/словом Бутчер не содержит надёжно размечаемой сущности."}
 {"hash":"1d822ad168c5ba0a5043f3a057e90c4a20260303","action":"review_required","reason":"Длинная футбольная статья с 7 сущностями: нужна сверка клубов, городов и повторов Milan/Bavariya."}
