@@ -25,10 +25,15 @@
 
 | Run | Model | BS | LR | Epochs | Attention / weights | AdamW | Batching | Workers / prefetch | Best dev loss | Micro-F1 | Macro-F1 | Train time, s | Compute, s | HFU |
 |---|---|---:|---:|---:|---|---|---|---|---:|---:|---:|---:|---:|---:|
+| `xl-bs12-ga3-ebs36-lr5e-5` | `facebook/xlm-roberta-xl` | 12 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA3 (effective BS36) | 2 / 1 | 0.06758 | **0.86020** | **0.86100** | 917.21 | 830.65 | 18.54% |
+| `xl-bs16-ga2-ebs32-lr5e-5` | `facebook/xlm-roberta-xl` | 16 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA2 (effective BS32) | 2 / 1 | 0.06750 | 0.85780 | 0.85880 | 885.52 | 802.49 | 19.19% |
 | `xl-bs28-lr5e-5` | `facebook/xlm-roberta-xl` | 28 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | **0.06507** | **0.85609** | **0.85708** | 836.65 | 750.88 | 20.51% |
+| `xl-bs16-ga2-ebs32-lr7e-5` | `facebook/xlm-roberta-xl` | 16 | 7e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA2 (effective BS32) | 2 / 1 | **0.06496** | 0.85480 | 0.85520 | 868.24 | 802.34 | 19.19% |
 | `large-bs192-lr2e-4-w2p1` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.07018 | **0.85450** | **0.85530** | 117.06 | 104.13 | 23.78% |
+| `xl-bs16-ga2-ebs32-lr4e-5` | `facebook/xlm-roberta-xl` | 16 | 4e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA2 (effective BS32) | 2 / 1 | 0.06954 | 0.85200 | 0.85280 | 891.71 | 804.09 | 19.15% |
 | `large-bs192-lr2e-4-sortish20` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | sortish pool ×20 | 2 / 1 | **0.06840** | 0.84848 | 0.84875 | **70.26** | **57.22** | **43.27%** |
 | `large-bs192-lr1.5e-4-fa-varlen` | `FacebookAI/xlm-roberta-large` | 192 | 1.5e-4 | 3 | FA2 varlen, direct BF16 weights | fused | dynamic padding | 2 / 1 | **0.06342** | 0.84719 | 0.84873 | 102.44 | 95.19 | 26.01% |
+| `xl-bs12-ga4-ebs48-lr5e-5` | `facebook/xlm-roberta-xl` | 12 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA4 (effective BS48) | 2 / 1 | 0.07619 | 0.84670 | 0.84750 | 906.91 | 815.06 | 18.89% |
 | `large-bs192-lr2e-4-fa-varlen-unfused` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | FA2 varlen, FP32 weights + BF16 AMP | unfused | dynamic padding | 2 / 1 | 0.07142 | 0.84463 | 0.84553 | 113.47 | 99.69 | 24.84% |
 | `large-bs192-lr2e-4-fa-varlen` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | FA2 varlen, direct BF16 weights | fused | dynamic padding | 2 / 1 | 0.06447 | 0.84041 | 0.84135 | 102.13 | 94.67 | 26.15% |
 | `large-bs192-lr2e-4-sortish5` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | sortish pool ×5 | 2 / 1 | 0.07158 | 0.83975 | 0.84057 | 77.67 | 64.39 | 38.45% |
@@ -48,11 +53,16 @@
 | `uztext-bs1024-lr8e-4` | `rifkat/uztext-3Gb-BPE-Roberta` | 1024 | 8e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | 0.52630 | 0.00000 | 0.00000 | 19.64 | 17.50 | 15.77% |
 | `large-bs192-lr2e-4-fixed` | `FacebookAI/xlm-roberta-large` | 192 | 2e-4 | 3 | SDPA, FP32 weights + BF16 AMP | fused | fixed padding 256 | 2 / 1 | 0.07018 | — | — | 117.72 | 103.97 | 23.81% |
 
-Лучший сохранённый результат по качеству — `xl-bs28-lr5e-5`; он улучшил
-micro-F1 относительно `large-bs192-lr2e-4-w2p1` с 0.85450 до 0.85609.
+Лучший сохранённый результат по качеству — `xl-bs12-ga3-ebs36-lr5e-5`; он улучшил
+micro-F1 относительно `large-bs192-lr2e-4-w2p1` с 0.85450 до 0.86020.
 Sortish batching был значительно быстрее, но менял порядок и token composition
 батчей и снижал exact-span F1. FlashAttention varlen повышал throughput, но в
 проверенных конфигурациях также не превзошёл SDPA по F1.
+
+Для XL в проверенном трехэпоховом режиме gradient accumulation улучшил качество:
+effective BS36 (`BS12 × GA3`) превзошёл effective BS28/32. Effective BS48 уже
+снизил качество из-за меньшего числа optimizer updates на эпоху. Внутри
+effective BS32 локальный optimum LR — `5e-5`; `4e-5` и `7e-5` дали худший F1.
 
 ### Loss по эпохам
 
@@ -67,6 +77,11 @@ Sortish batching был значительно быстрее, но менял �
 | `large-bs192-lr1.5e-4-fa-varlen` | 0.39653 / 0.07439 | 0.05537 / 0.06342 | 0.03854 / 0.06440 |
 | `xl-bs28-lr2e-5` | 0.53206 / 0.16107 | 0.11153 / 0.09873 | 0.07213 / 0.08878 |
 | `xl-bs28-lr5e-5` | 0.37404 / 0.08790 | 0.05799 / 0.06693 | 0.03082 / 0.06507 |
+| `xl-bs16-ga2-ebs32-lr4e-5` | 0.43561 / 0.11087 | 0.07408 / 0.07354 | 0.04196 / 0.06954 |
+| `xl-bs16-ga2-ebs32-lr5e-5` | 0.40435 / 0.10187 | 0.06576 / 0.07050 | 0.03613 / 0.06750 |
+| `xl-bs16-ga2-ebs32-lr7e-5` | 0.35902 / 0.08743 | 0.05455 / 0.06496 | 0.02711 / 0.06587 |
+| `xl-bs12-ga3-ebs36-lr5e-5` | 0.41258 / 0.10172 | 0.06813 / 0.07081 | 0.03798 / 0.06758 |
+| `xl-bs12-ga4-ebs48-lr5e-5` | 0.48513 / 0.12941 | 0.08667 / 0.08259 | 0.05073 / 0.07619 |
 | `tahrirchi-bs512-lr1e-4` | 0.49410 / 0.17629 | 0.14059 / 0.14152 | 0.10688 / 0.13655 |
 | `tahrirchi-bs512-lr2e-4` | 0.46384 / 0.20938 | 0.13171 / 0.13829 | 0.08948 / 0.13074 |
 | `tahrirchi-bs512-lr2.5e-4` | 0.49631 / 0.19493 | 0.13202 / 0.13908 | 0.08676 / 0.13498 |
@@ -88,6 +103,11 @@ Sortish batching был значительно быстрее, но менял �
 | Run | ORG | NAME | GEO | Micro P/R/F1 | Macro P/R/F1 |
 |---|---:|---:|---:|---:|---:|
 | `xl-bs28-lr5e-5` | .7966/.8484/.8217 | .8596/.8952/.8771 | .8649/.8801/.8724 | .8392/.8737/.8561 | .8404/.8746/.8571 |
+| `xl-bs16-ga2-ebs32-lr4e-5` | .7987/.8492/.8232 | .8523/.8883/.8699 | .8602/.8706/.8653 | .8361/.8685/.8520 | .8371/.8694/.8528 |
+| `xl-bs16-ga2-ebs32-lr5e-5` | .8124/.8552/.8333 | .8650/.8952/.8798 | .8559/.8710/.8633 | .8434/.8728/.8578 | .8444/.8738/.8588 |
+| `xl-bs16-ga2-ebs32-lr7e-5` | .8195/.8349/.8271 | .8580/.8780/.8679 | .8534/.8882/.8705 | .8432/.8667/.8548 | .8436/.8670/.8552 |
+| `xl-bs12-ga3-ebs36-lr5e-5` | .8089/.8627/.8349 | .8642/.8918/.8778 | .8705/.8702/.8704 | .8466/.8741/.8602 | .8479/.8749/.8610 |
+| `xl-bs12-ga4-ebs48-lr5e-5` | .7942/.8417/.8172 | .8481/.8836/.8655 | .8580/.8618/.8599 | .8324/.8614/.8467 | .8334/.8623/.8475 |
 | `tahrirchi-bs512-lr1e-4` | .5365/.6721/.5967 | .6733/.7766/.7213 | .7180/.7743/.7451 | .6370/.7397/.6845 | .6426/.7410/.6877 |
 | `tahrirchi-bs512-lr2e-4` | .5838/.7386/.6522 | .6939/.7809/.7348 | .7525/.7926/.7721 | .6710/.7705/.7173 | .6767/.7707/.7197 |
 | `tahrirchi-bs512-lr2.5e-4` | .5867/.7281/.6498 | .7047/.7883/.7441 | .7596/.7875/.7733 | .6778/.7672/.7197 | .6836/.7680/.7224 |
@@ -143,6 +163,8 @@ Sortish batching был значительно быстрее, но менял �
 | XL FA2, BS64 on full dataset | OOM on first long batch at about 79.08 GiB |
 | XL FA2, BS48, LR 2e-5 | stopped in epoch 2; epoch 1 train/dev loss 1.05665 / 0.65579, unhealthy optimization |
 | XL SDPA, BS20, LR 2e-5 | stable at about 3.42 batches/s; deliberately stopped at step 108/923 to test BS28 |
+| XL SDPA, BS28 × GA2 (effective BS56), LR 5e-5 | OOM at first optimizer step |
+| XL SDPA, BS24 × GA2 (effective BS48), LR 5e-5 | OOM at first optimizer step |
 | Large `torch.compile` | failed because Triton/CUDA toolkit 13.1 did not match PyTorch CUDA 12.4 |
 | Large FA2 with fused AdamW and FP32 master weights | did not converge; fixed operationally by direct BF16 weights, which reduced F1 |
 
