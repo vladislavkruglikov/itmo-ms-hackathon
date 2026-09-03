@@ -34,11 +34,15 @@ def main():
             changed += 1
             continue
         updated = dict(row)
-        if decision and decision["action"] == "replace_entities":
-            entities = []
+        if decision and decision["action"] in {"replace_entities", "add_entities"}:
+            entities = [] if decision["action"] == "replace_entities" else list(updated.get("entities", []))
+            existing = {(e["label"], e["start"], e["end"]) for e in entities}
             for item in decision["entities"]:
                 for start, end in all_occurrences(row["text"], item["text"]):
-                    entities.append({"label": item["label"], "start": start, "end": end})
+                    value = (item["label"], start, end)
+                    if value not in existing:
+                        entities.append({"label": item["label"], "start": start, "end": end})
+                        existing.add(value)
             updated["entities"] = sorted(entities, key=lambda e: (e["start"], e["end"], e["label"]))
             changed += 1
         output.append(updated)
