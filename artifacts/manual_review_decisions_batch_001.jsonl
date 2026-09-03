@@ -1888,3 +1888,23 @@
 {"hash":"f2d6fc6ffedf3d58a9fb7b92b3be231320260525","action":"review_required","reason":"Текст с изображения с искажёнными именами: требуется отдельная проверка границ bandlik vazirligi и двух NAME."}
 {"hash":"ffb9c772eb459b62","action":"review_required","reason":"Длинная геополитическая новость с 16 сущностями: нужна полная сверка стран, Толибона, организаций и персон."}
 {"hash":"000b5ffb61e2f6684fb1ee80369cb7a220260311","action":"keep_original","reason":"Проверено: Пермь, Хоразм и Тошкент корректно сохранены двумя маршрутами; груз, тоннаж, цены и контакты не размечены."}
+{"hash":"001afc89d65284989ebe8f47f572ce7520260301","action":"keep_original","reason":"Проверено: поздравительная фраза не содержит явной сущности; имя Soliha употреблено как обращение/пожелание без надёжного контекста."}
+{"hash":"0023c6a9d675328920341496ea2b54c620260301","action":"keep_original","reason":"Проверено: Toronto Raptors, Washington Wizards и NBA корректно выделены как ORG."}
+{"hash":"00355f93ad8542215d9c78ceadd5d65a20260304","action":"review_required","reason":"Короткая культурная фраза: Hoshimjoni может быть именем персонажа, требуется дополнительная проверка контекста."}
+{"hash":"00405b90e4d4b13a3d7a31aee4549b1d20260312","action":"keep_original","reason":"Проверено: Oʻzbekiston корректно выделен как GEO; названия аккаунтов и общие слова не размечены."}
+{"hash":"0057510aabaf36e0540c4868e679d4a20260305","action":"keep_original","reason":"Проверено: короткое обращение не содержит сущности."}
+{"hash":"0061e5b9193b4c6ac9884e700ee3316b20260228","action":"keep_original","reason":"Проверено: три варианта WilliamEst корректно сохранены как NAME; username и hashtag не добавлены."}
+{"hash":"0076f2be2dd7f30279d23aaecedbc95e20260314","action":"keep_original","reason":"Проверено: Fargona корректно выделена как GEO; остальные слова — обращение и username-подобный текст."}
+{"hash":"00789d35dbf9d406c2032e79dc2ad25420260308","action":"keep_original","reason":"Проверено: Qusar, кусары, Дагистан и Дербент сохранены как GEO; username и этноним не добавлены."}
+{"hash":"008191ba38e3fd46f040a8f56144b30720260309","action":"keep_original","reason":"Проверено: фраза не содержит надёжно идентифицируемой сущности."}
+{"hash":"009e74dfa36ca0b0b6d52644f948c83220260309","action":"review_required","reason":"Короткая музыкальная строка с именами/названиями Ork Djodji Bent, MANDO и Studio Todorovi: нужна проверка потенциально пропущенных ORG/NAME."}
+{"hash":"00a3022e8076376dea4957344cdc2bbb20260307","action":"keep_original","reason":"Проверено: Qoʻqon корректно выделен как GEO; обращения и служебные слова не добавлены."}
+{"hash":"00c58dde3c835730a6db2f6c7bb7566820260306","action":"keep_original","reason":"Проверено: Трамп корректно выделен как NAME; остальной текст не содержит сущностей."}
+{"hash":"00e5f2b8433eeb2ab972ef160daef29920260305","action":"keep_original","reason":"Проверено: строка поклонника и username-подобные фрагменты не дают надёжной сущности."}
+{"hash":"00e98ea76358c804f1df3772f5f6fec220260311","action":"keep_original","reason":"Проверено: искажённая бытовая фраза не содержит надёжно выделяемой сущности."}
+{"hash":"00eb8c22e3e5610521d7451e056ee4f520260312","action":"keep_original","reason":"Проверено: три формы имени Abdulloh/Abdukarim и GEO Toshkent/Surxandaryo сохранены; usernames не добавлены."}
+{"hash":"00f9080435538c5cb79d4f129a9e1c8720260310","action":"keep_original","reason":"Проверено: username и эмоциональное слово не являются надёжными сущностями."}
+{"hash":"0105deaca995191a7bbb42a0ed74edee20260301","action":"keep_original","reason":"Проверено: рекламные hashtags, usernames, дата и служебные слова не содержат надёжной сущности."}
+{"hash":"0111f91b93c008ed4ec83d7959fc1d1920260306","action":"keep_original","reason":"Проверено: Fozil aka корректно выделен как NAME по текущей границе; уважительное обращение не добавлено."}
+{"hash":"011241377d2912e706520410ceaaa38020260312","action":"keep_original","reason":"Проверено: короткая строка с username/именем не содержит достаточно надёжной сущности."}
+{"hash":"011859db228e5b68eb5d67379192420020260312","action":"replace_entities","entities":[{"label":"NAME","text":"Аброр Ким"}],"reason":"Исправлена граница: полное имя «Аброр Ким» должно быть одной NAME, а не только «Аброр»."}
