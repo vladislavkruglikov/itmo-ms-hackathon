@@ -1328,3 +1328,23 @@
 {"hash":"09b4c64d9c90857f0f575fbcf5729c0020260304","action":"review_required","reason":"Длинное объявление аренды с 11 сущностями: нужна построчная сверка районов, вузов, метро и организаций."}
 {"hash":"09e7d6e70d5d8776058df1dae92356ef20260311","action":"keep_original","reason":"Проверено: Federico Valverde/текущая NAME размечен; Madridist выглядит username."}
 {"hash":"0b31dab47c1a9794d842d219498cbe9d20260305","action":"review_required","reason":"Длинное объявление недвижимости с 3 сущностями: требуется сверка адресных GEO и ориентиров."}
+{"hash":"0b5b2b7c56cce8d8c10a042fa7ffbcd620260303","action":"review_required","reason":"Медицинская публикация с врачом и 2 gold-сущностями: требуется полная сверка персон и медицинских организаций."}
+{"hash":"0bf5ac7594956f1b950db3d2b3f91b0920260314","action":"keep_original","reason":"Проверено: Siddiq Mahmudov, Toxir и текущая третья сущность уже размечены; слова о песне не добавлены."}
+{"hash":"0c152bd3b1ab8c4a5fa72b8540c08fab20260305","action":"keep_original","reason":"Проверено: KFC Radio, Dan Soder и Shane Gillis уже размечены корректно."}
+{"hash":"0c1e1ef30a2dae94c076659efbf308ef20260301","action":"keep_original","reason":"Проверено: Москва Сити/текущая сущность размечена; оценочная фраза не добавлена."}
+{"hash":"0c27c6277ad7b564234aafed2406aa2620260308","action":"keep_original","reason":"Проверено: название мыла и текущая сущность сохранены; цена и рекламные слова не добавлены."}
+{"hash":"0c5ce024fd35c1deb14275a4011cd74f20260301","action":"keep_original","reason":"Проверено: Тошкент и локальный ориентир/текущие GEO сохранены; username не добавлен."}
+{"hash":"0ccf37a79b93a467311961f5f11e60c620260329","action":"keep_original","reason":"Проверено: Murad Nazarov и Sanjarinvestment/текущие сущности сохранены; эмоциональная фраза не добавлена."}
+{"hash":"0d1343b42ad15f19d9ba2f9bbe4ef86120260306","action":"review_required","reason":"Длинное объявление аренды с 4 сущностями: требуется сверка районов, ориентиров и учебных заведений."}
+{"hash":"0dd130a019ca59c2f12552b2b105e34d20260308","action":"keep_original","reason":"Проверено: Узбекистон и текущая сущность уже размечены; общие слова о каналах не добавлены."}
+{"hash":"0dd64ae74c135bd5eaefafee54a2aec820260303","action":"keep_original","reason":"Проверено: повторяющиеся Uzum Bank и текущие 14 сущностей согласованы; служебные слова и суммы не добавлены."}
+{"hash":"0e2280c25576c1df","action":"review_required","reason":"Длинный демографический текст с 17 сущностями: требуется полная сверка стран, регионов и организаций."}
+{"hash":"0e72499840c5f5e381afdfaa7bf8ff4520260306","action":"keep_original","reason":"Проверено: Узбекистан и Pastdargom/текущие сущности сохранены; статья закона и общие слова не добавлены."}
+{"hash":"0f1cc4069df0c40d802112e87dcee96320260302","action":"keep_original","reason":"Проверено: Strachey и Vanessa Bell уже размечены как NAME."}
+{"hash":"110ac2e60f8a8cef9d526070d069d3d820260303","action":"keep_original","reason":"Проверено: Malacia/текущая сущность сохранена; username не добавлен."}
+{"hash":"117250001aade4f289c2811d76f8b6a620260309","action":"keep_original","reason":"Проверено: текущая сущность объявления сохранена; порода кошки, username и канал не добавлены без политики товарных/аккаунтных названий."}
+{"hash":"118c05317e6858566549de3333651bbd20260301","action":"keep_original","reason":"Проверено: короткая строка с именем/username, текущая единственная сущность сохранена."}
+{"hash":"12495e7b703893a9196d20fa94172d3d20260310","action":"keep_original","reason":"Проверено: Jaloliddin Axmadaliyev и Dj Baxrom/текущие сущности сохранены; название ремикса не добавлено."}
+{"hash":"12713f9b4798661bb7b2bbb9640961f620260302","action":"keep_original","reason":"Проверено: Arsenal и North London/текущие сущности уже размечены; username не добавлен."}
+{"hash":"12b152e4eb985ce5200496299b8d596a20260314","action":"keep_original","reason":"Проверено: Saudi Arabia и текущая вторая сущность сохранены; общие слова о SIM-карте не добавлены."}
+{"hash":"1305a049b5fba97314f4da81969f87f20260311","action":"review_required","reason":"Политическая запись с 3 сущностями и повторными именами/организациями: требуется полная сверка границ."}
