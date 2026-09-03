@@ -1388,3 +1388,23 @@
 {"hash":"22ae402bf194352523ee51baffc622b020260311","action":"keep_original","reason":"Проверено: Kobe/текущая NAME сохранена; Lakeshow_323 — username."}
 {"hash":"2309f853ab35f66c4990d6fbd5bca8ce20260305","action":"review_required","reason":"Длинная общественно-политическая публикация с 8 сущностями: требуется полная сверка организаций и GEO."}
 {"hash":"231c81cc3811d296cf0edaa8da8bd3ec20260312","action":"keep_original","reason":"Проверено: Amorim/текущая сущность сохранена; остальная строка нарицательная."}
+{"hash":"23531975295351ee9b64848c57de50a120260307","action":"review_required","reason":"Спортивный протокол с 8 именованными участниками/организацией: требуется сверка всех имён и границ."}
+{"hash":"2432b04ab3a2e4e25a63c236d1d2c7eb20260307","action":"keep_original","reason":"Проверено: Shukhrat/текущая сущность сохранена; религиозно-бытовой текст не расширен."}
+{"hash":"251b29e0ea21f5c8a2083beeef5eb43520260305","action":"keep_original","reason":"Проверено: Malacia/текущая сущность сохранена; AbsoluteBruno — username."}
+{"hash":"261bfe1a8a7bc119c1fcea855faebcb020260523","action":"keep_original","reason":"Проверено: Toshkent, Pepsi и Osh размечены корректно; раздельное написание Samarkand и ссылки не добавлены."}
+{"hash":"2626804ab63b91de53d61f498c1cddec20260306","action":"keep_original","reason":"Проверено: Zarina/текущая сущность сохранена; остальная фраза нарицательная."}
+{"hash":"263f557ff4d5c32279309ed5be6bde6a20260301","action":"keep_original","reason":"Проверено: Ricky's и Rue21 размечены с корректными границами; слово jeans не включено."}
+{"hash":"26b066040d264da1453ee45a111be48020260312","action":"keep_original","reason":"Проверено: Doku и Real Madrid размечены с правильными типами NAME/ORG."}
+{"hash":"26b129c17ec43450cc4618345551a11020260309","action":"review_required","reason":"Длинный текст о писателе и романе с 4 сущностями: нужна построчная сверка автора, произведения и канала."}
+{"hash":"280ef8e6ead2810b92e9a51c6b89ae8b20260312","action":"keep_original","reason":"Проверено: Sergeli и текущая сущность сохранены; username не добавлен."}
+{"hash":"287a7cc58362c5924c439c69a308abd420251205","action":"review_required","reason":"Длинный политико-правовой текст с Murad Building и персонами: требуется сверка 4 gold-сущностей."}
+{"hash":"288e8f187a85515eeb8047fcc3ceb59120260313","action":"keep_original","reason":"Проверено: Shamshod/текущая NAME сохранена."}
+{"hash":"2b6a20ecf72b65bc593f5eede746459a20260307","action":"keep_original","reason":"Проверено: Moldova и Gagauz/текущие GEO сохранены; описательные слова не добавлены."}
+{"hash":"2c1a3dc147e6eda0b5ba378a2b79755920260306","action":"keep_original","reason":"Проверено: Guliraьno/текущая сущность сохранена; общие слова о судьях не добавлены."}
+{"hash":"2c6b83f391deb65820470132ed8a1d7420260307","action":"keep_original","reason":"Проверено: Хоразм и стадион/текущие 2 сущности сохранены; описательная критика не добавлена."}
+{"hash":"2da5b4db99631d3a86747d00674b1bf520260305","action":"keep_original","reason":"Проверено: Korporativ Yurist/текущая сущность сохранена; общие слова не добавлены."}
+{"hash":"33523982cf71b3d7202988b46a0c512e20260311","action":"keep_original","reason":"Проверено: Brahim/текущая сущность сохранена; спортивная фраза нарицательная."}
+{"hash":"33bf95884a0613a83e77b867134d4e7920260308","action":"keep_original","reason":"Проверено: Abror domla/текущая сущность сохранена; религиозные пожелания не добавлены."}
+{"hash":"3553aa90ae082dc47a365aaaa10197fa20260301","action":"keep_original","reason":"Проверено: Kapadze, Navbahor и Dinamo/текущие 3 сущности размечены; слова интервью не добавлены."}
+{"hash":"358818c182a76606acd7571b0ac0b71020260213","action":"keep_original","reason":"Проверено: Nawrath, Giacomel, Perrot и Both/текущие 4 NAME корректны."}
+{"hash":"375d11ea4b22cc1240b27799a352bd9f20260308","action":"keep_original","reason":"Проверено: текущая сущность объявления сохранена; цены, тип кузова и username не добавлены."}
