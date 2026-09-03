@@ -1208,3 +1208,23 @@
 {"hash":"c976efb0a8c61abfc2877b16480b484d20260216","action":"keep_original","reason":"Проверено: KFC и Yangiobod/Musaffo текущей схемой покрыты; названия блюд не добавлены."}
 {"hash":"d4e6e9d6223188ea2abd354e5b1cb18920260122","action":"keep_original","reason":"Проверено: Murod building, Korzinka и Oybek Qosimov размечены; разговорное enerj не добавлено без уверенной идентификации."}
 {"hash":"d503a69206a55f4d32b9762c23387a2520260218","action":"review_required","reason":"Длинная новость об институте и фольклоре: требуется полная сверка организаций, географий и названия мероприятия."}
+{"hash":"d7a4e597917fab23bf6387161639dfe420250902","action":"keep_original","reason":"Проверено: murad_nazarov_tashkent — username/упоминание аккаунта, текущая сущность сохранена без расширения."}
+{"hash":"e5519033bd024f7fc67158c23283077b20260228","action":"keep_original","reason":"Проверено: KORTEX OIL уже размечен корректно; рекламные описательные слова не добавлены."}
+{"hash":"e63f8dc237a011b3bee647c611094c8120260202","action":"review_required","reason":"Новостной текст с Telegram-каналом и несколькими GEO/ORG: требуется полная сверка границ и повторов."}
+{"hash":"e97c3a85cb3afa2e","action":"keep_original","reason":"Проверено: Oʻzavtosanoat, Brno и MSV уже покрыты gold; общие слова выставки не добавлены."}
+{"hash":"ed3daa42a40857923e7e135d8d84f39820260228","action":"keep_original","reason":"Проверено: DREAM BURGER, KFC и Jizzax уже размечены; блюда и рекламные слова не добавлены."}
+{"hash":"ee72c79a0d9a2d96a5f51293f1d49c4820260526","action":"review_required","reason":"Длинная официальная публикация с учреждениями, должностями и адресными GEO: нужна построчная сверка."}
+{"hash":"f049362f22f797e5d0bd49e553b59d2f20260108","action":"review_required","reason":"Длинный рекламно-политический текст с персонами и компаниями: требуется полная сверка именных границ и типов."}
+{"hash":"f067208ea725e67fcf482fb909979be720260508","action":"keep_original","reason":"Проверено: RC Cola, Pepsi и Coca-Cola/контекст уже отражены; рекламный текст не требует добавления общих слов."}
+{"hash":"f13407515a88e4ea4c21e6d1d867425420250712","action":"keep_original","reason":"Проверено: текущие 2 сущности в смешанной рекламной строке сохранены; usernames и описательные слова не добавлены."}
+{"hash":"f810ea86bde4e9e86ce3e9c6df63afca20260212","action":"keep_original","reason":"Проверено: рекламная запись с текущими 3 сущностями; виды птиц и общие характеристики товара не добавлены."}
+{"hash":"fb4c7df15fbddb6ac0382ff37af74c2120260201","action":"keep_original","reason":"Проверено: BELLISSIMO PIZZA INTERNATIONAL и связанные сущности уже размечены; hr_bellissimo оставлен как служебный username."}
+{"hash":"fe3da15a9e0976a8","action":"review_required","reason":"Длинная новость о BP и региональных организациях: требуется полная сверка всех 9 gold-сущностей и повторов."}
+{"hash":"00bb838ab0a306186f72968fc34ed50e20260307","action":"keep_original","reason":"Проверено: Barcelona/Barca, Flick и Real-контекст уже размечены; разговорные слова и хэштеги не добавлены."}
+{"hash":"0142ea94c43ef9ebdeb7f79aa47f28b820260304","action":"keep_original","reason":"Проверено: Санжар и Улугбек уже корректно выделены как имена; повторное упоминание не добавлено."}
+{"hash":"0216befb2771cbebc05f9a1281359c5420260302","action":"review_required","reason":"Длинный футбольный отчёт с клубами, стадионом и турниром: нужна построчная сверка 9 gold-сущностей."}
+{"hash":"02a89c52f733389faa7fe3250ea9c10f20260308","action":"keep_original","reason":"Проверено: Usyk, Inoue и Shakur размечены; BoxingKingdom14 выглядит username и не добавлен."}
+{"hash":"04163c1b65491eef4f3eb0ebdf54dbd020260301","action":"review_required","reason":"Очень длинный футбольный отчёт с 156 gold-сущностями: требуется полная построчная проверка, отложено без догадочных изменений."}
+{"hash":"042deb47f511e14e9a9c3901ea5a80c820260324","action":"review_required","reason":"Длинный художественный текст с персонажами и местами: требуется полная сверка границ NAME/GEO."}
+{"hash":"04a689ead550818a8fcda32e81f9784720260302","action":"keep_original","reason":"Проверено: BarcaTimes и Camp Nou/текущие сущности размечены; служебные и нарицательные слова не добавлены."}
+{"hash":"069d780806fbffb469af263b81e37dff20260303","action":"review_required","reason":"Длинный художественный текст с множественными повторяющимися именами: нужна построчная сверка всех 19 gold-сущностей."}
