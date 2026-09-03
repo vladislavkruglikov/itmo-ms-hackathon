@@ -200,3 +200,7 @@ records.
 Ranks 31–40 added one short-news correction, excluded three unstructured or
 promotional records, and flagged the remaining substantive records for full
 review. The manual output now contains 12,992 records.
+The manual ledger currently covers ranks 1–110. It has produced seven direct
+span-repair decisions, excluded 22 clearly low-context records, and marked the
+remaining records for complete review; the current output contains 12,978
+records.

@@ -353,3 +353,7 @@ Ranks 31–40 added one short-news correction (president name and monument
 complex spans), excluded three unstructured/promotional records, and marked
 the remaining substantive records for full review. The current manual output
 has 12,992 records; source data remains untouched.
+The manual ledger now covers ranks 1–110. It contains explicit decisions for
+22 excluded low-context records, seven direct span-repair records, one
+keep-original record, and the remainder marked `review_required` pending full
+context annotation. The current materialized dataset has 12,978 records.
