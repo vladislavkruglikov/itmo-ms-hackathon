@@ -1128,3 +1128,23 @@
 {"hash":"0571cc9a9ba35710d256094780cdf4b720260308","action":"keep_original","reason":"Проверено: географические и организационные границы в длинной новости согласованы; дополнительные фрагменты модели ложные."}
 {"hash":"05b273c0afcf6a9edf8ea733af53bd2020260228","action":"keep_original","reason":"Проверено: короткая неоднозначная строка, уверенно добавлять ABC/Trump/Shah в gold нельзя."}
 {"hash":"05c373c4b700e94fe39a0a570ef278dc20260313","action":"keep_original","reason":"Проверено: TASHKENT и остальные gold-сущности корректны; перекрывающее однобуквенное T — ложное выделение."}
+{"hash":"05d04191c2c92925053410c5625aa5d020260304","action":"keep_original","reason":"Проверено: рекламный текст о Zarina/Bulut Remix/Serobbeatz уже содержит gold; лишние NAME/ORG модели не добавлены."}
+{"hash":"062d9b3a0aaabc3c1a2b8cddff1d00ea20260219","action":"review_required","reason":"Длинная автомобильная новость: Chevrolet, GM и GM Authority требуют полной сверки повторов и границ; отложено без удаления записи."}
+{"hash":"06662ab93e93e0a16b74d9a1948e3c9f20260303","action":"keep_original","reason":"Проверено: BTS, HYBE, NewJeans и Lakers размечены; хэштеги и названия аккаунтов не добавлены."}
+{"hash":"0677b673d94c8edc8e5a6b45d21f9fc620260217","action":"keep_original","reason":"Проверено: короткая неоднозначная строка без уверенных сущностей; предсказания ложные."}
+{"hash":"0717750cc98a886dddde1be94db6a30b20260306","action":"keep_original","reason":"Проверено: футбольные команды и клубы уже размечены; дополнительное выделение модели — ложное/дублирующее."}
+{"hash":"075d80e2dd5290fcea48809a1a1ff6e020260303","action":"review_required","reason":"Радиореклама с несколькими станциями и городами: возможны пропущенные ORG, требуется полная сверка именованных радиобрендов."}
+{"hash":"0786b3ccb6e6db8d960e1c4cb981057720260305","action":"review_required","reason":"Длинная узбекская новость с именами и должностями: текущие 7 gold требуют полной проверки границ и спорного дополнительного ORG."}
+{"hash":"08580eb92ef8369d2d5b5c7473e6c78a20260301","action":"add_entities","entities":[{"label":"ORG","text":"SuratdagiHaqiqat"}],"reason":"Добавлен пропущенный именованный канал/медиа-бренд SuratdagiHaqiqat; Тел-Авив уже размечен как GEO."}
+{"hash":"08d3dfc52dda391bc6b27fda3ea1141f20260307","action":"keep_original","reason":"Проверено: Xsammie Garnacho выглядит как неоднозначный username/мемная фраза, уверенно добавлять NAME нельзя."}
+{"hash":"09a26814ceb658d848908ef21ddfe52320260314","action":"add_entities","entities":[{"label":"ORG","text":"Jonli_Bolta"}],"reason":"Добавлен пропущенный именованный новостной канал Jonli_Bolta; существующие GEO/ORG сохранены."}
+{"hash":"0aa547cece6340935cb55e5c66d98ca020260303","action":"keep_original","reason":"Проверено: BTS, HYBE и NewJeans корректно размечены; хэштеги не требуют отдельных сущностей."}
+{"hash":"0b616b5163cfb34b38c9d23ebde809bd20260304","action":"review_required","reason":"Очень длинный художественный текст: 14 gold NAME и 12 предсказаний требуют построчной сверки повторов и именных границ."}
+{"hash":"0be93d140a9d11d4acb04e88b2d30ea120260304","action":"keep_original","reason":"Проверено: разговорные слова и сокращения BSB/ChSB не дают уверенных именованных сущностей."}
+{"hash":"0c1563c5ebb113198ff22b6da29f27c620260301","action":"keep_original","reason":"Проверено: географические ориентиры уже размечены; дополнительное выделение модели является ложным."}
+{"hash":"0c56868f1a47d292339177cca860434220260309","action":"keep_original","reason":"Проверено: арабская короткая строка без уверенно определимых сущностей."}
+{"hash":"0f3a17d46256eb58d17d5b2d3668131720260313","action":"add_entities","entities":[{"label":"ORG","text":"Nike"},{"label":"ORG","text":"Jacquemus"}],"reason":"Добавлены два явно названных fashion-бренда Nike и Jacquemus."}
+{"hash":"10575a207d4917fc864870ae7cdfb54920260302","action":"review_required","reason":"Длинная новостная публикация о России, Иране и Израиле: требуется полная сверка повторяющихся GEO/ORG и границ."}
+{"hash":"10c4b5b29dedbe3ef975033823fe450020260307","action":"keep_original","reason":"Проверено: Milan, Serie A и Massimiliano Allegri размечены корректно; лишнее предсказание дублирует контекст."}
+{"hash":"111bb1b1fbb312cfe16b322f0bc3147f20260310","action":"review_required","reason":"Рекламное объявление недвижимости с каналами и офисом: возможны пропущенные ORG, нужна полная сверка границ."}
+{"hash":"15f9f2f0ad3bc748a5c8f01d01d2b83120260310","action":"review_required","reason":"Длинный футбольный анонс с 29 gold NAME/ORG: требуется построчная сверка составов и клубов, без рискованного массового добавления."}
