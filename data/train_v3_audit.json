@@ -1,0 +1,8961 @@
+{
+  "schema_version": 1,
+  "source": {
+    "train": "data/train.jsonl",
+    "train_v2": "data/train_v2.jsonl"
+  },
+  "output": "data/train_v3.jsonl",
+  "input_records": 44598,
+  "output_records": 44596,
+  "duplicate_text_groups": 2,
+  "conflicting_duplicate_groups": 2,
+  "dropped_duplicate_records": 2,
+  "boundary_changes": {
+    "trailing_trim": 2315,
+    "spans_changed": 2346,
+    "leading_trim": 48
+  },
+  "ambiguous_surface_count": 1093,
+  "ambiguous_surface_occurrences": 72024,
+  "ambiguous_surfaces": [
+    {
+      "surface": "rossiya",
+      "counts": {
+        "GEO": 4448,
+        "ORG": 293
+      },
+      "total": 4741
+    },
+    {
+      "surface": "o‘zbekiston",
+      "counts": {
+        "GEO": 4682,
+        "ORG": 16,
+        "NAME": 1
+      },
+      "total": 4699
+    },
+    {
+      "surface": "aqsh",
+      "counts": {
+        "GEO": 3951,
+        "ORG": 278
+      },
+      "total": 4229
+    },
+    {
+      "surface": "toshkent",
+      "counts": {
+        "GEO": 3246,
+        "ORG": 2,
+        "NAME": 1
+      },
+      "total": 3249
+    },
+    {
+      "surface": "suriya",
+      "counts": {
+        "GEO": 1982,
+        "ORG": 4,
+        "NAME": 4
+      },
+      "total": 1990
+    },
+    {
+      "surface": "turkiya",
+      "counts": {
+        "GEO": 1878,
+        "ORG": 91
+      },
+      "total": 1969
+    },
+    {
+      "surface": "xitoy",
+      "counts": {
+        "GEO": 1644,
+        "ORG": 75
+      },
+      "total": 1719
+    },
+    {
+      "surface": "ukraina",
+      "counts": {
+        "GEO": 1571,
+        "ORG": 22
+      },
+      "total": 1593
+    },
+    {
+      "surface": "eron",
+      "counts": {
+        "GEO": 1217,
+        "ORG": 23
+      },
+      "total": 1240
+    },
+    {
+      "surface": "davlat",
+      "counts": {
+        "NAME": 1080,
+        "GEO": 25,
+        "ORG": 4
+      },
+      "total": 1109
+    },
+    {
+      "surface": "qozog‘iston",
+      "counts": {
+        "GEO": 907,
+        "ORG": 14
+      },
+      "total": 921
+    },
+    {
+      "surface": "barselona",
+      "counts": {
+        "ORG": 668,
+        "GEO": 153
+      },
+      "total": 821
+    },
+    {
+      "surface": "germaniya",
+      "counts": {
+        "GEO": 798,
+        "ORG": 20
+      },
+      "total": 818
+    },
+    {
+      "surface": "real",
+      "counts": {
+        "ORG": 756,
+        "GEO": 17
+      },
+      "total": 773
+    },
+    {
+      "surface": "hindiston",
+      "counts": {
+        "GEO": 710,
+        "ORG": 17
+      },
+      "total": 727
+    },
+    {
+      "surface": "fransiya",
+      "counts": {
+        "GEO": 685,
+        "ORG": 34
+      },
+      "total": 719
+    },
+    {
+      "surface": "moskva",
+      "counts": {
+        "GEO": 701,
+        "ORG": 1
+      },
+      "total": 702
+    },
+    {
+      "surface": "qirg‘iziston",
+      "counts": {
+        "GEO": 695,
+        "ORG": 5
+      },
+      "total": 700
+    },
+    {
+      "surface": "oʻzbekiston",
+      "counts": {
+        "GEO": 650,
+        "ORG": 8
+      },
+      "total": 658
+    },
+    {
+      "surface": "telegram",
+      "counts": {
+        "ORG": 649,
+        "GEO": 2
+      },
+      "total": 651
+    },
+    {
+      "surface": "tojikiston",
+      "counts": {
+        "GEO": 627,
+        "ORG": 5
+      },
+      "total": 632
+    },
+    {
+      "surface": "samarqand",
+      "counts": {
+        "GEO": 620,
+        "ORG": 1
+      },
+      "total": 621
+    },
+    {
+      "surface": "yaponiya",
+      "counts": {
+        "GEO": 589,
+        "ORG": 16
+      },
+      "total": 605
+    },
+    {
+      "surface": "saudiya arabistoni",
+      "counts": {
+        "GEO": 543,
+        "ORG": 23
+      },
+      "total": 566
+    },
+    {
+      "surface": "vladimir putin",
+      "counts": {
+        "NAME": 556,
+        "ORG": 5
+      },
+      "total": 561
+    },
+    {
+      "surface": "ispaniya",
+      "counts": {
+        "GEO": 548,
+        "ORG": 5
+      },
+      "total": 553
+    },
+    {
+      "surface": "buyuk britaniya",
+      "counts": {
+        "GEO": 526,
+        "ORG": 17
+      },
+      "total": 543
+    },
+    {
+      "surface": "iroq",
+      "counts": {
+        "GEO": 521,
+        "ORG": 5
+      },
+      "total": 526
+    },
+    {
+      "surface": "instagram",
+      "counts": {
+        "ORG": 509,
+        "GEO": 6
+      },
+      "total": 515
+    },
+    {
+      "surface": "isroil",
+      "counts": {
+        "GEO": 496,
+        "ORG": 13
+      },
+      "total": 509
+    },
+    {
+      "surface": "bmt",
+      "counts": {
+        "ORG": 409,
+        "GEO": 40
+      },
+      "total": 449
+    },
+    {
+      "surface": "facebook",
+      "counts": {
+        "ORG": 440,
+        "GEO": 2
+      },
+      "total": 442
+    },
+    {
+      "surface": "yevropa",
+      "counts": {
+        "GEO": 440,
+        "ORG": 1
+      },
+      "total": 441
+    },
+    {
+      "surface": "italiya",
+      "counts": {
+        "GEO": 431,
+        "ORG": 3
+      },
+      "total": 434
+    },
+    {
+      "surface": "namangan",
+      "counts": {
+        "GEO": 432,
+        "NAME": 1
+      },
+      "total": 433
+    },
+    {
+      "surface": "janubiy koreya",
+      "counts": {
+        "GEO": 421,
+        "ORG": 2
+      },
+      "total": 423
+    },
+    {
+      "surface": "nato",
+      "counts": {
+        "ORG": 371,
+        "GEO": 26
+      },
+      "total": 397
+    },
+    {
+      "surface": "o‘zbekiston respublikasi",
+      "counts": {
+        "ORG": 158,
+        "GEO": 228
+      },
+      "total": 386
+    },
+    {
+      "surface": "belarus",
+      "counts": {
+        "GEO": 372,
+        "ORG": 8
+      },
+      "total": 380
+    },
+    {
+      "surface": "shimoliy koreya",
+      "counts": {
+        "GEO": 371,
+        "ORG": 1
+      },
+      "total": 372
+    },
+    {
+      "surface": "turkmaniston",
+      "counts": {
+        "GEO": 347,
+        "ORG": 4
+      },
+      "total": 351
+    },
+    {
+      "surface": "yuventus",
+      "counts": {
+        "ORG": 325,
+        "GEO": 16
+      },
+      "total": 341
+    },
+    {
+      "surface": "andijon",
+      "counts": {
+        "ORG": 33,
+        "GEO": 291
+      },
+      "total": 324
+    },
+    {
+      "surface": "youtube",
+      "counts": {
+        "ORG": 321,
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 323
+    },
+    {
+      "surface": "arsenal",
+      "counts": {
+        "ORG": 317,
+        "GEO": 4
+      },
+      "total": 321
+    },
+    {
+      "surface": "manchester yunayted",
+      "counts": {
+        "ORG": 289,
+        "GEO": 26
+      },
+      "total": 315
+    },
+    {
+      "surface": "chelsi",
+      "counts": {
+        "ORG": 270,
+        "NAME": 25,
+        "GEO": 18
+      },
+      "total": 313
+    },
+    {
+      "surface": "murad buildings",
+      "counts": {
+        "ORG": 304,
+        "GEO": 3
+      },
+      "total": 307
+    },
+    {
+      "surface": "buxoro",
+      "counts": {
+        "ORG": 20,
+        "GEO": 285
+      },
+      "total": 305
+    },
+    {
+      "surface": "parlament",
+      "counts": {
+        "ORG": 295,
+        "GEO": 10
+      },
+      "total": 305
+    },
+    {
+      "surface": "qatar",
+      "counts": {
+        "GEO": 277,
+        "ORG": 20
+      },
+      "total": 297
+    },
+    {
+      "surface": "fifa",
+      "counts": {
+        "ORG": 260,
+        "GEO": 2
+      },
+      "total": 262
+    },
+    {
+      "surface": "bavariya",
+      "counts": {
+        "ORG": 214,
+        "GEO": 40
+      },
+      "total": 254
+    },
+    {
+      "surface": "manchester siti",
+      "counts": {
+        "ORG": 222,
+        "GEO": 23
+      },
+      "total": 245
+    },
+    {
+      "surface": "yevropa ittifoqi",
+      "counts": {
+        "ORG": 127,
+        "GEO": 116
+      },
+      "total": 243
+    },
+    {
+      "surface": "avstraliya",
+      "counts": {
+        "GEO": 239,
+        "ORG": 2
+      },
+      "total": 241
+    },
+    {
+      "surface": "shahar",
+      "counts": {
+        "GEO": 239,
+        "NAME": 1
+      },
+      "total": 240
+    },
+    {
+      "surface": "ўзбекистон",
+      "counts": {
+        "GEO": 232,
+        "ORG": 2
+      },
+      "total": 234
+    },
+    {
+      "surface": "venesuela",
+      "counts": {
+        "GEO": 229,
+        "ORG": 2
+      },
+      "total": 231
+    },
+    {
+      "surface": "liverpul",
+      "counts": {
+        "ORG": 182,
+        "GEO": 46
+      },
+      "total": 228
+    },
+    {
+      "surface": "psj",
+      "counts": {
+        "ORG": 217,
+        "GEO": 9
+      },
+      "total": 226
+    },
+    {
+      "surface": "o‘zbekiston respublikasi iiv jamoatchilik va ommaviy axborot vositalari bilan aloqalar boshqarmasi",
+      "counts": {
+        "ORG": 222,
+        "GEO": 1
+      },
+      "total": 223
+    },
+    {
+      "surface": "aqsh prezidenti",
+      "counts": {
+        "ORG": 220,
+        "NAME": 2
+      },
+      "total": 222
+    },
+    {
+      "surface": "amerika",
+      "counts": {
+        "GEO": 215,
+        "ORG": 4
+      },
+      "total": 219
+    },
+    {
+      "surface": "britaniya",
+      "counts": {
+        "GEO": 212,
+        "ORG": 5,
+        "NAME": 1
+      },
+      "total": 218
+    },
+    {
+      "surface": "misr",
+      "counts": {
+        "GEO": 209,
+        "ORG": 5
+      },
+      "total": 214
+    },
+    {
+      "surface": "davlatlar",
+      "counts": {
+        "NAME": 208,
+        "GEO": 5
+      },
+      "total": 213
+    },
+    {
+      "surface": "kanada",
+      "counts": {
+        "GEO": 211,
+        "ORG": 1
+      },
+      "total": 212
+    },
+    {
+      "surface": "esa",
+      "counts": {
+        "NAME": 205,
+        "ORG": 6
+      },
+      "total": 211
+    },
+    {
+      "surface": "osiyo",
+      "counts": {
+        "GEO": 206,
+        "ORG": 1
+      },
+      "total": 207
+    },
+    {
+      "surface": "kxdr",
+      "counts": {
+        "GEO": 136,
+        "ORG": 64
+      },
+      "total": 200
+    },
+    {
+      "surface": "armaniston",
+      "counts": {
+        "GEO": 192,
+        "ORG": 5
+      },
+      "total": 197
+    },
+    {
+      "surface": "braziliya",
+      "counts": {
+        "GEO": 189,
+        "ORG": 3
+      },
+      "total": 192
+    },
+    {
+      "surface": "lokomotiv",
+      "counts": {
+        "ORG": 176,
+        "GEO": 8
+      },
+      "total": 184
+    },
+    {
+      "surface": "ishid",
+      "counts": {
+        "ORG": 179,
+        "NAME": 2,
+        "GEO": 2
+      },
+      "total": 183
+    },
+    {
+      "surface": "baa",
+      "counts": {
+        "GEO": 117,
+        "ORG": 63
+      },
+      "total": 180
+    },
+    {
+      "surface": "shveytsariya",
+      "counts": {
+        "GEO": 170,
+        "ORG": 4
+      },
+      "total": 174
+    },
+    {
+      "surface": "tolibon",
+      "counts": {
+        "ORG": 147,
+        "GEO": 23,
+        "NAME": 2
+      },
+      "total": 172
+    },
+    {
+      "surface": "adliya vazirligi",
+      "counts": {
+        "ORG": 169,
+        "NAME": 1
+      },
+      "total": 170
+    },
+    {
+      "surface": "atletiko",
+      "counts": {
+        "ORG": 154,
+        "GEO": 6
+      },
+      "total": 160
+    },
+    {
+      "surface": "jamiyati",
+      "counts": {
+        "ORG": 159,
+        "NAME": 1
+      },
+      "total": 160
+    },
+    {
+      "surface": "markazi",
+      "counts": {
+        "ORG": 157,
+        "GEO": 2
+      },
+      "total": 159
+    },
+    {
+      "surface": "ozarboyjon",
+      "counts": {
+        "GEO": 156,
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 158
+    },
+    {
+      "surface": "pentagon",
+      "counts": {
+        "ORG": 132,
+        "GEO": 26
+      },
+      "total": 158
+    },
+    {
+      "surface": "pyotr poroshenko",
+      "counts": {
+        "NAME": 156,
+        "ORG": 1
+      },
+      "total": 157
+    },
+    {
+      "surface": "paxtakor",
+      "counts": {
+        "ORG": 135,
+        "GEO": 16
+      },
+      "total": 151
+    },
+    {
+      "surface": "исроил",
+      "counts": {
+        "GEO": 150,
+        "ORG": 1
+      },
+      "total": 151
+    },
+    {
+      "surface": "respublika",
+      "counts": {
+        "ORG": 133,
+        "GEO": 12
+      },
+      "total": 145
+    },
+    {
+      "surface": "argentina",
+      "counts": {
+        "ORG": 8,
+        "GEO": 134
+      },
+      "total": 142
+    },
+    {
+      "surface": "yaman",
+      "counts": {
+        "GEO": 137,
+        "ORG": 1
+      },
+      "total": 138
+    },
+    {
+      "surface": "rossiya federatsiyasi",
+      "counts": {
+        "ORG": 63,
+        "GEO": 72
+      },
+      "total": 135
+    },
+    {
+      "surface": "madrid",
+      "counts": {
+        "GEO": 124,
+        "ORG": 10
+      },
+      "total": 134
+    },
+    {
+      "surface": "milan",
+      "counts": {
+        "ORG": 106,
+        "GEO": 28
+      },
+      "total": 134
+    },
+    {
+      "surface": "real madrid",
+      "counts": {
+        "ORG": 133,
+        "GEO": 1
+      },
+      "total": 134
+    },
+    {
+      "surface": "tehron",
+      "counts": {
+        "GEO": 126,
+        "NAME": 2
+      },
+      "total": 128
+    },
+    {
+      "surface": "niderlandiya",
+      "counts": {
+        "GEO": 125,
+        "ORG": 1
+      },
+      "total": 126
+    },
+    {
+      "surface": "livan",
+      "counts": {
+        "GEO": 119,
+        "NAME": 1
+      },
+      "total": 120
+    },
+    {
+      "surface": "islom karimov",
+      "counts": {
+        "NAME": 117,
+        "GEO": 2
+      },
+      "total": 119
+    },
+    {
+      "surface": "bunyodkor",
+      "counts": {
+        "ORG": 96,
+        "GEO": 18,
+        "NAME": 2
+      },
+      "total": 116
+    },
+    {
+      "surface": "prezident",
+      "counts": {
+        "NAME": 113,
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 116
+    },
+    {
+      "surface": "rossiyaga",
+      "counts": {
+        "GEO": 114,
+        "ORG": 1
+      },
+      "total": 115
+    },
+    {
+      "surface": "urganch",
+      "counts": {
+        "GEO": 113,
+        "NAME": 1
+      },
+      "total": 114
+    },
+    {
+      "surface": "buxoro viloyati",
+      "counts": {
+        "GEO": 110,
+        "ORG": 3
+      },
+      "total": 113
+    },
+    {
+      "surface": "kun.uz",
+      "counts": {
+        "ORG": 96,
+        "GEO": 15,
+        "NAME": 1
+      },
+      "total": 112
+    },
+    {
+      "surface": "navoiy",
+      "counts": {
+        "NAME": 2,
+        "GEO": 106,
+        "ORG": 4
+      },
+      "total": 112
+    },
+    {
+      "surface": "portugaliya",
+      "counts": {
+        "GEO": 107,
+        "ORG": 5
+      },
+      "total": 112
+    },
+    {
+      "surface": "bahrayn",
+      "counts": {
+        "GEO": 106,
+        "ORG": 3
+      },
+      "total": 109
+    },
+    {
+      "surface": "xodimlari",
+      "counts": {
+        "GEO": 105,
+        "NAME": 1
+      },
+      "total": 106
+    },
+    {
+      "surface": "liviya",
+      "counts": {
+        "GEO": 104,
+        "ORG": 1
+      },
+      "total": 105
+    },
+    {
+      "surface": "twitter",
+      "counts": {
+        "ORG": 102,
+        "GEO": 3
+      },
+      "total": 105
+    },
+    {
+      "surface": "ana",
+      "counts": {
+        "NAME": 102,
+        "ORG": 2
+      },
+      "total": 104
+    },
+    {
+      "surface": "seul",
+      "counts": {
+        "GEO": 95,
+        "ORG": 9
+      },
+      "total": 104
+    },
+    {
+      "surface": "donbass",
+      "counts": {
+        "GEO": 102,
+        "ORG": 1
+      },
+      "total": 103
+    },
+    {
+      "surface": "markaziy bank",
+      "counts": {
+        "ORG": 97,
+        "GEO": 4
+      },
+      "total": 101
+    },
+    {
+      "surface": "roma",
+      "counts": {
+        "ORG": 85,
+        "GEO": 15
+      },
+      "total": 100
+    },
+    {
+      "surface": "inter",
+      "counts": {
+        "ORG": 97,
+        "GEO": 2
+      },
+      "total": 99
+    },
+    {
+      "surface": "tottenhem",
+      "counts": {
+        "ORG": 78,
+        "GEO": 21
+      },
+      "total": 99
+    },
+    {
+      "surface": "rossiyaning",
+      "counts": {
+        "GEO": 97,
+        "NAME": 1
+      },
+      "total": 98
+    },
+    {
+      "surface": "o‘zbekiston respublikasi prezidenti",
+      "counts": {
+        "ORG": 93,
+        "NAME": 1
+      },
+      "total": 94
+    },
+    {
+      "surface": "filippin",
+      "counts": {
+        "ORG": 2,
+        "GEO": 90
+      },
+      "total": 92
+    },
+    {
+      "surface": "tashkilot",
+      "counts": {
+        "ORG": 89,
+        "GEO": 1
+      },
+      "total": 90
+    },
+    {
+      "surface": "marta",
+      "counts": {
+        "GEO": 88,
+        "NAME": 1
+      },
+      "total": 89
+    },
+    {
+      "surface": "surxondaryo",
+      "counts": {
+        "GEO": 84,
+        "ORG": 1
+      },
+      "total": 85
+    },
+    {
+      "surface": "amazon",
+      "counts": {
+        "ORG": 83,
+        "GEO": 1
+      },
+      "total": 84
+    },
+    {
+      "surface": "markaziy",
+      "counts": {
+        "ORG": 82,
+        "GEO": 2
+      },
+      "total": 84
+    },
+    {
+      "surface": "xorazm",
+      "counts": {
+        "GEO": 80,
+        "ORG": 4
+      },
+      "total": 84
+    },
+    {
+      "surface": "yevrokomissiya",
+      "counts": {
+        "ORG": 79,
+        "GEO": 4
+      },
+      "total": 83
+    },
+    {
+      "surface": "rossiya prezidenti",
+      "counts": {
+        "ORG": 80,
+        "NAME": 2
+      },
+      "total": 82
+    },
+    {
+      "surface": "sirdaryo",
+      "counts": {
+        "GEO": 81,
+        "ORG": 1
+      },
+      "total": 82
+    },
+    {
+      "surface": "spacex",
+      "counts": {
+        "ORG": 81,
+        "GEO": 1
+      },
+      "total": 82
+    },
+    {
+      "surface": "vazirlar mahkamasining",
+      "counts": {
+        "ORG": 79,
+        "GEO": 3
+      },
+      "total": 82
+    },
+    {
+      "surface": "davlatlari",
+      "counts": {
+        "NAME": 78,
+        "GEO": 3
+      },
+      "total": 81
+    },
+    {
+      "surface": "jahon banki",
+      "counts": {
+        "GEO": 2,
+        "ORG": 79
+      },
+      "total": 81
+    },
+    {
+      "surface": "borussiya",
+      "counts": {
+        "ORG": 77,
+        "GEO": 3
+      },
+      "total": 80
+    },
+    {
+      "surface": "kreml",
+      "counts": {
+        "ORG": 48,
+        "GEO": 32
+      },
+      "total": 80
+    },
+    {
+      "surface": "nasa",
+      "counts": {
+        "ORG": 78,
+        "GEO": 1
+      },
+      "total": 79
+    },
+    {
+      "surface": "tashqi ishlar vazirligi",
+      "counts": {
+        "ORG": 77,
+        "GEO": 2
+      },
+      "total": 79
+    },
+    {
+      "surface": "jsst",
+      "counts": {
+        "ORG": 73,
+        "GEO": 5
+      },
+      "total": 78
+    },
+    {
+      "surface": "oq uy",
+      "counts": {
+        "ORG": 16,
+        "GEO": 62
+      },
+      "total": 78
+    },
+    {
+      "surface": "falastin",
+      "counts": {
+        "GEO": 75,
+        "ORG": 1
+      },
+      "total": 76
+    },
+    {
+      "surface": "everton",
+      "counts": {
+        "ORG": 74,
+        "GEO": 1
+      },
+      "total": 75
+    },
+    {
+      "surface": "shayxontohur",
+      "counts": {
+        "GEO": 72,
+        "NAME": 3
+      },
+      "total": 75
+    },
+    {
+      "surface": "shht",
+      "counts": {
+        "ORG": 57,
+        "GEO": 18
+      },
+      "total": 75
+    },
+    {
+      "surface": "respublikasi",
+      "counts": {
+        "ORG": 73,
+        "GEO": 1
+      },
+      "total": 74
+    },
+    {
+      "surface": "aqshning",
+      "counts": {
+        "GEO": 71,
+        "ORG": 2
+      },
+      "total": 73
+    },
+    {
+      "surface": "serbiya",
+      "counts": {
+        "GEO": 69,
+        "ORG": 4
+      },
+      "total": 73
+    },
+    {
+      "surface": "андижон",
+      "counts": {
+        "ORG": 18,
+        "GEO": 55
+      },
+      "total": 73
+    },
+    {
+      "surface": "kuvayt",
+      "counts": {
+        "GEO": 68,
+        "ORG": 4
+      },
+      "total": 72
+    },
+    {
+      "surface": "angela merkel",
+      "counts": {
+        "NAME": 70,
+        "ORG": 1
+      },
+      "total": 71
+    },
+    {
+      "surface": "мурод билдинг",
+      "counts": {
+        "ORG": 69,
+        "GEO": 2
+      },
+      "total": 71
+    },
+    {
+      "surface": "viloyatlar",
+      "counts": {
+        "GEO": 67,
+        "ORG": 3
+      },
+      "total": 70
+    },
+    {
+      "surface": "krasnodar",
+      "counts": {
+        "ORG": 40,
+        "GEO": 28
+      },
+      "total": 68
+    },
+    {
+      "surface": "mdh",
+      "counts": {
+        "GEO": 40,
+        "ORG": 27
+      },
+      "total": 67
+    },
+    {
+      "surface": "sevilya",
+      "counts": {
+        "GEO": 17,
+        "ORG": 50
+      },
+      "total": 67
+    },
+    {
+      "surface": "islandiya",
+      "counts": {
+        "GEO": 63,
+        "ORG": 3
+      },
+      "total": 66
+    },
+    {
+      "surface": "slovakiya",
+      "counts": {
+        "GEO": 62,
+        "ORG": 3
+      },
+      "total": 65
+    },
+    {
+      "surface": "iib",
+      "counts": {
+        "ORG": 58,
+        "GEO": 5
+      },
+      "total": 63
+    },
+    {
+      "surface": "o‘zbekiston prezidenti",
+      "counts": {
+        "ORG": 60,
+        "NAME": 3
+      },
+      "total": 63
+    },
+    {
+      "surface": "oliy majlis qonunchilik palatasi",
+      "counts": {
+        "ORG": 60,
+        "GEO": 1
+      },
+      "total": 61
+    },
+    {
+      "surface": "dinamo",
+      "counts": {
+        "ORG": 57,
+        "GEO": 2
+      },
+      "total": 59
+    },
+    {
+      "surface": "napoli",
+      "counts": {
+        "ORG": 56,
+        "GEO": 3
+      },
+      "total": 59
+    },
+    {
+      "surface": "chili",
+      "counts": {
+        "GEO": 54,
+        "ORG": 4
+      },
+      "total": 58
+    },
+    {
+      "surface": "nasaf",
+      "counts": {
+        "ORG": 54,
+        "GEO": 4
+      },
+      "total": 58
+    },
+    {
+      "surface": "obod",
+      "counts": {
+        "NAME": 48,
+        "ORG": 7,
+        "GEO": 3
+      },
+      "total": 58
+    },
+    {
+      "surface": "o‘za",
+      "counts": {
+        "ORG": 56,
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 58
+    },
+    {
+      "surface": "qo‘shma shtatlar",
+      "counts": {
+        "GEO": 56,
+        "ORG": 2
+      },
+      "total": 58
+    },
+    {
+      "surface": "birlashgan arab amirliklari",
+      "counts": {
+        "GEO": 31,
+        "ORG": 26
+      },
+      "total": 57
+    },
+    {
+      "surface": "birlashgan millatlar tashkiloti",
+      "counts": {
+        "ORG": 55,
+        "GEO": 2
+      },
+      "total": 57
+    },
+    {
+      "surface": "ekvador",
+      "counts": {
+        "GEO": 53,
+        "ORG": 4
+      },
+      "total": 57
+    },
+    {
+      "surface": "monako",
+      "counts": {
+        "ORG": 36,
+        "GEO": 21
+      },
+      "total": 57
+    },
+    {
+      "surface": "bosh prokuratura",
+      "counts": {
+        "ORG": 55,
+        "GEO": 1
+      },
+      "total": 56
+    },
+    {
+      "surface": "koreya respublikasi",
+      "counts": {
+        "GEO": 35,
+        "ORG": 21
+      },
+      "total": 56
+    },
+    {
+      "surface": "lester",
+      "counts": {
+        "GEO": 14,
+        "NAME": 12,
+        "ORG": 30
+      },
+      "total": 56
+    },
+    {
+      "surface": "tiv",
+      "counts": {
+        "ORG": 41,
+        "GEO": 15
+      },
+      "total": 56
+    },
+    {
+      "surface": "toshshahartransxizmat",
+      "counts": {
+        "ORG": 54,
+        "GEO": 2
+      },
+      "total": 56
+    },
+    {
+      "surface": "ukraina prezidenti",
+      "counts": {
+        "ORG": 55,
+        "GEO": 1
+      },
+      "total": 56
+    },
+    {
+      "surface": "valensiya",
+      "counts": {
+        "ORG": 44,
+        "GEO": 12
+      },
+      "total": 56
+    },
+    {
+      "surface": "yei",
+      "counts": {
+        "ORG": 46,
+        "GEO": 10
+      },
+      "total": 56
+    },
+    {
+      "surface": "jamoat",
+      "counts": {
+        "NAME": 54,
+        "GEO": 1
+      },
+      "total": 55
+    },
+    {
+      "surface": "samarqandda",
+      "counts": {
+        "NAME": 1,
+        "GEO": 54
+      },
+      "total": 55
+    },
+    {
+      "surface": "tass",
+      "counts": {
+        "ORG": 52,
+        "GEO": 3
+      },
+      "total": 55
+    },
+    {
+      "surface": "florida",
+      "counts": {
+        "GEO": 52,
+        "ORG": 1
+      },
+      "total": 53
+    },
+    {
+      "surface": "mars",
+      "counts": {
+        "GEO": 51,
+        "ORG": 2
+      },
+      "total": 53
+    },
+    {
+      "surface": "navbahor",
+      "counts": {
+        "NAME": 1,
+        "ORG": 49,
+        "GEO": 2
+      },
+      "total": 52
+    },
+    {
+      "surface": "nyukasl",
+      "counts": {
+        "ORG": 42,
+        "GEO": 10
+      },
+      "total": 52
+    },
+    {
+      "surface": "myu",
+      "counts": {
+        "ORG": 50,
+        "GEO": 1
+      },
+      "total": 51
+    },
+    {
+      "surface": "fransua olland",
+      "counts": {
+        "NAME": 48,
+        "ORG": 2
+      },
+      "total": 50
+    },
+    {
+      "surface": "olmaliq",
+      "counts": {
+        "GEO": 45,
+        "ORG": 5
+      },
+      "total": 50
+    },
+    {
+      "surface": "tereza mey",
+      "counts": {
+        "NAME": 49,
+        "GEO": 1
+      },
+      "total": 50
+    },
+    {
+      "surface": "xosep gvardiola",
+      "counts": {
+        "NAME": 49,
+        "ORG": 1
+      },
+      "total": 50
+    },
+    {
+      "surface": "oav",
+      "counts": {
+        "ORG": 46,
+        "GEO": 3
+      },
+      "total": 49
+    },
+    {
+      "surface": "portu",
+      "counts": {
+        "ORG": 40,
+        "GEO": 8,
+        "NAME": 1
+      },
+      "total": 49
+    },
+    {
+      "surface": "uyefa",
+      "counts": {
+        "ORG": 48,
+        "GEO": 1
+      },
+      "total": 49
+    },
+    {
+      "surface": "x",
+      "counts": {
+        "ORG": 45,
+        "NAME": 3
+      },
+      "total": 48
+    },
+    {
+      "surface": "adolat",
+      "counts": {
+        "NAME": 45,
+        "ORG": 2
+      },
+      "total": 47
+    },
+    {
+      "surface": "alisher navoiy",
+      "counts": {
+        "NAME": 39,
+        "GEO": 8
+      },
+      "total": 47
+    },
+    {
+      "surface": "bmt xavfsizlik kengashi",
+      "counts": {
+        "ORG": 44,
+        "GEO": 3
+      },
+      "total": 47
+    },
+    {
+      "surface": "olimlar",
+      "counts": {
+        "NAME": 44,
+        "GEO": 3
+      },
+      "total": 47
+    },
+    {
+      "surface": "xitoy xalq respublikasi",
+      "counts": {
+        "GEO": 14,
+        "ORG": 32
+      },
+      "total": 46
+    },
+    {
+      "surface": "maktablar",
+      "counts": {
+        "ORG": 43,
+        "GEO": 2
+      },
+      "total": 45
+    },
+    {
+      "surface": "rostov",
+      "counts": {
+        "ORG": 36,
+        "GEO": 9
+      },
+      "total": 45
+    },
+    {
+      "surface": "zenit",
+      "counts": {
+        "ORG": 43,
+        "GEO": 2
+      },
+      "total": 45
+    },
+    {
+      "surface": "shanxay hamkorlik tashkiloti",
+      "counts": {
+        "ORG": 43,
+        "GEO": 1
+      },
+      "total": 44
+    },
+    {
+      "surface": "atalanta",
+      "counts": {
+        "ORG": 41,
+        "GEO": 2
+      },
+      "total": 43
+    },
+    {
+      "surface": "davlatlarning",
+      "counts": {
+        "NAME": 42,
+        "GEO": 1
+      },
+      "total": 43
+    },
+    {
+      "surface": "guliston",
+      "counts": {
+        "GEO": 34,
+        "NAME": 8,
+        "ORG": 1
+      },
+      "total": 43
+    },
+    {
+      "surface": "humo",
+      "counts": {
+        "ORG": 33,
+        "NAME": 6,
+        "GEO": 4
+      },
+      "total": 43
+    },
+    {
+      "surface": "murod building",
+      "counts": {
+        "ORG": 42,
+        "GEO": 1
+      },
+      "total": 43
+    },
+    {
+      "surface": "xitoyning",
+      "counts": {
+        "GEO": 41,
+        "ORG": 1
+      },
+      "total": 42
+    },
+    {
+      "surface": "jazoir",
+      "counts": {
+        "GEO": 37,
+        "ORG": 4
+      },
+      "total": 41
+    },
+    {
+      "surface": "madina",
+      "counts": {
+        "NAME": 29,
+        "GEO": 12
+      },
+      "total": 41
+    },
+    {
+      "surface": "fox news",
+      "counts": {
+        "ORG": 39,
+        "GEO": 1
+      },
+      "total": 40
+    },
+    {
+      "surface": "fargona",
+      "counts": {
+        "NAME": 23,
+        "GEO": 16
+      },
+      "total": 39
+    },
+    {
+      "surface": "men",
+      "counts": {
+        "NAME": 38,
+        "GEO": 1
+      },
+      "total": 39
+    },
+    {
+      "surface": "murad building",
+      "counts": {
+        "ORG": 35,
+        "GEO": 4
+      },
+      "total": 39
+    },
+    {
+      "surface": "samarqand davlat universiteti",
+      "counts": {
+        "ORG": 38,
+        "GEO": 1
+      },
+      "total": 39
+    },
+    {
+      "surface": "xodimlarining",
+      "counts": {
+        "GEO": 38,
+        "NAME": 1
+      },
+      "total": 39
+    },
+    {
+      "surface": "espanol",
+      "counts": {
+        "ORG": 34,
+        "GEO": 4
+      },
+      "total": 38
+    },
+    {
+      "surface": "yevroittifoq",
+      "counts": {
+        "GEO": 15,
+        "ORG": 23
+      },
+      "total": 38
+    },
+    {
+      "surface": "sog‘liqni saqlash vaziri",
+      "counts": {
+        "NAME": 35,
+        "ORG": 2
+      },
+      "total": 37
+    },
+    {
+      "surface": "xalq banki",
+      "counts": {
+        "ORG": 36,
+        "GEO": 1
+      },
+      "total": 37
+    },
+    {
+      "surface": "bmt bosh assambleyasi",
+      "counts": {
+        "ORG": 34,
+        "GEO": 2
+      },
+      "total": 36
+    },
+    {
+      "surface": "briks",
+      "counts": {
+        "ORG": 28,
+        "GEO": 8
+      },
+      "total": 36
+    },
+    {
+      "surface": "surxon",
+      "counts": {
+        "ORG": 21,
+        "GEO": 15
+      },
+      "total": 36
+    },
+    {
+      "surface": "yexht",
+      "counts": {
+        "ORG": 29,
+        "GEO": 7
+      },
+      "total": 36
+    },
+    {
+      "surface": "bektemir",
+      "counts": {
+        "GEO": 30,
+        "NAME": 5
+      },
+      "total": 35
+    },
+    {
+      "surface": "dunyo",
+      "counts": {
+        "ORG": 22,
+        "GEO": 13
+      },
+      "total": 35
+    },
+    {
+      "surface": "lion",
+      "counts": {
+        "ORG": 23,
+        "GEO": 12
+      },
+      "total": 35
+    },
+    {
+      "surface": "turkiya respublikasi",
+      "counts": {
+        "ORG": 32,
+        "GEO": 3
+      },
+      "total": 35
+    },
+    {
+      "surface": "urganch davlat universiteti",
+      "counts": {
+        "ORG": 34,
+        "GEO": 1
+      },
+      "total": 35
+    },
+    {
+      "surface": "volfsburg",
+      "counts": {
+        "ORG": 28,
+        "GEO": 7
+      },
+      "total": 35
+    },
+    {
+      "surface": "xitoyda",
+      "counts": {
+        "GEO": 29,
+        "ORG": 6
+      },
+      "total": 35
+    },
+    {
+      "surface": "ypx",
+      "counts": {
+        "ORG": 34,
+        "GEO": 1
+      },
+      "total": 35
+    },
+    {
+      "surface": "asaka",
+      "counts": {
+        "NAME": 7,
+        "ORG": 13,
+        "GEO": 14
+      },
+      "total": 34
+    },
+    {
+      "surface": "qunduz",
+      "counts": {
+        "GEO": 32,
+        "NAME": 2
+      },
+      "total": 34
+    },
+    {
+      "surface": "spartak",
+      "counts": {
+        "ORG": 33,
+        "GEO": 1
+      },
+      "total": 34
+    },
+    {
+      "surface": "sporting",
+      "counts": {
+        "ORG": 32,
+        "GEO": 2
+      },
+      "total": 34
+    },
+    {
+      "surface": "transport vaziri",
+      "counts": {
+        "NAME": 33,
+        "ORG": 1
+      },
+      "total": 34
+    },
+    {
+      "surface": "dortmund",
+      "counts": {
+        "ORG": 7,
+        "GEO": 26
+      },
+      "total": 33
+    },
+    {
+      "surface": "vilyarreal",
+      "counts": {
+        "ORG": 29,
+        "GEO": 4
+      },
+      "total": 33
+    },
+    {
+      "surface": "amir temur",
+      "counts": {
+        "NAME": 28,
+        "GEO": 4
+      },
+      "total": 32
+    },
+    {
+      "surface": "aqshda",
+      "counts": {
+        "GEO": 30,
+        "ORG": 2
+      },
+      "total": 32
+    },
+    {
+      "surface": "muqaddas",
+      "counts": {
+        "NAME": 31,
+        "GEO": 1
+      },
+      "total": 32
+    },
+    {
+      "surface": "rossiyadan",
+      "counts": {
+        "GEO": 31,
+        "ORG": 1
+      },
+      "total": 32
+    },
+    {
+      "surface": "selta",
+      "counts": {
+        "ORG": 31,
+        "GEO": 1
+      },
+      "total": 32
+    },
+    {
+      "surface": "tiktok",
+      "counts": {
+        "ORG": 29,
+        "GEO": 3
+      },
+      "total": 32
+    },
+    {
+      "surface": "viloyat hokimi",
+      "counts": {
+        "ORG": 6,
+        "NAME": 26
+      },
+      "total": 32
+    },
+    {
+      "surface": "alisher usmonov",
+      "counts": {
+        "NAME": 30,
+        "ORG": 1
+      },
+      "total": 31
+    },
+    {
+      "surface": "daryo",
+      "counts": {
+        "ORG": 17,
+        "GEO": 14
+      },
+      "total": 31
+    },
+    {
+      "surface": "galatasaray",
+      "counts": {
+        "ORG": 30,
+        "GEO": 1
+      },
+      "total": 31
+    },
+    {
+      "surface": "rossiya tiv",
+      "counts": {
+        "ORG": 30,
+        "GEO": 1
+      },
+      "total": 31
+    },
+    {
+      "surface": "toshkent axborot texnologiyalari universiteti",
+      "counts": {
+        "ORG": 30,
+        "GEO": 1
+      },
+      "total": 31
+    },
+    {
+      "surface": "бухоро",
+      "counts": {
+        "ORG": 20,
+        "GEO": 11
+      },
+      "total": 31
+    },
+    {
+      "surface": "pak kin xe",
+      "counts": {
+        "NAME": 29,
+        "ORG": 1
+      },
+      "total": 30
+    },
+    {
+      "surface": "pan gi mun",
+      "counts": {
+        "NAME": 29,
+        "ORG": 1
+      },
+      "total": 30
+    },
+    {
+      "surface": "sharja",
+      "counts": {
+        "GEO": 27,
+        "NAME": 1,
+        "ORG": 2
+      },
+      "total": 30
+    },
+    {
+      "surface": "bobur",
+      "counts": {
+        "NAME": 25,
+        "GEO": 4
+      },
+      "total": 29
+    },
+    {
+      "surface": "hamburg",
+      "counts": {
+        "GEO": 28,
+        "ORG": 1
+      },
+      "total": 29
+    },
+    {
+      "surface": "oqtepa",
+      "counts": {
+        "ORG": 17,
+        "GEO": 12
+      },
+      "total": 29
+    },
+    {
+      "surface": "shaxtyor",
+      "counts": {
+        "ORG": 27,
+        "GEO": 2
+      },
+      "total": 29
+    },
+    {
+      "surface": "sssr",
+      "counts": {
+        "ORG": 9,
+        "GEO": 20
+      },
+      "total": 29
+    },
+    {
+      "surface": "turkiston",
+      "counts": {
+        "GEO": 28,
+        "ORG": 1
+      },
+      "total": 29
+    },
+    {
+      "surface": "ufa",
+      "counts": {
+        "ORG": 4,
+        "GEO": 25
+      },
+      "total": 29
+    },
+    {
+      "surface": "barcelona",
+      "counts": {
+        "ORG": 26,
+        "GEO": 2
+      },
+      "total": 28
+    },
+    {
+      "surface": "hyundai",
+      "counts": {
+        "ORG": 26,
+        "NAME": 2
+      },
+      "total": 28
+    },
+    {
+      "surface": "pxenyan",
+      "counts": {
+        "GEO": 27,
+        "NAME": 1
+      },
+      "total": 28
+    },
+    {
+      "surface": "sanderlend",
+      "counts": {
+        "GEO": 8,
+        "ORG": 20
+      },
+      "total": 28
+    },
+    {
+      "surface": "бунёдкор",
+      "counts": {
+        "ORG": 13,
+        "GEO": 15
+      },
+      "total": 28
+    },
+    {
+      "surface": "aston villa",
+      "counts": {
+        "ORG": 25,
+        "GEO": 2
+      },
+      "total": 27
+    },
+    {
+      "surface": "ayaks",
+      "counts": {
+        "ORG": 24,
+        "GEO": 3
+      },
+      "total": 27
+    },
+    {
+      "surface": "bornmut",
+      "counts": {
+        "ORG": 22,
+        "GEO": 5
+      },
+      "total": 27
+    },
+    {
+      "surface": "metallurg",
+      "counts": {
+        "ORG": 25,
+        "GEO": 2
+      },
+      "total": 27
+    },
+    {
+      "surface": "nestone",
+      "counts": {
+        "GEO": 26,
+        "ORG": 1
+      },
+      "total": 27
+    },
+    {
+      "surface": "qosim-jo‘mart to‘qayev",
+      "counts": {
+        "NAME": 25,
+        "ORG": 2
+      },
+      "total": 27
+    },
+    {
+      "surface": "xodimlar",
+      "counts": {
+        "GEO": 26,
+        "NAME": 1
+      },
+      "total": 27
+    },
+    {
+      "surface": "xodimlarning",
+      "counts": {
+        "GEO": 25,
+        "NAME": 2
+      },
+      "total": 27
+    },
+    {
+      "surface": "astana",
+      "counts": {
+        "GEO": 7,
+        "ORG": 19
+      },
+      "total": 26
+    },
+    {
+      "surface": "mchj",
+      "counts": {
+        "ORG": 25,
+        "GEO": 1
+      },
+      "total": 26
+    },
+    {
+      "surface": "nest one",
+      "counts": {
+        "GEO": 23,
+        "ORG": 3
+      },
+      "total": 26
+    },
+    {
+      "surface": "tojikiston respublikasi",
+      "counts": {
+        "GEO": 5,
+        "ORG": 21
+      },
+      "total": 26
+    },
+    {
+      "surface": "tsska",
+      "counts": {
+        "ORG": 25,
+        "GEO": 1
+      },
+      "total": 26
+    },
+    {
+      "surface": "пахтакор",
+      "counts": {
+        "ORG": 25,
+        "GEO": 1
+      },
+      "total": 26
+    },
+    {
+      "surface": "хоразм",
+      "counts": {
+        "GEO": 14,
+        "ORG": 12
+      },
+      "total": 26
+    },
+    {
+      "surface": "boku",
+      "counts": {
+        "GEO": 22,
+        "NAME": 3
+      },
+      "total": 25
+    },
+    {
+      "surface": "maktablarda",
+      "counts": {
+        "ORG": 19,
+        "GEO": 6
+      },
+      "total": 25
+    },
+    {
+      "surface": "qizilqum",
+      "counts": {
+        "ORG": 24,
+        "GEO": 1
+      },
+      "total": 25
+    },
+    {
+      "surface": "real sosedad",
+      "counts": {
+        "ORG": 24,
+        "GEO": 1
+      },
+      "total": 25
+    },
+    {
+      "surface": "xetafe",
+      "counts": {
+        "ORG": 24,
+        "GEO": 1
+      },
+      "total": 25
+    },
+    {
+      "surface": "al-quds",
+      "counts": {
+        "ORG": 3,
+        "GEO": 21
+      },
+      "total": 24
+    },
+    {
+      "surface": "jar",
+      "counts": {
+        "GEO": 21,
+        "ORG": 2,
+        "NAME": 1
+      },
+      "total": 24
+    },
+    {
+      "surface": "o‘zbekiston respublikasining",
+      "counts": {
+        "GEO": 13,
+        "ORG": 11
+      },
+      "total": 24
+    },
+    {
+      "surface": "sinxua",
+      "counts": {
+        "ORG": 22,
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 24
+    },
+    {
+      "surface": "vkontakte",
+      "counts": {
+        "ORG": 21,
+        "GEO": 3
+      },
+      "total": 24
+    },
+    {
+      "surface": "xxr",
+      "counts": {
+        "GEO": 15,
+        "ORG": 9
+      },
+      "total": 24
+    },
+    {
+      "surface": "bozor",
+      "counts": {
+        "NAME": 20,
+        "GEO": 3
+      },
+      "total": 23
+    },
+    {
+      "surface": "chimkent",
+      "counts": {
+        "GEO": 21,
+        "NAME": 2
+      },
+      "total": 23
+    },
+    {
+      "surface": "eshton karter",
+      "counts": {
+        "NAME": 22,
+        "ORG": 1
+      },
+      "total": 23
+    },
+    {
+      "surface": "fransiya prezidenti",
+      "counts": {
+        "ORG": 19,
+        "GEO": 3,
+        "NAME": 1
+      },
+      "total": 23
+    },
+    {
+      "surface": "nurafshon",
+      "counts": {
+        "GEO": 20,
+        "NAME": 3
+      },
+      "total": 23
+    },
+    {
+      "surface": "oston",
+      "counts": {
+        "GEO": 22,
+        "NAME": 1
+      },
+      "total": 23
+    },
+    {
+      "surface": "oybek",
+      "counts": {
+        "NAME": 19,
+        "GEO": 4
+      },
+      "total": 23
+    },
+    {
+      "surface": "yechl",
+      "counts": {
+        "GEO": 12,
+        "ORG": 11
+      },
+      "total": 23
+    },
+    {
+      "surface": "aqsh prezidentligi",
+      "counts": {
+        "ORG": 19,
+        "GEO": 3
+      },
+      "total": 22
+    },
+    {
+      "surface": "baraka",
+      "counts": {
+        "NAME": 21,
+        "ORG": 1
+      },
+      "total": 22
+    },
+    {
+      "surface": "latsio",
+      "counts": {
+        "ORG": 20,
+        "GEO": 2
+      },
+      "total": 22
+    },
+    {
+      "surface": "ryonxap",
+      "counts": {
+        "ORG": 20,
+        "GEO": 2
+      },
+      "total": 22
+    },
+    {
+      "surface": "sauthempton",
+      "counts": {
+        "ORG": 12,
+        "GEO": 10
+      },
+      "total": 22
+    },
+    {
+      "surface": "tsyurix",
+      "counts": {
+        "GEO": 20,
+        "ORG": 2
+      },
+      "total": 22
+    },
+    {
+      "surface": "vest hem",
+      "counts": {
+        "ORG": 16,
+        "GEO": 6
+      },
+      "total": 22
+    },
+    {
+      "surface": "yevropa kengashi",
+      "counts": {
+        "ORG": 21,
+        "GEO": 1
+      },
+      "total": 22
+    },
+    {
+      "surface": "disney",
+      "counts": {
+        "ORG": 20,
+        "GEO": 1
+      },
+      "total": 21
+    },
+    {
+      "surface": "jahon",
+      "counts": {
+        "GEO": 19,
+        "ORG": 2
+      },
+      "total": 21
+    },
+    {
+      "surface": "kardiff",
+      "counts": {
+        "ORG": 5,
+        "GEO": 16
+      },
+      "total": 21
+    },
+    {
+      "surface": "kristal pelas",
+      "counts": {
+        "ORG": 18,
+        "GEO": 3
+      },
+      "total": 21
+    },
+    {
+      "surface": "muborak",
+      "counts": {
+        "NAME": 19,
+        "GEO": 2
+      },
+      "total": 21
+    },
+    {
+      "surface": "ramos",
+      "counts": {
+        "NAME": 20,
+        "GEO": 1
+      },
+      "total": 21
+    },
+    {
+      "surface": "saodat",
+      "counts": {
+        "ORG": 1,
+        "NAME": 20
+      },
+      "total": 21
+    },
+    {
+      "surface": "sidney",
+      "counts": {
+        "GEO": 17,
+        "NAME": 4
+      },
+      "total": 21
+    },
+    {
+      "surface": "van i",
+      "counts": {
+        "NAME": 20,
+        "ORG": 1
+      },
+      "total": 21
+    },
+    {
+      "surface": "bugun",
+      "counts": {
+        "GEO": 19,
+        "NAME": 1
+      },
+      "total": 20
+    },
+    {
+      "surface": "chikago",
+      "counts": {
+        "ORG": 4,
+        "GEO": 16
+      },
+      "total": 20
+    },
+    {
+      "surface": "jamoasi",
+      "counts": {
+        "ORG": 19,
+        "NAME": 1
+      },
+      "total": 20
+    },
+    {
+      "surface": "la liga",
+      "counts": {
+        "ORG": 17,
+        "GEO": 3
+      },
+      "total": 20
+    },
+    {
+      "surface": "marsel",
+      "counts": {
+        "GEO": 9,
+        "ORG": 10,
+        "NAME": 1
+      },
+      "total": 20
+    },
+    {
+      "surface": "river pleyt",
+      "counts": {
+        "ORG": 18,
+        "GEO": 2
+      },
+      "total": 20
+    },
+    {
+      "surface": "senat",
+      "counts": {
+        "ORG": 18,
+        "GEO": 2
+      },
+      "total": 20
+    },
+    {
+      "surface": "chempionlar ligasi",
+      "counts": {
+        "ORG": 15,
+        "GEO": 4
+      },
+      "total": 19
+    },
+    {
+      "surface": "formula-1",
+      "counts": {
+        "ORG": 17,
+        "GEO": 2
+      },
+      "total": 19
+    },
+    {
+      "surface": "g20",
+      "counts": {
+        "GEO": 7,
+        "ORG": 12
+      },
+      "total": 19
+    },
+    {
+      "surface": "havo",
+      "counts": {
+        "NAME": 13,
+        "GEO": 6
+      },
+      "total": 19
+    },
+    {
+      "surface": "istiqlol",
+      "counts": {
+        "GEO": 6,
+        "ORG": 13
+      },
+      "total": 19
+    },
+    {
+      "surface": "orenburg",
+      "counts": {
+        "ORG": 10,
+        "GEO": 9
+      },
+      "total": 19
+    },
+    {
+      "surface": "russia",
+      "counts": {
+        "GEO": 18,
+        "ORG": 1
+      },
+      "total": 19
+    },
+    {
+      "surface": "android",
+      "counts": {
+        "ORG": 13,
+        "GEO": 5
+      },
+      "total": 18
+    },
+    {
+      "surface": "aziz abduhakimov",
+      "counts": {
+        "NAME": 16,
+        "ORG": 2
+      },
+      "total": 18
+    },
+    {
+      "surface": "bryusselda",
+      "counts": {
+        "GEO": 17,
+        "NAME": 1
+      },
+      "total": 18
+    },
+    {
+      "surface": "byurosi",
+      "counts": {
+        "ORG": 17,
+        "GEO": 1
+      },
+      "total": 18
+    },
+    {
+      "surface": "hirot",
+      "counts": {
+        "NAME": 8,
+        "GEO": 10
+      },
+      "total": 18
+    },
+    {
+      "surface": "moliya vaziri",
+      "counts": {
+        "NAME": 11,
+        "ORG": 7
+      },
+      "total": 18
+    },
+    {
+      "surface": "murod buildings",
+      "counts": {
+        "ORG": 17,
+        "GEO": 1
+      },
+      "total": 18
+    },
+    {
+      "surface": "respublikaning",
+      "counts": {
+        "ORG": 15,
+        "GEO": 3
+      },
+      "total": 18
+    },
+    {
+      "surface": "santos",
+      "counts": {
+        "ORG": 14,
+        "NAME": 2,
+        "GEO": 2
+      },
+      "total": 18
+    },
+    {
+      "surface": "saudiya arabistoniga",
+      "counts": {
+        "GEO": 17,
+        "ORG": 1
+      },
+      "total": 18
+    },
+    {
+      "surface": "saxovat",
+      "counts": {
+        "NAME": 14,
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 18
+    },
+    {
+      "surface": "superliga",
+      "counts": {
+        "GEO": 2,
+        "ORG": 16
+      },
+      "total": 18
+    },
+    {
+      "surface": "turkiy davlatlar tashkiloti",
+      "counts": {
+        "ORG": 15,
+        "GEO": 3
+      },
+      "total": 18
+    },
+    {
+      "surface": "xodimlarini",
+      "counts": {
+        "GEO": 15,
+        "NAME": 3
+      },
+      "total": 18
+    },
+    {
+      "surface": "yamal",
+      "counts": {
+        "NAME": 16,
+        "ORG": 2
+      },
+      "total": 18
+    },
+    {
+      "surface": "yevropa ittifoqining",
+      "counts": {
+        "GEO": 1,
+        "ORG": 17
+      },
+      "total": 18
+    },
+    {
+      "surface": "навбаҳор",
+      "counts": {
+        "ORG": 16,
+        "GEO": 2
+      },
+      "total": 18
+    },
+    {
+      "surface": "baada",
+      "counts": {
+        "ORG": 5,
+        "GEO": 12
+      },
+      "total": 17
+    },
+    {
+      "surface": "levante",
+      "counts": {
+        "ORG": 7,
+        "GEO": 10
+      },
+      "total": 17
+    },
+    {
+      "surface": "markaziga",
+      "counts": {
+        "ORG": 15,
+        "GEO": 2
+      },
+      "total": 17
+    },
+    {
+      "surface": "ural",
+      "counts": {
+        "ORG": 7,
+        "GEO": 10
+      },
+      "total": 17
+    },
+    {
+      "surface": "ash-shabob",
+      "counts": {
+        "ORG": 15,
+        "GEO": 1
+      },
+      "total": 16
+    },
+    {
+      "surface": "belarus respublikasi",
+      "counts": {
+        "ORG": 12,
+        "GEO": 4
+      },
+      "total": 16
+    },
+    {
+      "surface": "betis",
+      "counts": {
+        "ORG": 15,
+        "GEO": 1
+      },
+      "total": 16
+    },
+    {
+      "surface": "davlatlarda",
+      "counts": {
+        "NAME": 14,
+        "GEO": 2
+      },
+      "total": 16
+    },
+    {
+      "surface": "erkinlik",
+      "counts": {
+        "NAME": 14,
+        "GEO": 2
+      },
+      "total": 16
+    },
+    {
+      "surface": "hamjamiyati",
+      "counts": {
+        "ORG": 15,
+        "NAME": 1
+      },
+      "total": 16
+    },
+    {
+      "surface": "hududgaz poytaxt",
+      "counts": {
+        "ORG": 11,
+        "GEO": 5
+      },
+      "total": 16
+    },
+    {
+      "surface": "ittifoq",
+      "counts": {
+        "ORG": 15,
+        "GEO": 1
+      },
+      "total": 16
+    },
+    {
+      "surface": "michigan",
+      "counts": {
+        "ORG": 1,
+        "GEO": 15
+      },
+      "total": 16
+    },
+    {
+      "surface": "praga",
+      "counts": {
+        "GEO": 15,
+        "ORG": 1
+      },
+      "total": 16
+    },
+    {
+      "surface": "shalke",
+      "counts": {
+        "ORG": 13,
+        "GEO": 3
+      },
+      "total": 16
+    },
+    {
+      "surface": "tribuna.uz",
+      "counts": {
+        "ORG": 12,
+        "GEO": 4
+      },
+      "total": 16
+    },
+    {
+      "surface": "universitetlari",
+      "counts": {
+        "ORG": 15,
+        "GEO": 1
+      },
+      "total": 16
+    },
+    {
+      "surface": "al-ayn",
+      "counts": {
+        "ORG": 10,
+        "GEO": 5
+      },
+      "total": 15
+    },
+    {
+      "surface": "bayyer",
+      "counts": {
+        "ORG": 14,
+        "GEO": 1
+      },
+      "total": 15
+    },
+    {
+      "surface": "bosh assambleya",
+      "counts": {
+        "GEO": 7,
+        "ORG": 8
+      },
+      "total": 15
+    },
+    {
+      "surface": "feruza",
+      "counts": {
+        "GEO": 2,
+        "NAME": 13
+      },
+      "total": 15
+    },
+    {
+      "surface": "kadis",
+      "counts": {
+        "ORG": 10,
+        "GEO": 5
+      },
+      "total": 15
+    },
+    {
+      "surface": "kashima antlers",
+      "counts": {
+        "ORG": 11,
+        "GEO": 4
+      },
+      "total": 15
+    },
+    {
+      "surface": "kxsht",
+      "counts": {
+        "ORG": 12,
+        "GEO": 3
+      },
+      "total": 15
+    },
+    {
+      "surface": "makro",
+      "counts": {
+        "ORG": 14,
+        "GEO": 1
+      },
+      "total": 15
+    },
+    {
+      "surface": "qozog‘iston respublikasi",
+      "counts": {
+        "GEO": 6,
+        "ORG": 9
+      },
+      "total": 15
+    },
+    {
+      "surface": "rf",
+      "counts": {
+        "ORG": 10,
+        "GEO": 5
+      },
+      "total": 15
+    },
+    {
+      "surface": "san-paulu",
+      "counts": {
+        "GEO": 7,
+        "ORG": 8
+      },
+      "total": 15
+    },
+    {
+      "surface": "sho‘rtanneftgaz",
+      "counts": {
+        "GEO": 14,
+        "ORG": 1
+      },
+      "total": 15
+    },
+    {
+      "surface": "the telegraph",
+      "counts": {
+        "ORG": 14,
+        "GEO": 1
+      },
+      "total": 15
+    },
+    {
+      "surface": "valyadolid",
+      "counts": {
+        "ORG": 9,
+        "GEO": 6
+      },
+      "total": 15
+    },
+    {
+      "surface": "belgrad",
+      "counts": {
+        "GEO": 13,
+        "ORG": 1
+      },
+      "total": 14
+    },
+    {
+      "surface": "bolonya",
+      "counts": {
+        "ORG": 8,
+        "GEO": 6
+      },
+      "total": 14
+    },
+    {
+      "surface": "chorsu",
+      "counts": {
+        "GEO": 13,
+        "ORG": 1
+      },
+      "total": 14
+    },
+    {
+      "surface": "denov",
+      "counts": {
+        "NAME": 6,
+        "GEO": 7,
+        "ORG": 1
+      },
+      "total": 14
+    },
+    {
+      "surface": "do‘stlik",
+      "counts": {
+        "GEO": 13,
+        "ORG": 1
+      },
+      "total": 14
+    },
+    {
+      "surface": "kamolot",
+      "counts": {
+        "GEO": 4,
+        "ORG": 10
+      },
+      "total": 14
+    },
+    {
+      "surface": "leganes",
+      "counts": {
+        "ORG": 8,
+        "GEO": 6
+      },
+      "total": 14
+    },
+    {
+      "surface": "rim papasi",
+      "counts": {
+        "ORG": 2,
+        "NAME": 12
+      },
+      "total": 14
+    },
+    {
+      "surface": "siti",
+      "counts": {
+        "ORG": 13,
+        "GEO": 1
+      },
+      "total": 14
+    },
+    {
+      "surface": "uotford",
+      "counts": {
+        "ORG": 13,
+        "GEO": 1
+      },
+      "total": 14
+    },
+    {
+      "surface": "verder",
+      "counts": {
+        "ORG": 12,
+        "GEO": 2
+      },
+      "total": 14
+    },
+    {
+      "surface": "vulverhempton",
+      "counts": {
+        "ORG": 10,
+        "GEO": 4
+      },
+      "total": 14
+    },
+    {
+      "surface": "xalk",
+      "counts": {
+        "ORG": 1,
+        "NAME": 13
+      },
+      "total": 14
+    },
+    {
+      "surface": "yevro-2016",
+      "counts": {
+        "GEO": 13,
+        "ORG": 1
+      },
+      "total": 14
+    },
+    {
+      "surface": "сурхон",
+      "counts": {
+        "ORG": 7,
+        "GEO": 7
+      },
+      "total": 14
+    },
+    {
+      "surface": "aqsh elchixonasi",
+      "counts": {
+        "ORG": 12,
+        "GEO": 1
+      },
+      "total": 13
+    },
+    {
+      "surface": "diyorbakir",
+      "counts": {
+        "GEO": 12,
+        "NAME": 1
+      },
+      "total": 13
+    },
+    {
+      "surface": "granada",
+      "counts": {
+        "GEO": 4,
+        "ORG": 9
+      },
+      "total": 13
+    },
+    {
+      "surface": "magic city",
+      "counts": {
+        "GEO": 12,
+        "ORG": 1
+      },
+      "total": 13
+    },
+    {
+      "surface": "markaziy afrika respublikasi",
+      "counts": {
+        "GEO": 12,
+        "NAME": 1
+      },
+      "total": 13
+    },
+    {
+      "surface": "mash'al",
+      "counts": {
+        "ORG": 12,
+        "GEO": 1
+      },
+      "total": 13
+    },
+    {
+      "surface": "my.gov.uz",
+      "counts": {
+        "ORG": 10,
+        "GEO": 3
+      },
+      "total": 13
+    },
+    {
+      "surface": "ozarbayjon respublikasi",
+      "counts": {
+        "ORG": 12,
+        "GEO": 1
+      },
+      "total": 13
+    },
+    {
+      "surface": "portlend",
+      "counts": {
+        "ORG": 1,
+        "GEO": 12
+      },
+      "total": 13
+    },
+    {
+      "surface": "rossiya davlat dumasi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 12
+      },
+      "total": 13
+    },
+    {
+      "surface": "rossiya tergov qo‘mitasi",
+      "counts": {
+        "ORG": 12,
+        "GEO": 1
+      },
+      "total": 13
+    },
+    {
+      "surface": "toshkent shahar iibb yhxb",
+      "counts": {
+        "ORG": 12,
+        "GEO": 1
+      },
+      "total": 13
+    },
+    {
+      "surface": "xo‘jand",
+      "counts": {
+        "GEO": 11,
+        "ORG": 2
+      },
+      "total": 13
+    },
+    {
+      "surface": "bosh vazir",
+      "counts": {
+        "NAME": 10,
+        "ORG": 2
+      },
+      "total": 12
+    },
+    {
+      "surface": "byornli",
+      "counts": {
+        "ORG": 9,
+        "GEO": 3
+      },
+      "total": 12
+    },
+    {
+      "surface": "chinoz",
+      "counts": {
+        "GEO": 10,
+        "NAME": 2
+      },
+      "total": 12
+    },
+    {
+      "surface": "gabala",
+      "counts": {
+        "GEO": 4,
+        "ORG": 8
+      },
+      "total": 12
+    },
+    {
+      "surface": "jamoa",
+      "counts": {
+        "NAME": 1,
+        "ORG": 11
+      },
+      "total": 12
+    },
+    {
+      "surface": "maldiv",
+      "counts": {
+        "GEO": 10,
+        "ORG": 2
+      },
+      "total": 12
+    },
+    {
+      "surface": "malmyo",
+      "counts": {
+        "GEO": 5,
+        "ORG": 7
+      },
+      "total": 12
+    },
+    {
+      "surface": "metro",
+      "counts": {
+        "GEO": 9,
+        "ORG": 3
+      },
+      "total": 12
+    },
+    {
+      "surface": "muzeyi",
+      "counts": {
+        "ORG": 11,
+        "GEO": 1
+      },
+      "total": 12
+    },
+    {
+      "surface": "nursulton",
+      "counts": {
+        "NAME": 10,
+        "GEO": 2
+      },
+      "total": 12
+    },
+    {
+      "surface": "olimpiada",
+      "counts": {
+        "GEO": 7,
+        "ORG": 5
+      },
+      "total": 12
+    },
+    {
+      "surface": "o‘zbekiston markaziy banki",
+      "counts": {
+        "GEO": 1,
+        "ORG": 11
+      },
+      "total": 12
+    },
+    {
+      "surface": "quddus",
+      "counts": {
+        "GEO": 10,
+        "NAME": 2
+      },
+      "total": 12
+    },
+    {
+      "surface": "red bull",
+      "counts": {
+        "ORG": 11,
+        "GEO": 1
+      },
+      "total": 12
+    },
+    {
+      "surface": "rossiya federatsiyasining",
+      "counts": {
+        "ORG": 6,
+        "GEO": 6
+      },
+      "total": 12
+    },
+    {
+      "surface": "sh.b",
+      "counts": {
+        "NAME": 10,
+        "ORG": 2
+      },
+      "total": 12
+    },
+    {
+      "surface": "shahridagi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 10
+      },
+      "total": 12
+    },
+    {
+      "surface": "shifoxona",
+      "counts": {
+        "ORG": 4,
+        "GEO": 8
+      },
+      "total": 12
+    },
+    {
+      "surface": "sobiq ittifoq",
+      "counts": {
+        "ORG": 7,
+        "GEO": 5
+      },
+      "total": 12
+    },
+    {
+      "surface": "uzb",
+      "counts": {
+        "GEO": 11,
+        "ORG": 1
+      },
+      "total": 12
+    },
+    {
+      "surface": "viktoriya",
+      "counts": {
+        "GEO": 7,
+        "NAME": 2,
+        "ORG": 3
+      },
+      "total": 12
+    },
+    {
+      "surface": "xarkov",
+      "counts": {
+        "GEO": 11,
+        "NAME": 1
+      },
+      "total": 12
+    },
+    {
+      "surface": "xodim",
+      "counts": {
+        "NAME": 2,
+        "GEO": 10
+      },
+      "total": 12
+    },
+    {
+      "surface": "yevroparlament",
+      "counts": {
+        "ORG": 11,
+        "GEO": 1
+      },
+      "total": 12
+    },
+    {
+      "surface": "zarafshon",
+      "counts": {
+        "GEO": 10,
+        "NAME": 2
+      },
+      "total": 12
+    },
+    {
+      "surface": "мурад билдинг",
+      "counts": {
+        "ORG": 11,
+        "GEO": 1
+      },
+      "total": 12
+    },
+    {
+      "surface": "aeroport",
+      "counts": {
+        "ORG": 3,
+        "GEO": 8
+      },
+      "total": 11
+    },
+    {
+      "surface": "arizona",
+      "counts": {
+        "GEO": 10,
+        "NAME": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "asaka tumani",
+      "counts": {
+        "GEO": 10,
+        "NAME": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "chortoq",
+      "counts": {
+        "GEO": 10,
+        "NAME": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "eron islom respublikasi",
+      "counts": {
+        "GEO": 4,
+        "ORG": 7
+      },
+      "total": 11
+    },
+    {
+      "surface": "feyyenoord",
+      "counts": {
+        "ORG": 10,
+        "GEO": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "gabon",
+      "counts": {
+        "ORG": 2,
+        "GEO": 9
+      },
+      "total": 11
+    },
+    {
+      "surface": "ibn sino",
+      "counts": {
+        "NAME": 8,
+        "GEO": 3
+      },
+      "total": 11
+    },
+    {
+      "surface": "jomboy",
+      "counts": {
+        "GEO": 10,
+        "NAME": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "kishinyov",
+      "counts": {
+        "GEO": 10,
+        "NAME": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "kolorado",
+      "counts": {
+        "GEO": 10,
+        "ORG": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "leypsig",
+      "counts": {
+        "ORG": 4,
+        "GEO": 7
+      },
+      "total": 11
+    },
+    {
+      "surface": "man siti",
+      "counts": {
+        "ORG": 10,
+        "GEO": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "mirzo ulugbek",
+      "counts": {
+        "GEO": 2,
+        "NAME": 9
+      },
+      "total": 11
+    },
+    {
+      "surface": "oliy ta’lim fan va innovatsiyalar vaziri",
+      "counts": {
+        "NAME": 10,
+        "ORG": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "pokiston islom respublikasi",
+      "counts": {
+        "ORG": 10,
+        "GEO": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "pop",
+      "counts": {
+        "GEO": 10,
+        "ORG": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "rayhon",
+      "counts": {
+        "NAME": 6,
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "respublikada",
+      "counts": {
+        "ORG": 9,
+        "GEO": 2
+      },
+      "total": 11
+    },
+    {
+      "surface": "samara",
+      "counts": {
+        "GEO": 9,
+        "NAME": 2
+      },
+      "total": 11
+    },
+    {
+      "surface": "sana",
+      "counts": {
+        "ORG": 7,
+        "NAME": 2,
+        "GEO": 2
+      },
+      "total": 11
+    },
+    {
+      "surface": "sassuolo",
+      "counts": {
+        "ORG": 9,
+        "GEO": 2
+      },
+      "total": 11
+    },
+    {
+      "surface": "sautgempton",
+      "counts": {
+        "ORG": 3,
+        "GEO": 8
+      },
+      "total": 11
+    },
+    {
+      "surface": "shirin",
+      "counts": {
+        "NAME": 5,
+        "GEO": 6
+      },
+      "total": 11
+    },
+    {
+      "surface": "tengrinews.kz",
+      "counts": {
+        "GEO": 2,
+        "ORG": 9
+      },
+      "total": 11
+    },
+    {
+      "surface": "universitet",
+      "counts": {
+        "ORG": 10,
+        "GEO": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "vladimir",
+      "counts": {
+        "NAME": 10,
+        "GEO": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "xalqaro koinot stansiyasi",
+      "counts": {
+        "GEO": 10,
+        "ORG": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "xalqaro olimpiya qo‘mitasi",
+      "counts": {
+        "GEO": 2,
+        "ORG": 9
+      },
+      "total": 11
+    },
+    {
+      "surface": "xitoy xalq respublikasining",
+      "counts": {
+        "ORG": 10,
+        "GEO": 1
+      },
+      "total": 11
+    },
+    {
+      "surface": "yoshlar markazida",
+      "counts": {
+        "ORG": 1,
+        "GEO": 10
+      },
+      "total": 11
+    },
+    {
+      "surface": "anadolu",
+      "counts": {
+        "ORG": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "augsburg",
+      "counts": {
+        "ORG": 7,
+        "GEO": 3
+      },
+      "total": 10
+    },
+    {
+      "surface": "bahor",
+      "counts": {
+        "NAME": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "birlashgan qirollik",
+      "counts": {
+        "GEO": 6,
+        "ORG": 4
+      },
+      "total": 10
+    },
+    {
+      "surface": "brayton",
+      "counts": {
+        "ORG": 4,
+        "GEO": 6
+      },
+      "total": 10
+    },
+    {
+      "surface": "chelyabinsk",
+      "counts": {
+        "NAME": 2,
+        "GEO": 8
+      },
+      "total": 10
+    },
+    {
+      "surface": "davlatda",
+      "counts": {
+        "GEO": 3,
+        "NAME": 7
+      },
+      "total": 10
+    },
+    {
+      "surface": "izvestiya",
+      "counts": {
+        "ORG": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "janubiy afrika respublikasi",
+      "counts": {
+        "GEO": 9,
+        "ORG": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "jyenoa",
+      "counts": {
+        "ORG": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "los angeles times",
+      "counts": {
+        "ORG": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "markaziy harbiy okrug",
+      "counts": {
+        "ORG": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "maxtumquli",
+      "counts": {
+        "GEO": 6,
+        "NAME": 4
+      },
+      "total": 10
+    },
+    {
+      "surface": "melilya",
+      "counts": {
+        "ORG": 7,
+        "GEO": 3
+      },
+      "total": 10
+    },
+    {
+      "surface": "milliy",
+      "counts": {
+        "GEO": 5,
+        "ORG": 5
+      },
+      "total": 10
+    },
+    {
+      "surface": "monterrey",
+      "counts": {
+        "GEO": 5,
+        "ORG": 5
+      },
+      "total": 10
+    },
+    {
+      "surface": "o‘zbekiston fuqarosi",
+      "counts": {
+        "ORG": 3,
+        "NAME": 6,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "o‘zbekiston savdo-sanoat palatasi",
+      "counts": {
+        "ORG": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "o‘zbekkonsert",
+      "counts": {
+        "ORG": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "safiya",
+      "counts": {
+        "NAME": 3,
+        "ORG": 7
+      },
+      "total": 10
+    },
+    {
+      "surface": "shtutgart",
+      "counts": {
+        "ORG": 1,
+        "GEO": 9
+      },
+      "total": 10
+    },
+    {
+      "surface": "shuhrat",
+      "counts": {
+        "NAME": 9,
+        "ORG": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "so‘g‘diyona",
+      "counts": {
+        "ORG": 9,
+        "GEO": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "stok siti",
+      "counts": {
+        "GEO": 4,
+        "ORG": 6
+      },
+      "total": 10
+    },
+    {
+      "surface": "tottenxem",
+      "counts": {
+        "ORG": 8,
+        "GEO": 2
+      },
+      "total": 10
+    },
+    {
+      "surface": "yangi o‘zbekiston",
+      "counts": {
+        "ORG": 1,
+        "GEO": 9
+      },
+      "total": 10
+    },
+    {
+      "surface": "yulduz",
+      "counts": {
+        "NAME": 9,
+        "ORG": 1
+      },
+      "total": 10
+    },
+    {
+      "surface": "милан",
+      "counts": {
+        "GEO": 3,
+        "ORG": 7
+      },
+      "total": 10
+    },
+    {
+      "surface": "a.m",
+      "counts": {
+        "NAME": 8,
+        "ORG": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "afrosiyob",
+      "counts": {
+        "GEO": 6,
+        "ORG": 3
+      },
+      "total": 9
+    },
+    {
+      "surface": "ahmad",
+      "counts": {
+        "NAME": 8,
+        "ORG": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "alpomish",
+      "counts": {
+        "NAME": 6,
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "asean",
+      "counts": {
+        "GEO": 3,
+        "ORG": 6
+      },
+      "total": 9
+    },
+    {
+      "surface": "aslida",
+      "counts": {
+        "NAME": 7,
+        "ORG": 2
+      },
+      "total": 9
+    },
+    {
+      "surface": "axmat",
+      "counts": {
+        "ORG": 6,
+        "NAME": 2,
+        "GEO": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "bosh prokuror",
+      "counts": {
+        "NAME": 8,
+        "ORG": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "bryugge",
+      "counts": {
+        "ORG": 6,
+        "GEO": 3
+      },
+      "total": 9
+    },
+    {
+      "surface": "darakchi",
+      "counts": {
+        "ORG": 8,
+        "NAME": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "eron tashqi ishlar vazirligi",
+      "counts": {
+        "ORG": 8,
+        "NAME": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "gamburg",
+      "counts": {
+        "ORG": 2,
+        "GEO": 7
+      },
+      "total": 9
+    },
+    {
+      "surface": "haddersfild",
+      "counts": {
+        "GEO": 7,
+        "ORG": 2
+      },
+      "total": 9
+    },
+    {
+      "surface": "ichki ishlar boshqarmasi",
+      "counts": {
+        "ORG": 8,
+        "GEO": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "iker kasilyas",
+      "counts": {
+        "NAME": 7,
+        "ORG": 2
+      },
+      "total": 9
+    },
+    {
+      "surface": "kamaz",
+      "counts": {
+        "GEO": 1,
+        "ORG": 8
+      },
+      "total": 9
+    },
+    {
+      "surface": "kongress",
+      "counts": {
+        "GEO": 1,
+        "ORG": 8
+      },
+      "total": 9
+    },
+    {
+      "surface": "lester siti",
+      "counts": {
+        "ORG": 8,
+        "GEO": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "lill",
+      "counts": {
+        "GEO": 6,
+        "ORG": 3
+      },
+      "total": 9
+    },
+    {
+      "surface": "malaga",
+      "counts": {
+        "GEO": 4,
+        "ORG": 5
+      },
+      "total": 9
+    },
+    {
+      "surface": "manas",
+      "counts": {
+        "GEO": 8,
+        "NAME": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "monaco",
+      "counts": {
+        "GEO": 1,
+        "ORG": 8
+      },
+      "total": 9
+    },
+    {
+      "surface": "omon",
+      "counts": {
+        "NAME": 1,
+        "GEO": 8
+      },
+      "total": 9
+    },
+    {
+      "surface": "qirollik klubi",
+      "counts": {
+        "ORG": 8,
+        "GEO": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "rayo valekano",
+      "counts": {
+        "ORG": 8,
+        "GEO": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "reddit",
+      "counts": {
+        "ORG": 7,
+        "GEO": 2
+      },
+      "total": 9
+    },
+    {
+      "surface": "rio",
+      "counts": {
+        "NAME": 1,
+        "GEO": 8
+      },
+      "total": 9
+    },
+    {
+      "surface": "rohat",
+      "counts": {
+        "NAME": 2,
+        "GEO": 7
+      },
+      "total": 9
+    },
+    {
+      "surface": "rossiya 1",
+      "counts": {
+        "ORG": 8,
+        "GEO": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "sharof rashidov",
+      "counts": {
+        "NAME": 8,
+        "GEO": 1
+      },
+      "total": 9
+    },
+    {
+      "surface": "sofiya",
+      "counts": {
+        "NAME": 4,
+        "GEO": 5
+      },
+      "total": 9
+    },
+    {
+      "surface": "vnukovo",
+      "counts": {
+        "GEO": 5,
+        "ORG": 4
+      },
+      "total": 9
+    },
+    {
+      "surface": "xalqaro press-klub",
+      "counts": {
+        "ORG": 6,
+        "GEO": 3
+      },
+      "total": 9
+    },
+    {
+      "surface": "yevropa ligasi",
+      "counts": {
+        "GEO": 3,
+        "ORG": 6
+      },
+      "total": 9
+    },
+    {
+      "surface": "anji",
+      "counts": {
+        "GEO": 1,
+        "ORG": 7
+      },
+      "total": 8
+    },
+    {
+      "surface": "antalyaspor",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "artur",
+      "counts": {
+        "NAME": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "atlanta",
+      "counts": {
+        "GEO": 7,
+        "ORG": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "bayern",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "beshiktosh",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "bordo",
+      "counts": {
+        "GEO": 5,
+        "ORG": 3
+      },
+      "total": 8
+    },
+    {
+      "surface": "boston",
+      "counts": {
+        "NAME": 6,
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "deyzi",
+      "counts": {
+        "NAME": 5,
+        "ORG": 3
+      },
+      "total": 8
+    },
+    {
+      "surface": "emireyts",
+      "counts": {
+        "GEO": 7,
+        "ORG": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "farhod",
+      "counts": {
+        "NAME": 5,
+        "GEO": 3
+      },
+      "total": 8
+    },
+    {
+      "surface": "frayburg",
+      "counts": {
+        "GEO": 5,
+        "ORG": 3
+      },
+      "total": 8
+    },
+    {
+      "surface": "germaniya federativ respublikasi",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "g‘arb",
+      "counts": {
+        "GEO": 7,
+        "ORG": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "ios",
+      "counts": {
+        "ORG": 3,
+        "GEO": 5
+      },
+      "total": 8
+    },
+    {
+      "surface": "kosonsoy",
+      "counts": {
+        "GEO": 7,
+        "ORG": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "lexus",
+      "counts": {
+        "ORG": 7,
+        "NAME": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "majnuntol",
+      "counts": {
+        "GEO": 7,
+        "ORG": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "makkabi",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "mashable",
+      "counts": {
+        "ORG": 6,
+        "GEO": 2
+      },
+      "total": 8
+    },
+    {
+      "surface": "mehribon",
+      "counts": {
+        "NAME": 7,
+        "ORG": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "midlsbro",
+      "counts": {
+        "GEO": 5,
+        "ORG": 3
+      },
+      "total": 8
+    },
+    {
+      "surface": "munis",
+      "counts": {
+        "GEO": 7,
+        "ORG": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "neksiya",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "oq uyda",
+      "counts": {
+        "ORG": 2,
+        "GEO": 6
+      },
+      "total": 8
+    },
+    {
+      "surface": "o‘zbekiston respublikasida",
+      "counts": {
+        "GEO": 5,
+        "ORG": 3
+      },
+      "total": 8
+    },
+    {
+      "surface": "paris",
+      "counts": {
+        "GEO": 7,
+        "ORG": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "persepolis",
+      "counts": {
+        "GEO": 4,
+        "ORG": 4
+      },
+      "total": 8
+    },
+    {
+      "surface": "rodrigo",
+      "counts": {
+        "NAME": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "sibir",
+      "counts": {
+        "GEO": 6,
+        "ORG": 2
+      },
+      "total": 8
+    },
+    {
+      "surface": "tashqi ishlar vaziri",
+      "counts": {
+        "NAME": 3,
+        "ORG": 5
+      },
+      "total": 8
+    },
+    {
+      "surface": "tinchlik",
+      "counts": {
+        "ORG": 1,
+        "GEO": 7
+      },
+      "total": 8
+    },
+    {
+      "surface": "tsrvena zvezda",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "us open",
+      "counts": {
+        "GEO": 6,
+        "ORG": 2
+      },
+      "total": 8
+    },
+    {
+      "surface": "vest xem",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "yaim",
+      "counts": {
+        "GEO": 4,
+        "ORG": 4
+      },
+      "total": 8
+    },
+    {
+      "surface": "yevroosiyo iqtisodiy ittifoqi",
+      "counts": {
+        "ORG": 7,
+        "GEO": 1
+      },
+      "total": 8
+    },
+    {
+      "surface": "yoshlar markazi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 7
+      },
+      "total": 8
+    },
+    {
+      "surface": "zaltsburg",
+      "counts": {
+        "GEO": 6,
+        "ORG": 2
+      },
+      "total": 8
+    },
+    {
+      "surface": "a seriya",
+      "counts": {
+        "ORG": 4,
+        "GEO": 3
+      },
+      "total": 7
+    },
+    {
+      "surface": "as",
+      "counts": {
+        "GEO": 1,
+        "ORG": 5,
+        "NAME": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "bundesliga",
+      "counts": {
+        "ORG": 6,
+        "GEO": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "de xea",
+      "counts": {
+        "NAME": 4,
+        "GEO": 3
+      },
+      "total": 7
+    },
+    {
+      "surface": "detroyt",
+      "counts": {
+        "ORG": 1,
+        "GEO": 6
+      },
+      "total": 7
+    },
+    {
+      "surface": "donetsk xalq respublikasi",
+      "counts": {
+        "GEO": 6,
+        "ORG": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "ezgulik",
+      "counts": {
+        "GEO": 1,
+        "NAME": 5,
+        "ORG": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "filippinga",
+      "counts": {
+        "GEO": 5,
+        "NAME": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "fransiya hukumati",
+      "counts": {
+        "ORG": 5,
+        "NAME": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "fulhem",
+      "counts": {
+        "ORG": 4,
+        "GEO": 3
+      },
+      "total": 7
+    },
+    {
+      "surface": "furqat",
+      "counts": {
+        "NAME": 4,
+        "GEO": 3
+      },
+      "total": 7
+    },
+    {
+      "surface": "g7",
+      "counts": {
+        "ORG": 5,
+        "GEO": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "gavi",
+      "counts": {
+        "NAME": 5,
+        "ORG": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "gfr",
+      "counts": {
+        "ORG": 5,
+        "GEO": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "guanchjou",
+      "counts": {
+        "GEO": 5,
+        "ORG": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "hannover",
+      "counts": {
+        "GEO": 5,
+        "ORG": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "hokimi",
+      "counts": {
+        "NAME": 6,
+        "GEO": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "indiana",
+      "counts": {
+        "GEO": 6,
+        "ORG": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "kopenhagen",
+      "counts": {
+        "GEO": 6,
+        "ORG": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "milliy assambleya",
+      "counts": {
+        "GEO": 1,
+        "ORG": 6
+      },
+      "total": 7
+    },
+    {
+      "surface": "nant",
+      "counts": {
+        "GEO": 4,
+        "ORG": 3
+      },
+      "total": 7
+    },
+    {
+      "surface": "nilufar",
+      "counts": {
+        "NAME": 6,
+        "GEO": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "oklaxoma",
+      "counts": {
+        "GEO": 5,
+        "ORG": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "osiyo chempionati",
+      "counts": {
+        "ORG": 5,
+        "GEO": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "oydin",
+      "counts": {
+        "NAME": 5,
+        "GEO": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "o‘zrtxb",
+      "counts": {
+        "ORG": 6,
+        "GEO": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "papua-yangi gvineya",
+      "counts": {
+        "GEO": 5,
+        "ORG": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "politsiyachi",
+      "counts": {
+        "ORG": 1,
+        "NAME": 6
+      },
+      "total": 7
+    },
+    {
+      "surface": "portugaliya terma jamoasi",
+      "counts": {
+        "ORG": 5,
+        "GEO": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "qurolli kuchlar akademiyasi",
+      "counts": {
+        "ORG": 5,
+        "GEO": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "reus",
+      "counts": {
+        "GEO": 3,
+        "NAME": 1,
+        "ORG": 3
+      },
+      "total": 7
+    },
+    {
+      "surface": "shohruhxon",
+      "counts": {
+        "NAME": 4,
+        "ORG": 3
+      },
+      "total": 7
+    },
+    {
+      "surface": "so'g'diyona",
+      "counts": {
+        "GEO": 2,
+        "ORG": 5
+      },
+      "total": 7
+    },
+    {
+      "surface": "south china morning post",
+      "counts": {
+        "ORG": 6,
+        "GEO": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "suriya hukumati",
+      "counts": {
+        "ORG": 6,
+        "NAME": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "uilyams",
+      "counts": {
+        "NAME": 5,
+        "ORG": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "xominaiy",
+      "counts": {
+        "NAME": 5,
+        "ORG": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "yamanga",
+      "counts": {
+        "GEO": 6,
+        "ORG": 1
+      },
+      "total": 7
+    },
+    {
+      "surface": "yth",
+      "counts": {
+        "ORG": 5,
+        "GEO": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "ойбек",
+      "counts": {
+        "NAME": 5,
+        "GEO": 2
+      },
+      "total": 7
+    },
+    {
+      "surface": "a.o",
+      "counts": {
+        "ORG": 1,
+        "NAME": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "aeroporti",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "aqsh senati",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "astraxan",
+      "counts": {
+        "NAME": 1,
+        "GEO": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "atirau",
+      "counts": {
+        "GEO": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "axborot va ommaviy kommunikatsiyalar agentligi",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "ba",
+      "counts": {
+        "ORG": 2,
+        "NAME": 1,
+        "GEO": 3
+      },
+      "total": 6
+    },
+    {
+      "surface": "bundestag",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "deportivo",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "dnepr",
+      "counts": {
+        "GEO": 2,
+        "ORG": 4
+      },
+      "total": 6
+    },
+    {
+      "surface": "dominikan respublikasi",
+      "counts": {
+        "GEO": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "drujba",
+      "counts": {
+        "GEO": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "duma",
+      "counts": {
+        "GEO": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "fransiya respublikasi",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "herta",
+      "counts": {
+        "ORG": 4,
+        "GEO": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "hodisa",
+      "counts": {
+        "NAME": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "ichki ishlar vaziri",
+      "counts": {
+        "ORG": 4,
+        "NAME": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "ipak yo‘li",
+      "counts": {
+        "GEO": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "istanbul xalqaro aeroporti",
+      "counts": {
+        "GEO": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "kopengagen",
+      "counts": {
+        "GEO": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "krilya sovetov",
+      "counts": {
+        "GEO": 1,
+        "ORG": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "las-palmas",
+      "counts": {
+        "GEO": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "los-anjyeles gelaksi",
+      "counts": {
+        "GEO": 2,
+        "ORG": 4
+      },
+      "total": 6
+    },
+    {
+      "surface": "maktablarga",
+      "counts": {
+        "ORG": 4,
+        "GEO": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "margilon",
+      "counts": {
+        "NAME": 4,
+        "GEO": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "marhabo",
+      "counts": {
+        "NAME": 1,
+        "GEO": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "maynts",
+      "counts": {
+        "ORG": 4,
+        "GEO": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "minor",
+      "counts": {
+        "GEO": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "mirabad avenue",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "navoiy kon-metallurgiya kombinati",
+      "counts": {
+        "GEO": 1,
+        "ORG": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "nuroniy",
+      "counts": {
+        "NAME": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "nyu-york siti",
+      "counts": {
+        "ORG": 4,
+        "GEO": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "oloy",
+      "counts": {
+        "GEO": 2,
+        "ORG": 4
+      },
+      "total": 6
+    },
+    {
+      "surface": "osiyo futbol konfederatsiyasi",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "oskar",
+      "counts": {
+        "NAME": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "parma",
+      "counts": {
+        "GEO": 2,
+        "ORG": 4
+      },
+      "total": 6
+    },
+    {
+      "surface": "qirg‘iz respublikasi",
+      "counts": {
+        "GEO": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "qorabog‘",
+      "counts": {
+        "GEO": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "respublikachilar",
+      "counts": {
+        "ORG": 5,
+        "NAME": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "roman abramovich",
+      "counts": {
+        "NAME": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "rossiya federatsiyasiga",
+      "counts": {
+        "ORG": 2,
+        "GEO": 4
+      },
+      "total": 6
+    },
+    {
+      "surface": "rossiya imperiyasi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 4
+      },
+      "total": 6
+    },
+    {
+      "surface": "rustavi",
+      "counts": {
+        "NAME": 1,
+        "GEO": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "san-antonio",
+      "counts": {
+        "GEO": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "shifokorlar",
+      "counts": {
+        "NAME": 2,
+        "ORG": 4
+      },
+      "total": 6
+    },
+    {
+      "surface": "strasburg",
+      "counts": {
+        "GEO": 3,
+        "ORG": 3
+      },
+      "total": 6
+    },
+    {
+      "surface": "suonsi",
+      "counts": {
+        "GEO": 3,
+        "ORG": 3
+      },
+      "total": 6
+    },
+    {
+      "surface": "titan",
+      "counts": {
+        "ORG": 1,
+        "GEO": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "toshkent to‘qimachilik va yengil sanoat instituti",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "tvitter",
+      "counts": {
+        "ORG": 4,
+        "GEO": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "udineze",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "uza",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "vatikan",
+      "counts": {
+        "GEO": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "xayko maas",
+      "counts": {
+        "NAME": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "yeoii",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "yevrokengash",
+      "counts": {
+        "GEO": 1,
+        "ORG": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "буюк ипак йўли",
+      "counts": {
+        "GEO": 4,
+        "ORG": 2
+      },
+      "total": 6
+    },
+    {
+      "surface": "голден хаус",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "имом бухорий",
+      "counts": {
+        "NAME": 5,
+        "ORG": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "мурат билдинг",
+      "counts": {
+        "ORG": 5,
+        "GEO": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "навбахор",
+      "counts": {
+        "GEO": 1,
+        "ORG": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "навоий",
+      "counts": {
+        "GEO": 5,
+        "NAME": 1
+      },
+      "total": 6
+    },
+    {
+      "surface": "ссср",
+      "counts": {
+        "ORG": 1,
+        "GEO": 5
+      },
+      "total": 6
+    },
+    {
+      "surface": "abay",
+      "counts": {
+        "NAME": 3,
+        "GEO": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "aeroportida",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "aeroportlar",
+      "counts": {
+        "GEO": 2,
+        "ORG": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "al quds",
+      "counts": {
+        "GEO": 4,
+        "ORG": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "aral",
+      "counts": {
+        "ORG": 3,
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "azov",
+      "counts": {
+        "ORG": 1,
+        "GEO": 4
+      },
+      "total": 5
+    },
+    {
+      "surface": "dxr",
+      "counts": {
+        "GEO": 1,
+        "ORG": 4
+      },
+      "total": 5
+    },
+    {
+      "surface": "fan",
+      "counts": {
+        "ORG": 2,
+        "NAME": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "frozinone",
+      "counts": {
+        "ORG": 2,
+        "GEO": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "haj",
+      "counts": {
+        "GEO": 4,
+        "NAME": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "hall",
+      "counts": {
+        "NAME": 1,
+        "GEO": 4
+      },
+      "total": 5
+    },
+    {
+      "surface": "inson",
+      "counts": {
+        "NAME": 3,
+        "ORG": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "jahon kubogi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "kalabriya",
+      "counts": {
+        "NAME": 3,
+        "GEO": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "kataloniyaliklar",
+      "counts": {
+        "GEO": 4,
+        "ORG": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "kola",
+      "counts": {
+        "GEO": 2,
+        "ORG": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "konnektikut",
+      "counts": {
+        "GEO": 4,
+        "ORG": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "koreya respublikasining",
+      "counts": {
+        "GEO": 2,
+        "ORG": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "kyoln",
+      "counts": {
+        "GEO": 3,
+        "ORG": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "lugansk xalq respublikasi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "maldiv respublikasi",
+      "counts": {
+        "GEO": 3,
+        "ORG": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "marhamat",
+      "counts": {
+        "NAME": 1,
+        "GEO": 4
+      },
+      "total": 5
+    },
+    {
+      "surface": "marko",
+      "counts": {
+        "ORG": 4,
+        "NAME": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "millenium",
+      "counts": {
+        "GEO": 4,
+        "ORG": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "mirzo ulugʻbek",
+      "counts": {
+        "NAME": 3,
+        "GEO": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "nitstsa",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "norvich",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "oliy rada",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "orol",
+      "counts": {
+        "GEO": 3,
+        "ORG": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "o‘zekspomarkaz",
+      "counts": {
+        "GEO": 2,
+        "ORG": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "palermo",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "paynet",
+      "counts": {
+        "ORG": 3,
+        "GEO": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "politsiyachilar",
+      "counts": {
+        "ORG": 3,
+        "NAME": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "postda.uz",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "ryazan",
+      "counts": {
+        "GEO": 4,
+        "ORG": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "sankt-peterburg shahri",
+      "counts": {
+        "ORG": 2,
+        "GEO": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "saratov",
+      "counts": {
+        "NAME": 1,
+        "GEO": 4
+      },
+      "total": 5
+    },
+    {
+      "surface": "sent-eten",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "sharp",
+      "counts": {
+        "NAME": 1,
+        "ORG": 4
+      },
+      "total": 5
+    },
+    {
+      "surface": "sharq",
+      "counts": {
+        "GEO": 4,
+        "ORG": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "shodiyona",
+      "counts": {
+        "ORG": 1,
+        "NAME": 4
+      },
+      "total": 5
+    },
+    {
+      "surface": "suriya prezidenti",
+      "counts": {
+        "NAME": 4,
+        "ORG": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "tashqi ishlar vazirligining",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "toliblar",
+      "counts": {
+        "ORG": 2,
+        "NAME": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "tribuna",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "venger",
+      "counts": {
+        "NAME": 2,
+        "GEO": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "vest bromvich",
+      "counts": {
+        "GEO": 3,
+        "ORG": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "washington post",
+      "counts": {
+        "ORG": 4,
+        "GEO": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "xaltmaagiyn battulga",
+      "counts": {
+        "ORG": 1,
+        "NAME": 4
+      },
+      "total": 5
+    },
+    {
+      "surface": "xuk",
+      "counts": {
+        "NAME": 2,
+        "ORG": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "xyuston",
+      "counts": {
+        "ORG": 2,
+        "GEO": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "yeidan",
+      "counts": {
+        "ORG": 3,
+        "GEO": 2
+      },
+      "total": 5
+    },
+    {
+      "surface": "yevropa ittifoqida",
+      "counts": {
+        "GEO": 2,
+        "ORG": 3
+      },
+      "total": 5
+    },
+    {
+      "surface": "туркияга",
+      "counts": {
+        "GEO": 4,
+        "ORG": 1
+      },
+      "total": 5
+    },
+    {
+      "surface": "amen",
+      "counts": {
+        "GEO": 1,
+        "ORG": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "antverpen",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "austin",
+      "counts": {
+        "GEO": 3,
+        "NAME": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "avstriyaning",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "baxmal",
+      "counts": {
+        "GEO": 2,
+        "NAME": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "bek baraka",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "bilbao",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "birmingham",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "bm group",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "boysun",
+      "counts": {
+        "NAME": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "britaniya mudofaa vaziri",
+      "counts": {
+        "ORG": 3,
+        "NAME": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "britaniya parlamenti",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "butan",
+      "counts": {
+        "NAME": 1,
+        "GEO": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "buvayda",
+      "counts": {
+        "GEO": 3,
+        "NAME": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "checheniston respublikasi",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "delaver",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "empoli",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "etihad",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "f",
+      "counts": {
+        "NAME": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "fars",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "gennadiy timchenko",
+      "counts": {
+        "NAME": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "ginnesning rekordlar kitobiga",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "gvangyu",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "hamjamiyatiga",
+      "counts": {
+        "NAME": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "harts",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "hizb ut-tahrir",
+      "counts": {
+        "ORG": 2,
+        "NAME": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "innoprom",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "islom karimov nomidagi toshkent xalqaro aeroporti",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "ispaniya chempionati",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "jahonda",
+      "counts": {
+        "GEO": 3,
+        "NAME": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "jamiyat",
+      "counts": {
+        "NAME": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "jangarilar",
+      "counts": {
+        "NAME": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "jch",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "jyetisu",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "ka'ba",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "katta dubulg‘a",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "kito",
+      "counts": {
+        "NAME": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "kobe",
+      "counts": {
+        "NAME": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "kompani",
+      "counts": {
+        "NAME": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "koreya respublikasida",
+      "counts": {
+        "GEO": 1,
+        "ORG": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "lids",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "m.h",
+      "counts": {
+        "ORG": 2,
+        "NAME": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "maktablardagi",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "mehribonlik",
+      "counts": {
+        "ORG": 1,
+        "NAME": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "milliy kengash",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "moldova respublikasi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "monreal",
+      "counts": {
+        "GEO": 3,
+        "NAME": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "mo‘g‘ulistonda",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "muruvvat",
+      "counts": {
+        "ORG": 2,
+        "NAME": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "mustaqil davlatlar hamdo‘stligi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "muxlis.uz",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "n",
+      "counts": {
+        "NAME": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "navoiy viloyati favqulodda vaziyatlar boshqarmasi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "navro‘z",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "norin",
+      "counts": {
+        "ORG": 1,
+        "GEO": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "nyurnberg",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "ochl",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "olimpik",
+      "counts": {
+        "GEO": 1,
+        "ORG": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "osiyodagi",
+      "counts": {
+        "GEO": 3,
+        "NAME": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "o‘quvchilar",
+      "counts": {
+        "NAME": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "o‘zbekiston prezidenti administratsiyasi",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "o‘zbekiston professional futbol ligasi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "poytaxt",
+      "counts": {
+        "ORG": 1,
+        "GEO": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "qatardan",
+      "counts": {
+        "GEO": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "rafina",
+      "counts": {
+        "NAME": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "rajnatx singx",
+      "counts": {
+        "NAME": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "registon",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "reyter",
+      "counts": {
+        "ORG": 1,
+        "GEO": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "rog‘un ges",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "rozmetov",
+      "counts": {
+        "ORG": 3,
+        "NAME": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "rumiy",
+      "counts": {
+        "GEO": 3,
+        "NAME": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "ruslan kazakbayev",
+      "counts": {
+        "ORG": 1,
+        "NAME": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "sanya",
+      "counts": {
+        "NAME": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "sariarkaavtoprom",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "savdo markazi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "sevinch",
+      "counts": {
+        "NAME": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "shalke-04",
+      "counts": {
+        "ORG": 2,
+        "GEO": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "shota rustaveli",
+      "counts": {
+        "GEO": 1,
+        "NAME": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "sokolov",
+      "counts": {
+        "ORG": 1,
+        "NAME": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "son",
+      "counts": {
+        "NAME": 3,
+        "ORG": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "tasnim axborot agentligi",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "the guardian gazetasi",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "tottenhem hotspur",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "turkiya respublikasiga",
+      "counts": {
+        "GEO": 2,
+        "ORG": 2
+      },
+      "total": 4
+    },
+    {
+      "surface": "ukraina bosh vaziri",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "valencia",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "venera",
+      "counts": {
+        "NAME": 1,
+        "GEO": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "vest hem yunayted",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "xalqaro valuta jamg‘armasi",
+      "counts": {
+        "ORG": 3,
+        "GEO": 1
+      },
+      "total": 4
+    },
+    {
+      "surface": "zebo",
+      "counts": {
+        "NAME": 1,
+        "ORG": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "феруза",
+      "counts": {
+        "GEO": 1,
+        "NAME": 3
+      },
+      "total": 4
+    },
+    {
+      "surface": "abdurashid",
+      "counts": {
+        "GEO": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "ahillik",
+      "counts": {
+        "GEO": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "alfredo di stefano",
+      "counts": {
+        "NAME": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "alkala",
+      "counts": {
+        "GEO": 1,
+        "NAME": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "avezov",
+      "counts": {
+        "NAME": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "bek",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "belarusga",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "birlashgan arab amirliklaridan",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "blekpul",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "bron",
+      "counts": {
+        "NAME": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "buxoro xalqaro aeroporti",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "byorn",
+      "counts": {
+        "NAME": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "chimkentda",
+      "counts": {
+        "GEO": 1,
+        "NAME": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "deli",
+      "counts": {
+        "ORG": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "dinamo zagreb",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "dortmundning",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "duglas",
+      "counts": {
+        "GEO": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "farxod",
+      "counts": {
+        "NAME": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "flesh",
+      "counts": {
+        "ORG": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "fransiya parlamenti",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "galina",
+      "counts": {
+        "NAME": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "golden haus",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "gudzon",
+      "counts": {
+        "ORG": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "hindiston respublikasining",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "ies",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "iftixor",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "iib navbatchilik qismi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "ilyos",
+      "counts": {
+        "NAME": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "iordaniya hoshimiylar qirolligi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "iroq bosh vaziri",
+      "counts": {
+        "NAME": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "it-park",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "jahon chempionati",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "jordan",
+      "counts": {
+        "NAME": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "kastilya",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "kolumbiya universiteti",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "kordoba",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "koreya xalq demokratik respublikasi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "lxr",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "mayk pompeoni",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "mdh mamlakatlari",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "menxengladbax",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "milliy basketbol assotsiatsiyasi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "miluoki",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "miranda",
+      "counts": {
+        "GEO": 1,
+        "NAME": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "mirzo ulug‘bek",
+      "counts": {
+        "GEO": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "molde",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "myunster",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "nasdaq",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "nebraska",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "newport",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "nizomiy",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "nyu-meksiko shtati",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "oleg deripaska",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "ozarboyjon respublikasi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "o‘zbekiston prezidentining",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "pitt",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "pokiston armiyasining",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "qurbon hayiti",
+      "counts": {
+        "GEO": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "ramazon",
+      "counts": {
+        "GEO": 1,
+        "NAME": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "regnum",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "rog",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "rustavi 2",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "s.najimov",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "seaworld",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "shaxter",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "sherif",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "shohimardon",
+      "counts": {
+        "NAME": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "sirdaryo ies",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "sogdiana",
+      "counts": {
+        "GEO": 1,
+        "NAME": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "spark",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "sporting xixon",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "stemford brij",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "sulaymoniya",
+      "counts": {
+        "GEO": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "suriya tashqi ishlar vaziri",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "sxipxol aeroporti",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "t-mobile",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "tambov",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "tarkan",
+      "counts": {
+        "GEO": 1,
+        "NAME": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "tashselmash",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "texnologiya instituti",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "toshkent tibbiyot akademiyasi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "toshkent viloyati ichki ishlar bosh boshqarmasi",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "toyloq",
+      "counts": {
+        "GEO": 1,
+        "NAME": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "trinidad va tobago",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "uigan",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "universal",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "universitetlarni",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "uzcard.uz",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "vatandosh",
+      "counts": {
+        "ORG": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "vatanparvar",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "windows",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "xalq deputatlari",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "xasanboy",
+      "counts": {
+        "GEO": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "xiddink",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "xito",
+      "counts": {
+        "GEO": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "xitoy xalq respublikasida",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "xk",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "xun sen",
+      "counts": {
+        "NAME": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "yagona interaktiv davlat xizmatlari portalida",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "yangi hayot",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "yaypan",
+      "counts": {
+        "GEO": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "yeining",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "yoshlar texnoparki",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "yozyovon",
+      "counts": {
+        "ORG": 2,
+        "GEO": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "yuridik shaxslarga",
+      "counts": {
+        "ORG": 2,
+        "NAME": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "азиза",
+      "counts": {
+        "NAME": 2,
+        "ORG": 1
+      },
+      "total": 3
+    },
+    {
+      "surface": "виктория",
+      "counts": {
+        "GEO": 1,
+        "ORG": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "хасанбой",
+      "counts": {
+        "NAME": 1,
+        "GEO": 2
+      },
+      "total": 3
+    },
+    {
+      "surface": "abdulfattoh as-sisi",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "ajman",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "aju universiteti",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "akbarshoh",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "al-mayadin",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "albasete",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "angliya chempionati",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "anjyer",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "antonov",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "aqshning virjiniya shtati",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "ariel anri",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "armanistonga",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "ato",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "aygen",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "ayritom",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "badal",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "bangkok post",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "bedil",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "berdaq nomidagi qoraqalpoq davlat universiteti",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "blekbern",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "bloomberg billionaires index",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "boko harom",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "bolton",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "buxoro aeroportini",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "changi aeroporti",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "chloe",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "chu",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "dehqon bozori",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "dream city",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "durdona",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "estremadura",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "eurostar",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "excelsior portali",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "exo moskvi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "farovon",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "fikrat",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "frankfurter allgemeine sonntagszeitung",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "frantsuz politsiyasi",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "friman",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "gengam",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "gidro kollej",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "gulbahor",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "gulshan",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "gum",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "gumbaz",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "guzar",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "gʻazalkent",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "hasanboy",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "hindiston milliy muzeyida",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "hindu",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "hoffenxaym",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "hyatt regency tashkent",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "i.karimov",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "iib yhxb",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "imom al-buxoriy",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "imom buxoriy majmuasi muzeyiga",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "incheon",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "isroil davlati",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "izza",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "jakarta post",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "jamoalarda",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "jome masjidi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "kan",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "kirov",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "kremlning",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "la liganing",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "lutfiy",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "makkarti",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "makkenzi",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "malorka",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "markaziy osiyo davlatlari",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "mashinasozlar",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "media park",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "meriya",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "metropoliten",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "mfyda",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "minbar ortida",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "mingboyev",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "miyagi",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "mordoviya",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "moskva birjasi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "moskva davlat xalqaro munosabatlar instituti",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "murotali",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "myonxengladbax",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "navruz mall",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "nest onedan",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "next",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "nice",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "nottingham",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "oq uydagi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "oq uyni",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "o‘zbekiston orqali",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "o‘zbekistondagi favqulodda va muxtor elchisi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "panyushkin s.yu",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "paterson",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "pentagonda",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "pentagondagi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "phenom metaverse",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "platon",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "pokiston parlamenti",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "portsmut",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "pravda",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "pungon-namangan",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "rim imperiyasi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "romit",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "runi mara",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "savdo markazida",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "shayx zayniddin",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "shayx zayniddin jome masjidi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "shht sammiti",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "shimoliy koreya yetakchisi",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "shinam",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "siam qirolligi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "sssrda",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "sssrga",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "sssrning",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "stradinya",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "suonsi siti",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "suvsoz",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "tah",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "tashkent city majmuasi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "tashqi ishlar vazirlari kengashi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "tayanch punkti",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "temiryo‘lchilar",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "the verge",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "tillakori madrasasi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "tojikiston respublikasida",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "toluca",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "toshhovuz",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "toshkent harbiy okrugi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "toshkent shahar sudi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "tszyansu",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "tunis bosh vaziri",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "turkiya respublikasining",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "ulugʻbek madrasasi",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "universitetlarga",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "uyefa superkubogi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "vacancy.argos.uz",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "van ining",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "vayvari",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "verona",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "viktor vekselberg",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "virjiniya raji",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "vnexpress",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "voqea",
+      "counts": {
+        "GEO": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "webster",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "westminster",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "xalq kutubxonasi",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "xalqaro press-klubda",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "xalqaro vestminster universitetida",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "xan",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "xezer babbning",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "xil",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "xitrou aeroporti",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "xoʻjand",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "yokogama",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "yums",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "yuqori rada",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "yuridik",
+      "counts": {
+        "ORG": 1,
+        "NAME": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "абу бакр",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "амир темур",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "афғонистон ислом амирлиги",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "зарафшон",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "мустақиллик",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "наврўз",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "сурхондан",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "учтепа хокимияти",
+      "counts": {
+        "GEO": 1,
+        "ORG": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "фаровон",
+      "counts": {
+        "ORG": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "фарҳод",
+      "counts": {
+        "NAME": 1,
+        "GEO": 1
+      },
+      "total": 2
+    },
+    {
+      "surface": "ҳамза",
+      "counts": {
+        "NAME": 1,
+        "ORG": 1
+      },
+      "total": 2
+    }
+  ],
+  "conflict_details": [
+    {
+      "text_prefix": "London va Nyu-York birjalaridagi elektron savdolar davomida neft narxlari pasaymoqda. Bundan savdolar haqidagi ma'lumotlar darak bermoqda. Nyu-York tovar birjasida WTI turidagi neftning may fyucherslari 0,16 foizga tushib ketib, bir barrel ",
+      "hashes": [
+        "f7c939253572e298299a9ef55130bb4f",
+        "07edc6a7a47d8bea"
+      ],
+      "chosen_hash": "07edc6a7a47d8bea",
+      "signatures": [
+        [
+          [
+            "GEO",
+            0,
+            6
+          ],
+          [
+            "GEO",
+            10,
+            18
+          ],
+          [
+            "GEO",
+            139,
+            147
+          ],
+          [
+            "GEO",
+            275,
+            281
+          ],
+          [
+            "ORG",
+            286,
+            297
+          ]
+        ],
+        [
+          [
+            "GEO",
+            0,
+            6
+          ],
+          [
+            "GEO",
+            10,
+            18
+          ],
+          [
+            "GEO",
+            275,
+            285
+          ],
+          [
+            "ORG",
+            139,
+            163
+          ],
+          [
+            "ORG",
+            286,
+            297
+          ]
+        ]
+      ]
+    },
+    {
+      "text_prefix": "AQShlik harbiylar Suriyada Rossiya qiruvchi samolyotlari borligini ta'kidlashmoqda, deb xabar bermoqda Reuters axborot agentligi. AQSh qurolli kuchlaridagi manbalar Suriyadagi aerodromlardan birida kam sondagi rus qiruvchi samolyotlari borl",
+      "hashes": [
+        "c8ed1d843fa83f09e9ba8968b344dd1b",
+        "91dc27fd6ec11474"
+      ],
+      "chosen_hash": "91dc27fd6ec11474",
+      "signatures": [
+        [
+          [
+            "GEO",
+            0,
+            4
+          ],
+          [
+            "GEO",
+            18,
+            24
+          ],
+          [
+            "GEO",
+            130,
+            134
+          ],
+          [
+            "GEO",
+            165,
+            171
+          ],
+          [
+            "GEO",
+            280,
+            288
+          ],
+          [
+            "ORG",
+            27,
+            34
+          ],
+          [
+            "ORG",
+            311,
+            318
+          ]
+        ],
+        [
+          [
+            "GEO",
+            18,
+            26
+          ],
+          [
+            "GEO",
+            27,
+            34
+          ],
+          [
+            "GEO",
+            165,
+            175
+          ],
+          [
+            "GEO",
+            280,
+            288
+          ],
+          [
+            "GEO",
+            311,
+            320
+          ],
+          [
+            "ORG",
+            103,
+            110
+          ],
+          [
+            "ORG",
+            130,
+            155
+          ]
+        ]
+      ]
+    }
+  ],
+  "policy": "Context-dependent surface labels are retained; only exact-text duplicate conflicts are resolved."
+}

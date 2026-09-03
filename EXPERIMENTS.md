@@ -27,6 +27,7 @@
 |---|---|---|---:|---:|---:|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | `xl-bs12-ga3-ebs36-lr5e-5` | `train` |  `facebook/xlm-roberta-xl` | 12 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA3 (effective BS36) | 2 / 1 | 0.06758 | **0.86020** | **0.86100** | **0.87428** | **0.87539** | **0.81696** | **0.81661** | 917.21 | 830.65 | 18.54% |
 | `xl-best-to-v2-bs12-ga3-ebs36-lr1e-8-e1` | `train_v2` | `facebook/xlm-roberta-xl` | 12 | 1e-8 | 1 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA3 (effective BS36); initialized from best XL checkpoint | 2 / 1 | 0.06753 | **0.85977** | **0.86055** | — | — | — | — | 800.11 | 771.32 | 18.87% |
+| `xl-best-to-v3-bs12-ga3-ebs36-lr1e-8-e1` | `train_v3` | `facebook/xlm-roberta-xl` | 12 | 1e-8 | 1 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA3 (effective BS36); initialized from best XL checkpoint | 2 / 1 | 0.06755 | 0.85959 | 0.86038 | — | — | — | — | 805.67 | 777.00 | 18.73% |
 | `xl-bs16-ga2-ebs32-lr5e-5` | `train` |  `facebook/xlm-roberta-xl` | 16 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA2 (effective BS32) | 2 / 1 | 0.06750 | 0.85780 | 0.85880 | — | — | — | — | 885.52 | 802.49 | 19.19% |
 | `xl-bs28-lr5e-5` | `train` |  `facebook/xlm-roberta-xl` | 28 | 5e-5 | 3 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding | 2 / 1 | **0.06507** | **0.85609** | **0.85708** | — | — | — | — | 836.65 | 750.88 | 20.51% |
 | `large-best-to-v2-bs160-ga2-ebs320-lr3e-8-e1` | `train_v2` | `FacebookAI/xlm-roberta-large` | 160 | 3e-8 | 1 | SDPA, FP32 weights + BF16 AMP | fused | dynamic padding, GA2 (effective BS320); initialized from best large checkpoint | 2 / 1 | 0.06897 | **0.85536** | **0.85603** | — | — | — | — | 102.20 | 97.49 | 24.01% |
@@ -125,6 +126,7 @@ micro-F1 до 0.81325. `LR=1e-7` оказался значительно луч�
 | `large-best-to-v2-bs128-lr3e-8-e1` | 0.29665 / 0.06770 | — | — |
 | `xl-best-to-v2-bs12-ga3-ebs36-lr1e-6-e1` | 0.15992 / 0.08248 | — | — |
 | `xl-best-to-v2-bs12-ga3-ebs36-lr1e-8-e1` | 0.25241 / 0.06753 | — | — |
+| `xl-best-to-v3-bs12-ga3-ebs36-lr1e-8-e1` | 0.25113 / 0.06755 | — | — |
 | `large-best-to-v2-bs256-lr3e-8-e1` | 0.30256 / 0.06878 | — | — |
 | `large-best-to-v2-bs160-ga2-ebs320-lr3e-8-e1` | 0.30406 / 0.06897 | — | — |
 | `tahrirchi-bs512-lr1e-4` |  0.49410 / 0.17629 | 0.14059 / 0.14152 | 0.10688 / 0.13655 |
@@ -164,6 +166,7 @@ micro-F1 до 0.81325. `LR=1e-7` оказался значительно луч�
 | `large-best-to-v2-bs128-lr3e-8-e1` | .8009/.8488/.8242 | .8613/.8754/.8683 | .8586/.8860/.8721 | .8390/.8700/.8542 | .8403/.8701/.8548 |
 | `xl-best-to-v2-bs12-ga3-ebs36-lr1e-6-e1` | .7474/.7067/.7265 | .7758/.7891/.7824 | .6688/.7210/.6939 | .7265/.7366/.7315 | .7307/.7389/.7343 |
 | `xl-best-to-v2-bs12-ga3-ebs36-lr1e-8-e1` | .8154/.8571/.8357 | .8692/.8823/.8757 | .8725/.8680/.8703 | .8512/.8685/.8598 | .8523/.8691/.8605 |
+| `xl-best-to-v3-bs12-ga3-ebs36-lr1e-8-e1` | .8148/.8571/.8354 | .8695/.8823/.8759 | .8721/.8676/.8699 | .8509/.8684/.8596 | .8522/.8690/.8604 |
 | `large-best-to-v2-bs256-lr3e-8-e1` | .7992/.8518/.8247 | .8614/.8788/.8700 | .8588/.8879/.8731 | .8385/.8727/.8553 | .8398/.8728/.8559 |
 | `large-best-to-v2-bs160-ga2-ebs320-lr3e-8-e1` | .7992/.8533/.8254 | .8603/.8793/.8697 | .8583/.8882/.8730 | .8380/.8735/.8554 | .8393/.8736/.8560 |
 | `tahrirchi-bs512-lr1e-4` |  .5365/.6721/.5967 | .6733/.7766/.7213 | .7180/.7743/.7451 | .6370/.7397/.6845 | .6426/.7410/.6877 |

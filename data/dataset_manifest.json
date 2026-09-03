@@ -21,7 +21,7 @@
   },
   "documentation": {
     "path": "README.md",
-    "sha256": "1a951688eb07dc0ab37b8b13aa3f281d966a1af5eb01a944bc22820c328c55d7"
+    "sha256": "748832f17d248e99b88f2c6fbfe1ba7dbd1ed4c6312e1ab3f089f7b7a094528b"
   },
   "assets": [
     {
@@ -67,6 +67,14 @@
     {
       "path": "scripts/evaluate_service.py",
       "sha256": "c5c7ce4eaa4d781054b7ac00475c8ae053c07be8a4ff366bdd993f10bd170f3b"
+    },
+    {
+      "path": "DATASET_V3.md",
+      "sha256": "55352c9b04d451803a29b96a4fee15c73b195dd22851bf56d0075f1a469978ba"
+    },
+    {
+      "path": "scripts/build_train_v3.py",
+      "sha256": "d595a5f33d18b5cc08c78df91fe28c3095912e00f6b95701771e0aa246ed0394"
     }
   ],
   "splits": {
@@ -113,6 +121,29 @@
         "NAME+ORG": 112,
         "ORG": 288
       }
+    },
+    "train_v3": {
+      "path": "data/train_v3.jsonl",
+      "sha256": "1341231417e621c4162b65d525410bb68e60fd4fae1c321eafbc89d0bd4482ae",
+      "records": 44596,
+      "records_with_entities": 41013,
+      "entities": 247262,
+      "entities_by_label": {
+        "GEO": 107241,
+        "NAME": 68067,
+        "ORG": 71954
+      },
+      "documents_by_label_signature": {
+        "EMPTY": 3583,
+        "GEO": 3414,
+        "GEO+NAME": 4350,
+        "GEO+NAME+ORG": 13304,
+        "GEO+ORG": 8822,
+        "NAME": 2899,
+        "NAME+ORG": 3648,
+        "ORG": 4576
+      },
+      "source": "data/train_v2.jsonl cleaned by scripts/build_train_v3.py"
     }
   }
 }
