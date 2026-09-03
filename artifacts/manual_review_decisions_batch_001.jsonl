@@ -1408,3 +1408,23 @@
 {"hash":"3553aa90ae082dc47a365aaaa10197fa20260301","action":"keep_original","reason":"Проверено: Kapadze, Navbahor и Dinamo/текущие 3 сущности размечены; слова интервью не добавлены."}
 {"hash":"358818c182a76606acd7571b0ac0b71020260213","action":"keep_original","reason":"Проверено: Nawrath, Giacomel, Perrot и Both/текущие 4 NAME корректны."}
 {"hash":"375d11ea4b22cc1240b27799a352bd9f20260308","action":"keep_original","reason":"Проверено: текущая сущность объявления сохранена; цены, тип кузова и username не добавлены."}
+{"hash":"386e5685fd8dfa315746d320b259992d20260217","action":"keep_original","reason":"Проверено: адресные и коммерческие сущности объявления уже покрыты; общие слова и контактные каналы не добавлены."}
+{"hash":"38ee617121f0c6cb4c19c5285abd9eaf20260307","action":"keep_original","reason":"Проверено: Evgeniia/текущая сущность сохранена; разговорное слово не добавлено."}
+{"hash":"3b3af3e09e849768d2acdaebcd624d7d20260311","action":"keep_original","reason":"Проверено: Gaybullokh и Shukhrat/текущие 2 NAME сохранены."}
+{"hash":"3baf12e8dc973894b064ff421da4ca5c20260206","action":"keep_original","reason":"Проверено: Uni Medical care размечен единой корректной ORG-границей; username не добавлен."}
+{"hash":"3d876d9eed27494db3d95902f68e428220260513","action":"keep_original","reason":"Проверено: Pepsi life/текущая ORG сохранена; рекламные описания не добавлены."}
+{"hash":"3ee0299962e6ed4fd0bb52b0ebeda59e20260203","action":"review_required","reason":"Длинный административно-медицинский текст с 9 сущностями: требуется полная сверка агентства, совета и повторов."}
+{"hash":"4015afa99c0374e26420c513f35f527c20260304","action":"keep_original","reason":"Проверено: Babayan, Andijon и текущие спортивные сущности сохранены; общие слова о футболистах не добавлены."}
+{"hash":"409ac7ba56bce7c2188fb59b563e92cc20250915","action":"review_required","reason":"Длинная финансовая публикация с 10 сущностями: нужна полная сверка IMAN Holding, персон и географий."}
+{"hash":"426c535edc7ccf23ab4544b576b7c1d220260604","action":"review_required","reason":"Объявление турнира с 5 сущностями и названиями команд/органов: требуется построчная сверка границ."}
+{"hash":"450dc9f9a53f68f34fcfdc4fa9627c2420260310","action":"keep_original","reason":"Проверено: Jennie и Lisa/текущие 2 NAME корректны; разговорное связующее слово не добавлено."}
+{"hash":"458bdbbd1a53ce902491207c6bf0c9e520260301","action":"keep_original","reason":"Проверено: Shukhrat/текущая сущность сохранена; бытовые слова и описание вакансии не добавлены."}
+{"hash":"4688d4ef4433d4ae2592917ccc4a9d20260305","action":"keep_original","reason":"Проверено: Anjan/текущая GEO сохранена; оценочная и погодная лексика не добавлена."}
+{"hash":"4bb8a93b6bcb0efd583ed5068a1248f120260311","action":"keep_original","reason":"Проверено: Vladimir и Tashkent/текущие GEO сохранены; транспортные сокращения не добавлены."}
+{"hash":"4c14e018971be5d1504363ecb656a6f820260505","action":"keep_original","reason":"Проверено: Pepsi Cola/текущая ORG сохранена; остальная фраза не содержит надёжных сущностей."}
+{"hash":"4c1b07b644d55922","action":"review_required","reason":"Длинная криминально-дорожная новость с 5 сущностями: требуется сверка города, районов, улицы и органов."}
+{"hash":"5037a037eca7c71e","action":"review_required","reason":"Новость об авиакатастрофе с 6 сущностями: нужна полная сверка компаний, географий и модели самолёта."}
+{"hash":"51923b175e6616cb7f145671e9a7d37920260508","action":"keep_original","reason":"Проверено: Cola, Pepsi и Coca-Cola/текущие 3 сущности сохранены; общие слова о вкусе не добавлены."}
+{"hash":"597ea7437d796690db990a0988c5379d20260202","action":"keep_original","reason":"Проверено: Gas Block Baraka, Toshkent/Nurafshon и текущие сущности рекламы сохранены; технические размеры не добавлены."}
+{"hash":"5b4b4eb61973b6130ef3e27927d2645b20260301","action":"review_required","reason":"Длинная общественно-правовая публикация с 11 сущностями: требуется полная сверка организаций, районов и канала."}
+{"hash":"5c48370522d8eb7a0c0e5b0ac8cced2f20260305","action":"keep_original","reason":"Проверено: Visa и Google/текущие 2 сущности сохранены; общие слова о покупках не добавлены."}
