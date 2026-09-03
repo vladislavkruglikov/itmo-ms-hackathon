@@ -349,3 +349,7 @@ After the next four ranked candidates were inspected, one duplicated bilingual
 calendar scrape was also excluded and two long editorial/scraped documents
 were marked `review_required`. The current manually decided output therefore
 contains 12,997 records; only explicit ledger actions are applied.
+Ranks 31–40 added one short-news correction (president name and monument
+complex spans), excluded three unstructured/promotional records, and marked
+the remaining substantive records for full review. The current manual output
+has 12,992 records; source data remains untouched.

@@ -197,3 +197,6 @@ The ledger has since added four ranked decisions: one duplicated bilingual
 calendar scrape excluded from training and two long documents marked
 `review_required`; the materialized manually decided output now has 12,997
 records.
+Ranks 31–40 added one short-news correction, excluded three unstructured or
+promotional records, and flagged the remaining substantive records for full
+review. The manual output now contains 12,992 records.
