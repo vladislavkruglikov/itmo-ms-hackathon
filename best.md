@@ -243,12 +243,13 @@ The resulting complete-corpus file is
 `data/train_manual_entity_corrected_v1.jsonl`; its XL control run is in
 progress.
 
-The manual entity pass has now reached ranks 201–380. It has recorded 390
+The manual entity pass has now reached ranks 201–400. It has recorded 410
 audited decisions in the ledger; all materialized variants retain 13,000
 records, including social posts and advertisements. High-confidence additions
 in these batches include product/brand and organization names such as Pepsi,
 Lay's, KFC, TWICE, Sunrise City, and SOF EXPO Samarkand; the latest batch also
-covered `DOMKOMFORT SAMARKAND`, `Хепилор`, `Coca-Cola`, `YSL`, `UzNews`, and
+covered `DOMKOMFORT SAMARKAND`, `Хепилор`, `Coca-Cola`, `YSL`, `UzNews`,
+`SHN`, `uyzarbot`, and `SHAFRAN`, and
 additional beverage/architecture/software brands. Ambiguous
 substantive documents remain retained for further span review.
 
