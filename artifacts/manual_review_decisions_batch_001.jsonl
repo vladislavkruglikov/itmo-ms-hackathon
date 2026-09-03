@@ -908,3 +908,23 @@
 {"rank":918,"hash":"017c7c8febb460e36d4a323b2fa9c00020260305","action":"add_entities","rationale":"Xiaomi, Xiaomi 17 и Xiaomi 17 series — явно названные технологический бренд и линейка; добавлены как ORG.","entities":[{"label":"ORG","text":"Xiaomi"},{"label":"ORG","text":"Xiaomi 17"}]}
 {"rank":919,"hash":"0194a866877c75dadda42b8895e65cae20260305","action":"add_entities","rationale":"Access bank — явно названный банк; добавлено как ORG.","entities":[{"label":"ORG","text":"Access bank"}]}
 {"rank":920,"hash":"0222d94e51524f92c3b2f2f430e41bc520260312","action":"review_required","rationale":"Короткая строка с TikTok и usernames; требуется проверить ORG и usernames."}
+{"rank":921,"hash":"02a4bc0f3c760cd86211e2efcb7a5eb520260302","action":"review_required","rationale":"Религиозный текст с пророком и составными религиозными именами; требуется проверить NAME/ORG границы."}
+{"rank":922,"hash":"0312a505e563b7b4120af359e1058aae20260310","action":"review_required","rationale":"Криминальная новость о Казахстане, комитетах и миграции; требуется полный просмотр GEO/ORG."}
+{"rank":923,"hash":"035a2ae0152ada17036096fc77a128dc20260309","action":"review_required","rationale":"Религиозно-исторический текст о Yusuf alayhissalom и Египте; требуется проверить имя и GEO."}
+{"rank":924,"hash":"0396cb5efc982a0b5855e190d1d7c92120260310","action":"review_required","rationale":"Экономическая новость об ADNOC, нефтяном комплексе и Иране; требуется проверить ORG/GEO."}
+{"rank":925,"hash":"044daef4384a8cab53e553fde4e1922720260313","action":"review_required","rationale":"Новость об аварии газопровода с Xorazm, районом, организациями и улицами; требуется полный просмотр."}
+{"rank":926,"hash":"04566ea9745e9cee3ec2aaa102f412c320260309","action":"review_required","rationale":"Шахматная новость с гроссмейстерами, рейтингом и странами; требуется проверить NAME/ORG."}
+{"rank":927,"hash":"048381e6d512e006e09e048e52c8f4fd20260301","action":"review_required","rationale":"Очень длинный художественный текст с автором и персонажами; требуется полный просмотр NAME."}
+{"rank":928,"hash":"04a344f4915f3921480f0dd4dbde668820260305","action":"review_required","rationale":"Футбольная новость с Manchester City, Nottingham Forest, игроком и источниками; требуется проверить границы."}
+{"rank":929,"hash":"05ab0f2db56a158f89fa8ab6e2413fb120260314","action":"review_required","rationale":"Официальный текст о «Tuproq tahlil markazi» и общественном мероприятии; требуется проверить ORG."}
+{"rank":930,"hash":"066531aaba61c5b04a680c8fa6b343a820260304","action":"review_required","rationale":"Социальный свадебный пост с именами и локацией; требуется проверить NAME/GEO."}
+{"rank":931,"hash":"06915683e2868fa8fa5b086f61e30a0020260207","action":"review_required","rationale":"Рекламный пост KFC с продуктом, заведением и адресом; требуется проверить брендовые границы."}
+{"rank":932,"hash":"06c47aef9173794139ca6c70bb660a6e20260305","action":"add_entities","rationale":"Chery и Hamkorbank — явно названные автомобильный бренд и банк; добавлены как ORG.","entities":[{"label":"ORG","text":"Chery"},{"label":"ORG","text":"Hamkorbank"}]}
+{"rank":933,"hash":"06e31ba2605fe128f2d7ef2663d0bf1820260311","action":"review_required","rationale":"Новость Международного энергетического агентства о нефти и Иране; требуется полный просмотр ORG/GEO."}
+{"rank":934,"hash":"06e5fd50744aa4ca3bd584bdc827d46420260305","action":"keep_original","rationale":"Поздравительный текст без подтверждённых именованных сущностей; сохраняется без изменений."}
+{"rank":935,"hash":"075239441c9b93f3c8309cd95a65cf1520260308","action":"review_required","rationale":"Военно-политическая новость об Азербайджане и Иране; требуется проверить GEO/ORG и модели вооружений."}
+{"rank":936,"hash":"07ccb1df41e6d4f62c6ab1cd0a7eb1ef20260314","action":"review_required","rationale":"Интервью с актрисой и персонажами сериала; требуется проверить NAME/ORG и границы названий."}
+{"rank":937,"hash":"07f3e44ecabce029e4ee62f23075baa420260313","action":"review_required","rationale":"Научная новость с университетами, факультетом, городом и стажировкой; требуется полный просмотр ORG/GEO."}
+{"rank":938,"hash":"091ec71685e35a43ed131b58665c2f9720260306","action":"review_required","rationale":"Футбольный анонс с лигой, стадионом, городами и клубами; требуется проверить спортивные границы."}
+{"rank":939,"hash":"09c75688ca655efbb99961cb851ce4a820260303","action":"keep_original","rationale":"Короткая рекламная строка без надёжно подтверждённых именованных сущностей; сохраняется без изменений."}
+{"rank":940,"hash":"09df2fe1ea9551d9f40aea6bfa413a0e20260303","action":"review_required","rationale":"Военно-политическая новость об операции Ирана и корпусе стражей; требуется полный просмотр GEO/ORG."}
