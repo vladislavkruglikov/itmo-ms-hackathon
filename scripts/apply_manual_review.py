@@ -1,0 +1,50 @@
+from __future__ import annotations
+
+import argparse
+import json
+from pathlib import Path
+
+
+def read(path: Path):
+    return [json.loads(line) for line in path.open(encoding="utf-8") if line.strip()]
+
+
+def all_occurrences(text: str, value: str):
+    start = 0
+    while True:
+        start = text.find(value, start)
+        if start < 0:
+            return
+        yield start, start + len(value)
+        start += len(value)
+
+
+def main():
+    p = argparse.ArgumentParser(description="Apply explicit human review decisions.")
+    p.add_argument("--input", type=Path, required=True)
+    p.add_argument("--decisions", type=Path, required=True)
+    p.add_argument("--output", type=Path, required=True)
+    args = p.parse_args()
+    decisions = {row["hash"]: row for row in read(args.decisions)}
+    output = []
+    changed = 0
+    for row in read(args.input):
+        decision = decisions.get(row["hash"])
+        updated = dict(row)
+        if decision and decision["action"] == "replace_entities":
+            entities = []
+            for item in decision["entities"]:
+                for start, end in all_occurrences(row["text"], item["text"]):
+                    entities.append({"label": item["label"], "start": start, "end": end})
+            updated["entities"] = sorted(entities, key=lambda e: (e["start"], e["end"], e["label"]))
+            changed += 1
+        output.append(updated)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    with args.output.open("w", encoding="utf-8") as stream:
+        for row in output:
+            stream.write(json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n")
+    print(f"Wrote {len(output)} records; manually replaced {changed}")
+
+
+if __name__ == "__main__":
+    main()

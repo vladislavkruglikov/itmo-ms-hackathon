@@ -179,3 +179,13 @@ candidates skipped. The reviewed checkpoint scored 0.7265 standalone and
 below the 0.8868 production result. Therefore this reviewed dataset is not
 the production training set; it is retained for audit and future manual
 annotation.
+
+## 7. Manual semantic review (in progress)
+
+The earlier consensus relabeling is not a substitute for manual review. The
+manual process uses `scripts/export_manual_review_batch.py` to expose complete
+text and span context, `artifacts/manual_review_decisions_batch_001.jsonl` to
+store explicit decisions, and `scripts/apply_manual_review.py` to materialize
+only those decisions. Batch 001 contains two inspected candidates: one
+football roster was manually reannotated with complete person names, while a
+keyword-list record was left unchanged and marked `review_required`.

@@ -328,3 +328,15 @@ The reviewed dataset was rejected for production because 0.8863 is below the
 0.8868 constrained baseline. The new dataset and per-record audit remain
 available as `data/train_active_reviewed_consensus_add.jsonl` and
 `artifacts/active_learning_train_review_audit.jsonl`.
+
+## Genuine manual semantic review
+
+The previous consensus pass is explicitly not counted as human review. A
+persistent manual ledger was added with `scripts/export_manual_review_batch.py`
+and `scripts/apply_manual_review.py`. Batch 001 manually inspected two ranked
+candidates. The Spanish football roster was corrected by replacing malformed
+fragment predictions and incomplete labels with complete person-name spans.
+The keyword/search-list record was marked `review_required` and left
+unchanged because its annotation policy is ambiguous. The full 1000-record
+manual review remains in progress; no automatic consensus labels are included
+in this manual batch.
