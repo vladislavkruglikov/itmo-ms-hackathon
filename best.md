@@ -227,3 +227,22 @@ explicit span replacements/additions. One XL epoch plus the existing XL/large
 constrained ensemble scored **0.8828 micro-F1**, below the 0.8868 baseline, so
 that run is not the best checkpoint. Future review is restricted to entity
 boundary errors, missed real brands/organizations, and false entity spans.
+
+## 8. Focused full-corpus entity audit
+
+`scripts/build_entity_audit.py` compares every train gold span against the
+full ensemble prediction and writes `artifacts/entity_audit_train.jsonl`.
+The initial audit contains 5,378 candidates: 1,488 boundary disagreements,
+1,049 missed gold spans, and 2,841 false-positive spans. Prediction
+disagreement alone is not treated as proof that gold is wrong; each edit is
+based on the text context. The first high-confidence corrections add the
+brands/organizations `adidasfootball`, `miu miu`, `byd`, `TVK`,
+`WorldBaseballClassic`, `TABIYNUR`, and `brelilprofessional`, and remove
+repeated pronoun-as-person labels for `men`/`MEN` in one fictional record.
+The resulting complete-corpus file is
+`data/train_manual_entity_corrected_v1.jsonl`; its XL control run is in
+progress.
+
+The first entity-corrected XL checkpoint scored 0.8858 micro-F1 in the
+three-model ensemble at weight 0.25 and 0.8865 at weight 0.10, both below the
+0.8868 two-model baseline. It is retained as an experiment, not promoted.

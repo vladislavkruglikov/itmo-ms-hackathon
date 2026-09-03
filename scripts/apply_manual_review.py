@@ -59,6 +59,24 @@ def main():
                         existing.add(value)
             updated["entities"] = non_overlapping(entities)
             changed += 1
+        if decision and decision["action"] == "remove_entities":
+            removals = {(item["label"], item["text"]) for item in decision.get("entities", [])}
+            updated["entities"] = [
+                entity for entity in updated.get("entities", [])
+                if (entity["label"], row["text"][entity["start"]:entity["end"]]) not in removals
+            ]
+            changed += 1
+        if decision and decision["action"] == "relabel_entities":
+            relabel = {
+                (item["from_label"], item["text"]): item["to_label"]
+                for item in decision.get("entities", [])
+            }
+            for entity in updated.get("entities", []):
+                value = row["text"][entity["start"]:entity["end"]]
+                target = relabel.get((entity["label"], value))
+                if target:
+                    entity["label"] = target
+            changed += 1
         output.append(updated)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", encoding="utf-8") as stream:
