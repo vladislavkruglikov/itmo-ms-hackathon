@@ -1948,3 +1948,23 @@
 {"hash":"09a2f698275ee25765aea358a9574da320260303","action":"review_required","reason":"Длинная новость о военном ударе с 7 сущностями: нужна сверка Израиля, Ирана, органов и названий СМИ."}
 {"hash":"09b95a200fe4de019691e4e4b7653af220260312","action":"keep_original","reason":"Проверено: Samarqand shahri и SAMARQAND BUGUN/соцсети сохранены; слова рейд и транспорт не добавлены."}
 {"hash":"09c2d0504f429a7082b788024f0b00d620260311","action":"review_required","reason":"Длинная футбольная статья с 7 сущностями: требуется построчная сверка имён, Real и медиа Madrid Xtra."}
+{"hash":"09d84953272999f957a52b0887bcb0ad20260305","action":"review_required","reason":"Футбольная новость с 11 сущностями: нужна сверка клубов, игрока, TEAMtalk и географического названия La Liga."}
+{"hash":"09e5af50135ffafe6f353ba8b1a1483120260312","action":"keep_original","reason":"Проверено: Chelsea корректно выделен как ORG; usernames и разговорный текст не добавлены."}
+{"hash":"0a07c50ba0c3a2e8ca8f5149631b781e20260301","action":"review_required","reason":"Длинная трансферная новость с 19 сущностями: требуется сверка клубов, игроков, Transfermarkt и границ транслитерации."}
+{"hash":"0a247bfbc91a67eb56e73aedb40e2cae20260227","action":"keep_original","reason":"Проверено: Bournemouth, Sunderland, Premier League и hashtag-формы команд сохранены; дата и служебный текст не добавлены."}
+{"hash":"0a28a85c5e0296c3ddc28ce3d19b48d320260314","action":"keep_original","reason":"Проверено: Хусанов и Реал корректно выделены; оценочные слова не размечены."}
+{"hash":"0a6513b1c77fcc0f3fa00da625b52fe120260312","action":"add_entities","entities":[{"label":"ORG","text":"Gelik"},{"label":"ORG","text":"Mercedes Benz"}],"reason":"Добавлены пропущенные реальные автомобильные бренды Gelik и Mercedes Benz; прочая разметка новости сохранена."}
+{"hash":"0b3ad48f3106746dbe650b26995cf8de20260303","action":"review_required","reason":"Длинное официальное распоряжение с 22 сущностями: нужна полная сверка министерства, авиакомпаний, стран и подписанта."}
+{"hash":"0b429777ca8db00ac1635a5c37d58a8320260311","action":"keep_original","reason":"Проверено: Ibn Qayyim корректно выделен как NAME; религиозные общие слова и username не добавлены."}
+{"hash":"0d52711b41afd8811aa718ddd468bc2720260307","action":"keep_original","reason":"Проверено: Dr-Hratch W Kaloustian корректно выделен одной NAME; остальные слова не дают сущностей."}
+{"hash":"0d9c26103a0cf11fd91dbd6ba97d57e420260304","action":"keep_original","reason":"Проверено: рекламный текст товара и размеров без надёжной именованной сущности."}
+{"hash":"0dee20a3cb2f84ed37c18793a51fe63f20260301","action":"review_required","reason":"Короткий футбольный анонс: требуется проверить, должна ли лига CAF-CUP быть ORG, а также границы названий команд."}
+{"hash":"0e8f5aafabb9ef5d4a49418126a5f83320260308","action":"keep_original","reason":"Проверено: Fənərbağça, Samsunspor и Nene корректно размечены; idmanbiz не добавлен без контекста."}
+{"hash":"0e99afa52cd7a1515a23b11f315f4ebf20260228","action":"keep_original","reason":"Проверено: MŠK Žilina и Club Brugge KV корректно выделены как ORG; UYL и счёт не добавлены."}
+{"hash":"0eca371f746ebdf780dfe3babd4f951c20260306","action":"keep_original","reason":"Проверено: Боку, Иранский корпус и Азербайджанская служба безопасности сохранены по контексту; username не добавлен."}
+{"hash":"0ed1990476ea563014a8195a1aba49ef20260304","action":"review_required","reason":"Рекламная строка с неоднозначным Atlas Naturalka и текущей сущностью: нужна проверка пропущенного бренда и границ."}
+{"hash":"0ed3491c2fca8fed7d83a5eb723d697120260306","action":"keep_original","reason":"Проверено: Путин, Иран, Масуд Пезешкиён, Кремль, Хоманаи и Россия корректно размечены; общие слова не добавлены."}
+{"hash":"0f389a90e93a5b16825776bfaab22b6a20260304","action":"keep_original","reason":"Проверено: исторические коалиции и блоки сохранены как ORG; username и описательные слова не добавлены."}
+{"hash":"0f43bffe1a374c9d15c6ebaba4065d3b20260302","action":"review_required","reason":"Короткий серверный пост: нужно проверить, является ли PODOLSK GEO, а Misha_Popovych — только username или NAME."}
+{"hash":"0f6750c6ac86f02a99ef73217d3d8f4420260303","action":"keep_original","reason":"Проверено: Barselona, Atletiko и Rafinya корректно размечены; счёт и служебный эфир не добавлены."}
+{"hash":"104061dedbcee47ea376695000a43edd20260306","action":"keep_original","reason":"Проверено: Минаб, США, Израиль и начальная школа корректно сохранены; дата и число погибших не размечены."}
