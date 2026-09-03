@@ -153,3 +153,29 @@ Training on that filtered set produced a standalone constrained score of
 0.8434 and adding it to the production ensemble produced 0.8862, so it is
 retained as an experiment but not used in the best recipe. Small global label
 logit calibration sweeps also did not beat 0.8868 (best 0.8866).
+
+## 6. Auditable review of the top 1000 active-learning candidates
+
+The top 1000 candidates were generated in `artifacts/active_learning_train.jsonl`.
+The reproducible review command is:
+
+```bash
+python scripts/review_active_learning.py \
+  --input data/train.jsonl \
+  --candidates artifacts/active_learning_train.jsonl \
+  --output data/train_active_reviewed_consensus_add.jsonl \
+  --audit artifacts/active_learning_train_review_audit.jsonl
+```
+
+The review policy is conservative and auditable: add an entity only when both
+prediction views contain the exact same `(label, start, end)` span and that
+span does not overlap an existing gold entity. Existing gold entities are
+never deleted or boundary-changed automatically. The 985 entities missed by
+both views are recorded for review but retained.
+
+Result: 315 records changed, 799 entities added, and 457 overlapping consensus
+candidates skipped. The reviewed checkpoint scored 0.7265 standalone and
+0.8863 when added to the constrained production ensemble at weight 0.25,
+below the 0.8868 production result. Therefore this reviewed dataset is not
+the production training set; it is retained for audit and future manual
+annotation.

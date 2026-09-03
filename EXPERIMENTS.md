@@ -305,3 +305,26 @@ stories among high-disagreement training examples. Removing them as a single
 batch did not improve generalization, so the filtered dataset is not part of
 the production recipe. The report and filter remain available for manual
 review rather than automatic deletion.
+
+## Top-1000 candidate review
+
+The top 1000 training candidates were reviewed with
+`scripts/review_active_learning.py`. The policy added only exact spans shared
+by both prediction views when they did not overlap an existing annotation.
+Existing annotations were never automatically deleted or boundary-adjusted;
+gold spans missed by both models were logged for possible human review.
+
+| Artifact | Count/result |
+|---|---:|
+| Candidate records reviewed | 1000 |
+| Records changed | 315 |
+| Exact consensus spans added | 799 |
+| Overlapping consensus spans skipped | 457 |
+| Gold spans missed by both, retained | 985 |
+| Reviewed XL checkpoint standalone micro-F1 | 0.7265 |
+| Reviewed checkpoint in constrained ensemble, weight 0.25 | 0.8863 |
+
+The reviewed dataset was rejected for production because 0.8863 is below the
+0.8868 constrained baseline. The new dataset and per-record audit remain
+available as `data/train_active_reviewed_consensus_add.jsonl` and
+`artifacts/active_learning_train_review_audit.jsonl`.
