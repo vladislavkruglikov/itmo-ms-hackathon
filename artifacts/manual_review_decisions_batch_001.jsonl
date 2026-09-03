@@ -728,3 +728,23 @@
 {"rank":738,"hash":"018c51d6a51f593a3355225992a8030e20260301","action":"review_required","rationale":"Дипломатическое сообщение с посольством, государствами и пунктом пропуска; требуется полный просмотр GEO/ORG."}
 {"rank":739,"hash":"0199bc725ab058fa39be4fcec9ca479020260310","action":"review_required","rationale":"Социальный пост о Кurgontepa и группе; требуется проверить GEO/ORG и usernames."}
 {"rank":740,"hash":"01aad0a18add91666d80c18229fabeb420260311","action":"review_required","rationale":"Объявление аренды с районом, парком и ботом; требуется проверить GEO/ORG и username."}
+{"rank":741,"hash":"021091769aa7ee424a159d230df9a23c20260311","action":"keep_original","rationale":"Короткое бытовое обращение без подтверждённых именованных сущностей; сохраняется без изменений."}
+{"rank":742,"hash":"025e35adebb07276ba316e841722099920260314","action":"review_required","rationale":"Объявление аренды с районами, метро, университетом и ипподромом; требуется проверить GEO/ORG границы."}
+{"rank":743,"hash":"0270a0ae0a0694fd4121c352adb46a7020260311","action":"review_required","rationale":"Короткое сообщение о рейсе из Ташкента в Медину; требуется проверить границы GEO."}
+{"rank":744,"hash":"02e47f55cc10d95c4ecdfc49b45fbba320260308","action":"review_required","rationale":"Социальный текст о России и Узбекистане; требуется проверить GEO и отсутствие ложных организаций."}
+{"rank":745,"hash":"02fc5d58fe2bad2550c11d6a5c505ad020260319","action":"review_required","rationale":"Объявление о президентском указе и канале новостей; требуется проверить организации, президента и географию."}
+{"rank":746,"hash":"0310fdec74b13573dc56605e1ce0277120260302","action":"add_entities","rationale":"Agrobank и Hamkorbank — явно названные банки в объявлении; добавлены как ORG.","entities":[{"label":"ORG","text":"Agrobank"},{"label":"ORG","text":"Hamkorbank"}]}
+{"rank":747,"hash":"045a23b045da3c5fb3a60c9754c5ca0820260311","action":"review_required","rationale":"Религиозный пост с мечетью, городом, имамом и источником; требуется проверить ORG/NAME/GEO границы."}
+{"rank":748,"hash":"045bb72cf3b766f9a182666259e8ae7f20260311","action":"review_required","rationale":"Короткое обращение с именем; требуется проверить границу NAME."}
+{"rank":749,"hash":"0466bff5bc38e8a6e3e8b7df2f05d6b220260309","action":"review_required","rationale":"Военно-политическая новость с Ираном, США, Израилем и каналом; требуется полный просмотр GEO/ORG."}
+{"rank":750,"hash":"04dadc1a3888f9e3cafccc920373e81e20260302","action":"add_entities","rationale":"Uzbekistan Airways — явно названная авиакомпания; добавлено как ORG.","entities":[{"label":"ORG","text":"Uzbekistan Airways"}]}
+{"rank":751,"hash":"056b9e4e12a0dcb80e394b7acd04535520260301","action":"review_required","rationale":"Новость о руководителях Ирана и государственных СМИ; требуется проверить составные NAME/ORG/GEO."}
+{"rank":752,"hash":"05d26a475ce329659db4a1197f37309320260307","action":"review_required","rationale":"Политический текст на сомали о региональной администрации и должности; требуется проверить ORG/NAME/GEO."}
+{"rank":753,"hash":"0613bbf714e95c620a629b653badcaae20260307","action":"review_required","rationale":"Сообщение о населённых пунктах Галилеи; требуется проверить GEO границы Кфар-Гилади и Метулы."}
+{"rank":754,"hash":"0622deef1b69ccc1bcfd8652988b7f3b20260301","action":"review_required","rationale":"Транспортное объявление с маршрутами городов и автовокзалом; требуется полный просмотр GEO/ORG."}
+{"rank":755,"hash":"0673f20a07255b62ed23d9df1d5c2dc620260313","action":"add_entities","rationale":"Navoiyazot — явно названное промышленное предприятие; добавлено как ORG.","entities":[{"label":"ORG","text":"Navoiyazot"}]}
+{"rank":756,"hash":"07fa7877d03dbb537d669c8bbc9bf42a20260322","action":"review_required","rationale":"Политическая новость с премьер-министром, Ереваном и Нагорным Карабахом; требуется полный просмотр."}
+{"rank":757,"hash":"083e6eed7aec528e4c9824d5a1b1a36420260310","action":"review_required","rationale":"Короткая строка с сайтом/СМИ и именем; требуется проверить ORG/NAME."}
+{"rank":758,"hash":"090fa3f52b9c006fa0f0f9c2095566c220260305","action":"review_required","rationale":"Гольф-строка с человеком, федерацией и полем; требуется проверить NAME/ORG."}
+{"rank":759,"hash":"0929c6100a087b9c0da623edb819eec520260301","action":"add_entities","rationale":"Comfort town — явно названный жилой комплекс; добавлено как ORG.","entities":[{"label":"ORG","text":"Comfort town"}]}
+{"rank":760,"hash":"097202b9a31d58acee83dd063915489f20260302","action":"add_entities","rationale":"Oqtepa Lavash — явно названный бренд общепита; добавлено как ORG.","entities":[{"label":"ORG","text":"Oqtepa Lavash"}]}
