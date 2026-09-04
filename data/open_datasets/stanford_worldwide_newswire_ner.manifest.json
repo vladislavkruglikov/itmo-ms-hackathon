@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-09-04T16:52:52.316717+00:00",
+  "source": "stanfordnlp/en-worldwide-newswire (processed_annotated, sentence blocks greedily merged to a token-length target)",
+  "source_url": "https://github.com/stanfordnlp/en-worldwide-newswire",
+  "tokenizer_for_length_target": "facebook/xlm-roberta-xl",
+  "target_tokens": 50,
+  "max_tokens": 80,
+  "seed": 42,
+  "n_total_requested": 2000,
+  "empty_frac_requested": 0.18,
+  "output_path": "data/open_datasets/stanford_worldwide_newswire_ner.jsonl",
+  "records": 2000,
+  "records_with_entities": 1640,
+  "entities": 5051,
+  "entities_by_label": {
+    "ORG": 1599,
+    "NAME": 1571,
+    "GEO": 1881
+  },
+  "token_length_stats": {
+    "median": 61.0,
+    "mean": 62.44,
+    "min": 5,
+    "max": 366
+  }
+}
