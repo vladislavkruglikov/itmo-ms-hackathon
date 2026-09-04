@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-09-04T11:46:12.548118+00:00",
+  "input_path": "data/open_datasets/corpus_ner_xlsx_news_only.jsonl",
+  "output_path": "data/open_datasets/corpus_ner_xlsx_news_only.cyrillic_translit.jsonl",
+  "records_in_source": 1312,
+  "source_script_distribution": {
+    "latin": 1304,
+    "none": 8
+  },
+  "latin_only_candidates": 1304,
+  "uzbek_latin_candidates": 1296,
+  "entities_in_source": 2653,
+  "records_out": 1296,
+  "entities_out": 2620,
+  "entities_by_label": {
+    "GEO": 853,
+    "NAME": 921,
+    "ORG": 846
+  },
+}
