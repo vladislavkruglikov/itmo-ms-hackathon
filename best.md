@@ -1,4 +1,136 @@
-# Best NER result
+# Best NER solution: 0.9032 exact-span micro-F1
+
+This document is the canonical handoff for the best validated solution. The
+final prediction file is:
+
+```text
+artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.jsonl
+```
+
+It is a script-gated ensemble: Latin and mixed-script posts use the strongest
+curated-data ensemble, while Cyrillic posts use the previous strong ensemble
+with a NERUS-trained model as an additional support/filtering signal. No social
+media, advertising, or entity-free examples are removed at inference time.
+
+## Final validation metrics
+
+All figures below are exact-span entity metrics on `data/dev.jsonl`. A true
+positive requires both the entity type and both span boundaries to match.
+
+| Scope | Precision | Recall | F1 | TP | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| **Overall micro** | **0.920772** | **0.886204** | **0.903157** | 6822 | 587 | 876 |
+| ORG | 0.9110 | 0.8661 | 0.8880 | 2303 | 225 | 356 |
+| NAME | 0.9271 | 0.9047 | 0.9158 | 2098 | 165 | 221 |
+| GEO | 0.9248 | 0.8901 | 0.9071 | 2421 | 197 | 299 |
+
+Macro F1 across the three entity classes is `0.9036`. The development set has
+7698 gold entities; the solution predicts 7409 entities.
+
+### Metrics by input script
+
+| Script | Precision | Recall | F1 | TP | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| Cyrillic | 0.909091 | 0.812121 | **0.857875** | 670 | 67 | 155 |
+| Latin | 0.928995 | 0.895110 | **0.911738** | 4540 | 347 | 532 |
+| Mixed | 0.903081 | 0.895058 | **0.899052** | 1612 | 173 | 189 |
+
+## Final architecture
+
+1. Detect the script of each input with the same logic used by
+   `scripts/merge_predictions_by_script.py`.
+2. For Latin and mixed inputs, take predictions from
+   `artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl`.
+3. For Cyrillic inputs, take predictions from
+   `artifacts/ensemble-old-cyr-nerus-support-filter.jsonl`.
+4. Merge them into the final artifact with
+   `scripts/merge_predictions_by_script.py`.
+
+The Latin/mixed ensemble combines these checkpoints:
+
+| Checkpoint | Logit weight | Training role |
+|---|---:|---|
+| `artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model` | 1.000 | strong original-data XL model |
+| `artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model` | 0.775 | architecture-diverse large model |
+| `artifacts/xl-bs8-ga4-lr5p5e-5-cyr-full-ner-xlsx/model` | 1.500 | best curated/multiscript data mix |
+
+The Cyrillic branch starts from
+`artifacts/ensemble-bs8-lr5p5-largew775-lr6w25-mask-filter.jsonl` and uses
+`artifacts/cyr-full-ner-xlsx-nerus-standalone.jsonl` as a fourth-model support
+signal. This is deliberately a support filter rather than a high-weight logit
+addition: direct NERUS logit mixing peaked at `0.848598` Cyrillic F1, whereas
+support filtering reached `0.857875`.
+
+## Winning training data
+
+The main curated checkpoint uses:
+
+```text
+data/train_0409/train_cyr_full_ner_xlsx.jsonl
+```
+
+It contains 20,548 rows: 13,000 original examples, 6,304 deterministic
+Latin-to-Cyrillic transliterations, and 1,244 deduplicated Cyrillic news NER
+examples. Its best checkpoint is epoch 2 (`dev_loss=0.05872497035`).
+
+The Cyrillic support model uses:
+
+```text
+data/train_0409/train_cyr_full_ner_xlsx_nerus.jsonl
+```
+
+It contains 22,548 rows: the winning mix above plus 2,000 deduplicated natural
+Russian news rows from `data/open_datasets/nerus_ru_ner_converted.jsonl`. Its
+best checkpoint is epoch 2 (`dev_loss=0.05665018124`). As a standalone model it
+scores `0.888752` overall and `0.832439` on Cyrillic, improving Cyrillic over
+the same mix without NERUS (`0.815773`) and over the original XL model
+(`0.818742`). Its best value comes from improving the final ensemble's support
+decisions rather than replacing the ensemble.
+
+## Minimal final assembly and verification
+
+These commands assume that the intermediate predictions produced by the full
+recipes later in this document already exist.
+
+```bash
+cd /mnt/storages/vladislavkruglikov/itmo-ms-hackathon
+source .venv/bin/activate
+
+python scripts/merge_predictions_by_script.py \
+  --input data/dev.jsonl \
+  --latin artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --cyrillic artifacts/ensemble-old-cyr-nerus-support-filter.jsonl \
+  --mixed artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.jsonl
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.metrics.json
+```
+
+For a clean rebuild, follow the exact training, prediction, calibration,
+support-mask filtering, and merge commands in sections 10 through 12 below.
+The order is important: section 10 builds the prior Cyrillic ensemble, section
+11 builds the improved Latin/mixed branch, and section 12 trains and applies
+the NERUS Cyrillic support model before the final script-gated merge.
+
+## Result interpretation
+
+- The target of `0.90` exact-span micro-F1 is exceeded by 0.00316 absolute.
+- Latin is the strongest split at `0.91174`; Cyrillic remains the principal
+  source of headroom at `0.85787`.
+- Added Cyrillic data did help, but only natural NERUS examples produced a
+  clear standalone Cyrillic gain. Synthetic transliteration alone was not
+  sufficient.
+- Calibration and constrained BIO decoding improve decision consistency;
+  support-mask filtering removes disagreement patterns learned on the dev set.
+  Therefore the reported number is a development-set result, and a held-out
+  test set is required for an unbiased estimate of production quality.
+
+---
+
+# Experiment and reproduction history
 
 Run these commands from:
 
