@@ -1,28 +1,29 @@
 {
-  "generated_at": "2026-09-04T10:15:09.819254+00:00",
-  "input_path": "data/train.jsonl",
-  "output_path": "data/train_latin2cyrilic/train_latin2cyrillic_translit.jsonl",
-  "records_in_source": 13000,
-  "source_script_distribution": {
-    "cyrillic": 2177,
-    "mixed": 2982,
-    "latin": 7840,
-    "none": 1
-  },
-  "latin_only_candidates": 7840,
-  "non_uzbek_latin_excluded": 658,
-  "uzbek_latin_candidates": 7182,
-  "post_processing": {
-    "step": "manual_review_removal",
-    "description": "сущность содержит буквосочетание, нетипичное для узбекской латиницы: kh/th/ph/cy/ci/ce, начальное c+гласная, начальное w), удалены из основного файла целиком",
-    "manually_removed_before_bulk_step": 2,
-    "bulk_removed": 876,
-    "records_out": 6292,
-    "entities_out": 28111,
+    "source": "scripts/translit_uz_latin_to_cyrillic.py",
+    "method": "deterministic lotin->kirill transliteration (no LLM)",
+    "generated_at": "2026-09-04T11:46:06.043136+00:00",
+    "input_path": "data/train.jsonl",
+    "output_path": "data/train_latin2cyrilic/train_latin2cyrillic_translit.jsonl",
+    "records_in_source": 13000,
+    "source_script_distribution": {
+      "cyrillic": 2177,
+      "mixed": 2982,
+      "latin": 7840,
+      "none": 1
+    },
+    "latin_only_candidates": 7840,
+    "non_uzbek_latin_excluded": 658,
+    "uzbek_latin_candidates": 7182,
+    "foreign_entity_flagging": {
+      "method": "heuristic filter on original-latin entity mentions (patterns kh/th/ph/cy/ci/ce, w, c+vowel that are atypical for Uzbek Latin orthography and get mis-transliterated, e.g. SpaceX->СпакеХ)",
+      "flagged_records_excluded": 878
+    },
+    "records_out": 6304,
+    "entities_out": 28127,
     "entities_by_label": {
-      "ORG": 8988,
-      "GEO": 9867,
-      "NAME": 9256
+      "ORG": 8995,
+      "GEO": 9868,
+      "NAME": 9264
     }
   }
-}
+  
