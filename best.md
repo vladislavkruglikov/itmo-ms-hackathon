@@ -279,18 +279,18 @@ applies separately tuned logit biases for Latin, Cyrillic, and mixed-script
 documents and for every `B-*`/`I-*` label. A final conservative filter removes
 ensemble spans that neither component model predicts independently (except
 mixed-script GEO). Retraining XL with micro-batch 8 and gradient accumulation 4
-raises the result to **0.8960 exact-span micro-F1** (precision 0.8997, recall
-0.8924). Per-class F1 is ORG 0.8784, NAME 0.9071, and GEO 0.9038.
+raises the result to **0.8970 exact-span micro-F1** (precision 0.9028, recall
+0.8913). Per-class F1 is ORG 0.8831, NAME 0.9035, and GEO 0.9049.
 
 Train the promoted XL checkpoint with:
 
 ```bash
 python -m baseline.train \
   --train data/train.jsonl --dev data/dev.jsonl \
-  --output-dir artifacts/xl-bs8-ga4-ebs32-lr5e-5 \
+  --output-dir artifacts/xl-bs8-ga4-ebs32-lr5p5e-5 \
   --model-name facebook/xlm-roberta-xl \
   --epochs 3 --batch-size 8 --gradient-accumulation-steps 4 \
-  --learning-rate 5e-5 --weight-decay 0.01 --warmup-ratio 0.1 \
+  --learning-rate 5.5e-5 --weight-decay 0.01 --warmup-ratio 0.1 \
   --max-length 256 --stride 64 --seed 42 --device cuda \
   --bf16 --fused-adamw --num-workers 2 --prefetch-factor 1 \
   --persistent-workers
@@ -301,31 +301,31 @@ The search is reproducible from cached logits with:
 ```bash
 python scripts/cache_logits.py \
   --input data/dev.jsonl \
-  --model artifacts/xl-bs8-ga4-ebs32-lr5e-5/model \
-  --output artifacts/xl-bs8-dev-logits.pt \
+  --model artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model \
+  --output artifacts/xl-bs8-lr5p5e-5-dev-logits.pt \
   --batch-size 32
 
 python scripts/cache_logits.py \
   --input data/dev.jsonl \
   --model artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model \
-  --tokenizer artifacts/xl-bs8-ga4-ebs32-lr5e-5/model \
+  --tokenizer artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model \
   --output artifacts/best-large-xl-tokenizer-dev-logits.pt \
   --batch-size 64
 
 python scripts/tune_cached_biases.py \
   --input data/dev.jsonl \
-  --cache artifacts/xl-bs8-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
-  --output artifacts/bs8-threshold-full/report.json \
-  --predictions artifacts/bs8-threshold-full/dev_predictions.jsonl \
+  --cache artifacts/xl-bs8-lr5p5e-5-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --output artifacts/bs8-lr5p5-threshold/report.json \
+  --predictions artifacts/bs8-lr5p5-threshold/dev_predictions.jsonl \
   --workers 12
 
 python scripts/tune_cached_biases.py \
   --input data/dev.jsonl \
-  --cache artifacts/xl-bs8-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
-  --initial-report artifacts/bs8-threshold-full/report.json --skip-coarse \
+  --cache artifacts/xl-bs8-lr5p5e-5-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --initial-report artifacts/bs8-lr5p5-threshold/report.json --skip-coarse \
   --objective global --fine-rounds 2 --fine-radius 0.1 --fine-step 0.025 \
-  --output artifacts/bs8-threshold-global/report.json \
-  --predictions artifacts/bs8-threshold-global/dev_predictions.jsonl \
+  --output artifacts/bs8-lr5p5-global/report.json \
+  --predictions artifacts/bs8-lr5p5-global/dev_predictions.jsonl \
   --workers 12
 
 ```
@@ -335,22 +335,22 @@ The production-style end-to-end prediction command is:
 ```bash
 python scripts/ensemble_predict.py \
   --input data/dev.jsonl \
-  --output artifacts/ensemble-bs8-large-threshold-support.jsonl \
+  --output artifacts/ensemble-bs8-lr5p5-large-threshold-support.jsonl \
   --models \
-    artifacts/xl-bs8-ga4-ebs32-lr5e-5/model:1 \
+    artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model:1 \
     artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.75 \
   --batch-size 32 \
   --constrained \
   --script-label-bias \
-    latin:B-ORG:-0.65 latin:I-ORG:-0.325 \
-    latin:B-NAME:0.525 latin:I-NAME:0.725 \
-    latin:B-GEO:-0.1 latin:I-GEO:0.025 \
-    cyrillic:B-ORG:0.05 cyrillic:I-ORG:0.05 \
-    cyrillic:B-NAME:0.1 cyrillic:I-NAME:0.1 \
-    cyrillic:B-GEO:0.325 cyrillic:I-GEO:0.5 \
-    mixed:B-ORG:0 mixed:I-ORG:0 \
-    mixed:B-NAME:0.175 mixed:I-NAME:0.35 \
-    mixed:B-GEO:-0.525 mixed:I-GEO:-0.3 \
+    latin:B-ORG:-0.625 latin:I-ORG:0.025 \
+    latin:B-NAME:0.15 latin:I-NAME:0.6 \
+    latin:B-GEO:-0.2 latin:I-GEO:0.15 \
+    cyrillic:B-ORG:-0.3 cyrillic:I-ORG:-0.3 \
+    cyrillic:B-NAME:-0.3 cyrillic:I-NAME:-0.25 \
+    cyrillic:B-GEO:0.425 cyrillic:I-GEO:0.6 \
+    mixed:B-ORG:-0.625 mixed:I-ORG:-0.35 \
+    mixed:B-NAME:-0.6 mixed:I-NAME:-0.175 \
+    mixed:B-GEO:0.05 mixed:I-GEO:0.15 \
   --min-model-support \
     latin:ORG:1 latin:NAME:1 latin:GEO:1 \
     cyrillic:ORG:1 cyrillic:NAME:1 cyrillic:GEO:1 \
@@ -358,14 +358,14 @@ python scripts/ensemble_predict.py \
 
 python scripts/evaluate.py \
   --gold data/dev.jsonl \
-  --predictions artifacts/ensemble-bs8-large-threshold-support.jsonl \
-  --output artifacts/ensemble-bs8-large-threshold-support.metrics.json
+  --predictions artifacts/ensemble-bs8-lr5p5-large-threshold-support.jsonl \
+  --output artifacts/ensemble-bs8-lr5p5-large-threshold-support.metrics.json
 ```
 
 End-to-end predictions match the independently post-filtered cached predictions
 byte-for-byte. All
 five deterministic SHA-256 hash-fold diagnostics improved over the original
-0.8868 decoder. Their F1 values are 0.8910, 0.9154, 0.8888, 0.8781, and 0.9100.
+0.8868 decoder. Their F1 values are 0.8898, 0.9204, 0.8872, 0.8816, and 0.9093.
 Sweeping the large-model weight (0.45-1.05) retained 0.75 as best; adding the reviewed-data
 XL checkpoint also failed to improve the result. More aggressive support
 filtering reached 0.8951 on the full dev set but regressed some folds and was

@@ -448,3 +448,26 @@ Using BS4 as a third model in the calibrated BS8+large pipeline at weights
 0.025/0.05/0.10/0.15/0.20/0.30 produced micro-F1
 0.89572/0.89558/0.89524/0.89524/0.89528/0.89536. Since every value is below
 0.896048, BS4 was rejected and no production complexity was added.
+
+### BS8 learning-rate refinement
+
+Keeping BS8/GA4, seed 42, and all other settings fixed, LR 4.5e-5 finished with
+dev loss 0.069336, standalone F1 0.87308, and raw ensemble F1 0.88739. Full
+calibration plus the fixed support rule reached 0.8956. Full-dev support tuning
+could reach 0.896061, but leave-one-fold-out evaluation fell to 0.89507, so the
+run was rejected as overfit.
+
+LR 5.5e-5 improved dev loss to **0.063452**, standalone F1 to **0.88239**, and
+raw ensemble F1 to 0.88775. Full script-aware calibration, global refinement,
+and the conservative support rule produce the new best:
+
+| Run | Precision | Recall | Micro-F1 | TP | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| BS8 LR5.5e-5 + large, calibrated + support | 0.9028 | 0.8913 | **0.896980** | 6861 | 739 | 837 |
+
+Per-class F1 is 0.8831 ORG, 0.9035 NAME, and 0.9049 GEO. SHA-256 fold F1 is
+0.889837/0.920439/0.887247/0.881630/0.909284; all remain above the original
+decoder's corresponding folds. A local large-weight sweep at
+0.65/0.70/0.75/0.80/0.85 scored 0.89534/0.89592/**0.89698**/0.89554/0.89455,
+retaining 0.75. End-to-end inference matches cached post-filtered predictions
+byte-for-byte.
