@@ -61,7 +61,7 @@ def bias_tensor(params: dict[str, float], record_script: str) -> torch.Tensor:
 
 
 def decode_record(record, params: dict[str, float]):
-    record_script, offsets, logits, _ = record
+    _, record_script, offsets, logits, _ = record
     ids = viterbi(logits, bias_tensor(params, record_script))
     tagged = [
         (start, end, ID2LABEL[label_id])
@@ -72,11 +72,11 @@ def decode_record(record, params: dict[str, float]):
 
 def evaluate_subset(params: dict[str, float], selected_script: str | None = None, fold: int | None = None):
     tp = fp = fn = 0
-    for index, record in enumerate(RECORDS):
-        record_script, _, _, gold = record
+    for record in RECORDS:
+        record_hash, record_script, _, _, gold = record
         if selected_script is not None and record_script != selected_script:
             continue
-        if fold is not None and index % 5 != fold:
+        if fold is not None and int(hashlib.sha256(record_hash.encode()).hexdigest()[:8], 16) % 5 != fold:
             continue
         predicted = decode_record(record, params)
         tp += len(gold & predicted)
@@ -86,8 +86,8 @@ def evaluate_subset(params: dict[str, float], selected_script: str | None = None
 
 
 def worker(job):
-    selected_script, params = job
-    return params, evaluate_subset(params, selected_script)
+    objective_script, params = job
+    return params, evaluate_subset(params, objective_script)
 
 
 def candidate_values(start: float, stop: float, step: float) -> list[float]:
@@ -124,6 +124,17 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--predictions", type=Path, required=True)
     parser.add_argument("--workers", type=int, default=12)
+    parser.add_argument("--initial-report", type=Path)
+    parser.add_argument("--skip-coarse", action="store_true")
+    parser.add_argument("--fine-rounds", type=int, default=2)
+    parser.add_argument("--fine-radius", type=float, default=0.15)
+    parser.add_argument("--fine-step", type=float, default=0.025)
+    parser.add_argument(
+        "--objective",
+        choices=("script", "global"),
+        default="script",
+        help="Optimize each script subset independently or optimize full-dev micro-F1.",
+    )
     args = parser.parse_args()
 
     torch.set_num_threads(1)
@@ -157,28 +168,35 @@ def main() -> int:
         offsets = [offset for offset, _ in ordered]
         logits = torch.stack([value / total_weight for _, value in ordered])
         gold = {(entity["label"], entity["start"], entity["end"]) for entity in row["entities"]}
-        RECORDS.append((script(row["text"]), offsets, logits, gold))
+        RECORDS.append((row["hash"], script(row["text"]), offsets, logits, gold))
 
     params: dict[str, float] = {}
+    if args.initial_report is not None:
+        params = {
+            str(key): float(value)
+            for key, value in json.loads(args.initial_report.read_text(encoding="utf-8"))["params"].items()
+        }
     baseline = evaluate_subset(params)
     print("baseline", json.dumps(baseline, sort_keys=True))
     coarse = candidate_values(-0.4, 0.4, 0.05)
-    fine_delta = candidate_values(-0.15, 0.15, 0.025)
+    fine_delta = candidate_values(-args.fine_radius, args.fine_radius, args.fine_step)
     ctx = mp.get_context("fork")
     with ctx.Pool(processes=args.workers) as pool:
         for selected_script in SCRIPTS:
             print(f"tuning {selected_script}")
-            for label in ENTITY_LABELS:
-                candidates = [set_pair(params, selected_script, label, value) for value in coarse]
-                params, values = choose(pool.map(worker, [(selected_script, value) for value in candidates]), params)
-                print(selected_script, label, "joint", params[f"{selected_script}:B-{label}"], values["f1"])
-            for fine_round in range(2):
+            objective_script = selected_script if args.objective == "script" else None
+            if not args.skip_coarse:
+                for label in ENTITY_LABELS:
+                    candidates = [set_pair(params, selected_script, label, value) for value in coarse]
+                    params, values = choose(pool.map(worker, [(objective_script, value) for value in candidates]), params)
+                    print(selected_script, label, "joint", params[f"{selected_script}:B-{label}"], values["f1"])
+            for fine_round in range(args.fine_rounds):
                 for label in ENTITY_LABELS:
                     for prefix in ("B", "I"):
                         tag = f"{prefix}-{label}"
                         center = params[f"{selected_script}:{tag}"]
                         candidates = [set_tag(params, selected_script, tag, round(center + delta, 6)) for delta in fine_delta]
-                        params, values = choose(pool.map(worker, [(selected_script, value) for value in candidates]), params)
+                        params, values = choose(pool.map(worker, [(objective_script, value) for value in candidates]), params)
                         print(selected_script, tag, f"fine{fine_round + 1}", params[f"{selected_script}:{tag}"], values["f1"])
 
     final = evaluate_subset(params)

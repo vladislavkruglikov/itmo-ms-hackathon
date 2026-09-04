@@ -272,13 +272,15 @@ Epoch losses were 0.422152/0.104543, 0.069628/0.071119, and 0.038631/0.069212 (t
 Constrained dev decoding scored 0.8750 micro-F1 (ORG 0.8471, NAME 0.8963, GEO 0.8845), below the 0.8868 baseline,
 so this checkpoint is retained as an experiment and is not promoted.
 
-## 9. Current best: script-aware BIO threshold calibration
+## 9. Current best: calibrated BIO decoding with model-support filtering
 
 The two-model ensemble remains unchanged, but the constrained decoder now
 applies separately tuned logit biases for Latin, Cyrillic, and mixed-script
-documents and for every `B-*`/`I-*` label. The calibrated result is **0.8921
-exact-span micro-F1** (precision 0.8948, recall 0.8895), improving the previous
-0.8868 best. Per-class F1 is ORG 0.8758, NAME 0.8992, and GEO 0.9020.
+documents and for every `B-*`/`I-*` label. A final conservative filter removes
+ensemble spans that neither component model predicts independently (except
+mixed-script GEO). The result is **0.8938 exact-span micro-F1** (precision
+0.8996, recall 0.8882), improving the previous 0.8868 best. Per-class F1 is
+ORG 0.8798, NAME 0.9000, and GEO 0.9022.
 
 The search is reproducible from cached logits with:
 
@@ -302,6 +304,25 @@ python scripts/tune_cached_biases.py \
   --output artifacts/threshold-tuning-fine2/report.json \
   --predictions artifacts/threshold-tuning-fine2/dev_predictions.jsonl \
   --workers 12
+
+python scripts/tune_cached_biases.py \
+  --input data/dev.jsonl \
+  --cache artifacts/best-xl-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --initial-report artifacts/threshold-tuning-fine2/report.json --skip-coarse \
+  --objective global --fine-rounds 2 --fine-radius 0.1 --fine-step 0.05 \
+  --output artifacts/threshold-tuning-global-refine/report.json \
+  --predictions artifacts/threshold-tuning-global-refine/dev_predictions.jsonl \
+  --workers 12
+
+python scripts/tune_cached_biases.py \
+  --input data/dev.jsonl \
+  --cache artifacts/best-xl-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --initial-report artifacts/threshold-tuning-global-refine/report.json --skip-coarse \
+  --objective global \
+  --fine-rounds 1 --fine-radius 0.05 --fine-step 0.025 \
+  --output artifacts/threshold-tuning-global-refine2/report.json \
+  --predictions artifacts/threshold-tuning-global-refine2/dev_predictions.jsonl \
+  --workers 12
 ```
 
 The production-style end-to-end prediction command is:
@@ -309,31 +330,39 @@ The production-style end-to-end prediction command is:
 ```bash
 python scripts/ensemble_predict.py \
   --input data/dev.jsonl \
-  --output artifacts/ensemble-xl-large-threshold-tuned.jsonl \
+  --output artifacts/ensemble-xl-large-threshold-support.jsonl \
   --models \
     artifacts/base-facebook-xlm-roberta-xl-bf16-bs12-ga3-ebs36-lr5e-5/model:1 \
     artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.75 \
   --batch-size 32 \
   --constrained \
   --script-label-bias \
-    latin:B-ORG:-0.425 latin:I-ORG:0.1 \
+    latin:B-ORG:-0.525 latin:I-ORG:0.175 \
     latin:B-NAME:-0.1 latin:I-NAME:0.375 \
     latin:B-GEO:-0.075 latin:I-GEO:-0.15 \
-    cyrillic:B-ORG:0 cyrillic:I-ORG:0 \
+    cyrillic:B-ORG:0.025 cyrillic:I-ORG:0 \
     cyrillic:B-NAME:-0.225 cyrillic:I-NAME:-0.1 \
     cyrillic:B-GEO:0.4 cyrillic:I-GEO:0.675 \
     mixed:B-ORG:-0.45 mixed:I-ORG:-0.275 \
     mixed:B-NAME:0 mixed:I-NAME:0 \
-    mixed:B-GEO:0.1 mixed:I-GEO:0.125
+    mixed:B-GEO:0.1 mixed:I-GEO:0.125 \
+  --min-model-support \
+    latin:ORG:1 latin:NAME:1 latin:GEO:1 \
+    cyrillic:ORG:1 cyrillic:NAME:1 cyrillic:GEO:1 \
+    mixed:ORG:1 mixed:NAME:1
 
 python scripts/evaluate.py \
   --gold data/dev.jsonl \
-  --predictions artifacts/ensemble-xl-large-threshold-tuned.jsonl \
-  --output artifacts/ensemble-xl-large-threshold-tuned.metrics.json
+  --predictions artifacts/ensemble-xl-large-threshold-support.jsonl \
+  --output artifacts/ensemble-xl-large-threshold-support.metrics.json
 ```
 
 End-to-end predictions match the cached tuned predictions byte-for-byte. All
-five deterministic hash-fold diagnostics improved, with fold deltas from
-+0.00036 to +0.00771 micro-F1. The large model must be cached with the XL
+five deterministic SHA-256 hash-fold diagnostics improved over the original
+0.8868 decoder, with fold deltas from +0.0051 to +0.0091 micro-F1. Sweeping the
+large-model weight (0.45-1.05) retained 0.75 as best; adding the reviewed-data
+XL checkpoint also failed to improve the result. More aggressive support
+filtering reached 0.8951 on the full dev set but regressed some folds and was
+rejected as likely overfitting. The large model must be cached with the XL
 tokenizer because production ensemble inference tokenizes both components with
 the first model's tokenizer.

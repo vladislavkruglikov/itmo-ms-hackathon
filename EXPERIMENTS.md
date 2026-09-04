@@ -375,9 +375,18 @@ when both components use the production XL tokenizer.
 |---|---:|---:|---:|---:|---:|---:|---|
 | constrained baseline | 0.8875 | 0.8862 | 0.8868 | 6822 | 865 | 876 | Previous best |
 | script-aware BIO thresholds | 0.8948 | 0.8895 | **0.8921** | 6847 | 805 | 851 | New best |
+| refined thresholds + component support | 0.8996 | 0.8882 | **0.8938** | 6837 | 763 | 861 | Current best |
 
-Per-class tuned F1 is 0.8758 ORG, 0.8992 NAME, and 0.9020 GEO. Every one of
-five deterministic hash folds improved; deltas were +0.00771, +0.00456,
-+0.00658, +0.00036, and +0.00638. Full parameters and fold counts are stored
-in `artifacts/threshold-tuning-fine2/report.json`; the independently executed
-end-to-end ensemble matches the cached prediction file byte-for-byte.
+The current per-class F1 is 0.8798 ORG, 0.9000 NAME, and 0.9022 GEO. It drops
+spans unsupported by either component for all script/class pairs except mixed
+GEO. Against the original decoder, every deterministic SHA-256 hash fold
+improved: +0.005693, +0.009051, +0.008720, +0.005984, and +0.005107 F1.
+The refined threshold report is in
+`artifacts/threshold-tuning-global-refine2/report.json`; production output is
+`artifacts/ensemble-xl-large-threshold-support.jsonl`.
+
+Additional searches did not beat this robust choice. Ensemble weights 0.45 to
+1.05 retained 0.75 as best, and a third reviewed-data XL checkpoint at weights
+0.05 to 0.40 peaked below the current result. Fine-grained single-model filters
+can reach 0.8951 on full dev, but regress relative to 0.8938 on some folds and
+were rejected as likely dev overfitting.

@@ -86,6 +86,13 @@ def main() -> int:
         metavar="SCRIPT:LABEL:BIAS",
         help="Add a label-logit bias only for latin, cyrillic, or mixed documents.",
     )
+    parser.add_argument(
+        "--min-model-support",
+        nargs="*",
+        default=[],
+        metavar="SCRIPT:LABEL:COUNT",
+        help="Drop decoded spans not independently produced by at least COUNT component models.",
+    )
     args = parser.parse_args()
     label_bias = {}
     for item in args.label_bias:
@@ -97,6 +104,15 @@ def main() -> int:
         if script_name not in {"latin", "cyrillic", "mixed"}:
             raise ValueError(f"unknown script: {script_name}")
         script_label_bias[(script_name, name)] = float(value)
+    min_model_support = {}
+    for item in args.min_model_support:
+        script_name, name, value = item.split(":", 2)
+        if script_name not in {"latin", "cyrillic", "mixed"}:
+            raise ValueError(f"unknown script: {script_name}")
+        count = int(value)
+        if count < 0:
+            raise ValueError("model support must be non-negative")
+        min_model_support[(script_name, name)] = count
     device = resolve_device(args.device)
     records = read_records(args.input, require_entities=False)
     model_specs = [item.rsplit(":", 1) if ":" in item else (item, "1") for item in args.models]
@@ -106,12 +122,15 @@ def main() -> int:
     combined = [{} for _ in records]
     total_weight = 0.0
     id2label = None
+    component_scores = []
     for model_path, weight_text in model_specs:
         weight = float(weight_text)
         model = AutoModelForTokenClassification.from_pretrained(model_path).to(device)
         if id2label is None:
             id2label = {int(k): str(v) for k, v in model.config.id2label.items()}
         scores = predict_model(model, tokenizer, windows, len(records), args.batch_size, device)
+        if min_model_support:
+            component_scores.append(scores)
         for record_index, record_scores in enumerate(scores):
             for key, (value, count) in record_scores.items():
                 value = value / count
@@ -132,7 +151,37 @@ def main() -> int:
             logits[:, label_id] += script_label_bias.get((record_script, label), 0.0)
         ids = constrained_ids(logits, id2label) if args.constrained else [int(value.argmax()) for value in logits]
         tagged = [(start, end, id2label[label_id]) for (start, end), label_id in zip((key for key, _ in ordered), ids, strict=True)]
-        predictions.append({"hash": record["hash"], "entities": decode_bio_tokens(tagged)})
+        entities = decode_bio_tokens(tagged)
+        if min_model_support:
+            support_sets = []
+            for scores in component_scores:
+                component_ordered = sorted(scores[len(predictions)].items())
+                component_logits = torch.stack([value / count for _, (value, count) in component_ordered])
+                component_ids = (
+                    constrained_ids(component_logits, id2label)
+                    if args.constrained
+                    else [int(value.argmax()) for value in component_logits]
+                )
+                component_tagged = [
+                    (start, end, id2label[label_id])
+                    for (start, end), label_id in zip(
+                        (key for key, _ in component_ordered), component_ids, strict=True
+                    )
+                ]
+                support_sets.append({
+                    (entity["label"], entity["start"], entity["end"])
+                    for entity in decode_bio_tokens(component_tagged)
+                })
+            entities = [
+                entity
+                for entity in entities
+                if sum(
+                    (entity["label"], entity["start"], entity["end"]) in support
+                    for support in support_sets
+                )
+                >= min_model_support.get((record_script, entity["label"]), 0)
+            ]
+        predictions.append({"hash": record["hash"], "entities": entities})
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", encoding="utf-8") as stream:
         for prediction in predictions:
