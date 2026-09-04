@@ -1,0 +1,36 @@
+{
+  "source": "scripts/describe_cyrillic_full_append.py",
+  "method": "full append of deterministic latin->cyrillic transliteration on top of train;",
+  "generated_at": "2026-09-04T15:52:48.686696+00:00",
+  "train_path": "data/train.jsonl",
+  "translit_path": "data/train_latin2cyrilic/train_latin2cyrillic_translit.jsonl",
+  "output_path": "data/train_0409/train_cyr_full.jsonl",
+  "hash_suffix": "__translit_cyr",
+  "train_records_in": 13000,
+  "translit_records_in": 6304,
+  "expected_records_out": 19304,
+  "records_out": 19304,
+  "records_out_matches_expected": true,
+  "duplicate_hashes_in_output": 0,
+  "missing_from_output": 0,
+  "unexpected_in_output": 0,
+  "records_added": 6304,
+  "documents_with_both_scripts_present": 6304,
+  "entities_by_label_out": {
+    "GEO": 31313,
+    "ORG": 32415,
+    "NAME": 30482
+  },
+  "script_distribution_before": {
+    "cyrillic": 2177,
+    "mixed": 2982,
+    "latin": 7840,
+    "none": 1
+  },
+  "script_distribution_after": {
+    "cyrillic": 8195,
+    "mixed": 3268,
+    "latin": 7840,
+    "none": 1
+  }
+}

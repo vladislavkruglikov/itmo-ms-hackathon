@@ -1,0 +1,35 @@
+{
+  "source": "scripts/sample_replace_cyrillic_translit.py",
+  "method": "random replacement of a sampled fraction of train records with their deterministic latin->cyrillic transliteration; dataset size is unchanged, no document appears twice",
+  "generated_at": "2026-09-04T15:46:13.335024+00:00",
+  "train_path": "data/train.jsonl",
+  "translit_path": "data/train_latin2cyrilic/train_latin2cyrillic_translit.jsonl",
+  "hash_suffix": "__translit_cyr",
+  "fraction_requested": 0.5,
+  "seed": 42,
+  "keep_original_hash": false,
+  "train_records_in": 13000,
+  "translit_records_in": 6304,
+  "skipped_no_suffix": 0,
+  "skipped_missing_source": 0,
+  "candidate_records": 6304,
+  "records_replaced": 3152,
+  "records_out": 13000,
+  "entities_by_label_out": {
+    "GEO": 21445,
+    "ORG": 23420,
+    "NAME": 21218
+  },
+  "script_distribution_before": {
+    "cyrillic": 2177,
+    "mixed": 2982,
+    "latin": 7840,
+    "none": 1
+  },
+  "script_distribution_after": {
+    "cyrillic": 5191,
+    "mixed": 3120,
+    "latin": 4688,
+    "none": 1
+  }
+}
