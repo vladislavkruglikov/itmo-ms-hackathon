@@ -363,6 +363,10 @@ five deterministic SHA-256 hash-fold diagnostics improved over the original
 large-model weight (0.45-1.05) retained 0.75 as best; adding the reviewed-data
 XL checkpoint also failed to improve the result. More aggressive support
 filtering reached 0.8951 on the full dev set but regressed some folds and was
-rejected as likely overfitting. The large model must be cached with the XL
+rejected as likely overfitting. Entity-margin calibration and leave-one-fold-out
+learned disagreement rules also failed to transfer. A newly trained seed-17 XL
+(same best hyperparameters, final dev loss 0.06937) reduced F1 for every tested
+positive and negative ensemble weight; retuning its best candidate reached only
+0.8936 after support filtering. The large model must be cached with the XL
 tokenizer because production ensemble inference tokenizes both components with
 the first model's tokenizer.

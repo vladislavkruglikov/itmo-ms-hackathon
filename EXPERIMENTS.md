@@ -390,3 +390,24 @@ Additional searches did not beat this robust choice. Ensemble weights 0.45 to
 0.05 to 0.40 peaked below the current result. Fine-grained single-model filters
 can reach 0.8951 on full dev, but regress relative to 0.8938 on some folds and
 were rejected as likely dev overfitting.
+
+### Further calibration and seed-diversity checks
+
+Entity-level minimum/mean logit-margin filtering was tested by script, class,
+and component support. Although full-dev thresholds could improve individual
+groups, leave-one-hash-fold-out effects changed sign, so confidence filtering
+was rejected. Learning discrete XL-only/large-only filtering rules on four
+folds and applying them to the held-out fold produced aggregate micro-F1
+0.8930, below the fixed conservative support rule at 0.8938.
+
+A second `facebook/xlm-roberta-xl` was trained from the original pretrained
+model on `data/train.jsonl` with seed 17 and otherwise the best configuration:
+3 epochs, BS12, gradient accumulation 3, LR 5e-5, weight decay 0.01, warmup
+0.1, max length/stride 256/64, BF16, and fused AdamW. Epoch dev losses were
+0.108498, 0.074330, and 0.069367, versus 0.06758 for the seed-42 XL. Adding its
+cached logits at positive weights 0.025/0.05/0.075/0.10/0.15/0.20/0.30/0.40/0.50
+gave micro-F1 0.89213/0.89183/0.89190/0.89177/0.89150/0.89118/0.89093/0.89022/
+0.89070 before support filtering. Negative weights -0.025/-0.05/-0.10/-0.20
+gave 0.89147/0.89103/0.88971/0.88876. A final global BIO-bias retune at weight
+0.025 reached 0.89248 before support and 0.8936 after support, still below the
+0.8938 best. The seed-17 model is therefore rejected.
