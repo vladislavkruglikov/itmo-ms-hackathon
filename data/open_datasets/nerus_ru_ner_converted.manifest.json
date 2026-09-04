@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-09-04T16:17:14.338858+00:00",
+  "source": "natasha/nerus (nerus_lenta.conllu.gz, sentence-level sample)",
+  "source_url": "https://storage.yandexcloud.net/natasha-nerus/data/nerus_lenta.conllu.gz",
+  "n_selected": 2000,
+  "output_path": "data/open_datasets/output_top2000_longest.jsonl",
+  "records": 2000,
+  "records_with_entities": 1763,
+  "entities": 4227,
+  "entities_by_label": {
+    "GEO": 1534,
+    "ORG": 1377,
+    "NAME": 1316
+  }
+}
