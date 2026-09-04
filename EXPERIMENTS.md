@@ -361,3 +361,23 @@ The manually reviewed dataset was trained for one epoch after fixing nested
 span validation and freeing rejected generated checkpoints for disk space. It
 reached train/dev loss 0.369857/0.149388; its constrained ensemble scored
 0.8858, below the 0.8868 baseline, and was rejected for production.
+
+## Script-aware threshold calibration
+
+The existing XL + XLM-R-large ensemble was calibrated without retraining.
+`scripts/tune_cached_biases.py` performs coordinate search over separate BIO
+logit biases for Latin, Cyrillic, and mixed-script documents. It first searches
+a joint class bias and then performs two fine passes over `B-*` and `I-*`
+independently. Cached logits reproduce the original constrained best exactly
+when both components use the production XL tokenizer.
+
+| Run | Precision | Recall | Micro-F1 | TP | FP | FN | Result |
+|---|---:|---:|---:|---:|---:|---:|---|
+| constrained baseline | 0.8875 | 0.8862 | 0.8868 | 6822 | 865 | 876 | Previous best |
+| script-aware BIO thresholds | 0.8948 | 0.8895 | **0.8921** | 6847 | 805 | 851 | New best |
+
+Per-class tuned F1 is 0.8758 ORG, 0.8992 NAME, and 0.9020 GEO. Every one of
+five deterministic hash folds improved; deltas were +0.00771, +0.00456,
++0.00658, +0.00036, and +0.00638. Full parameters and fold counts are stored
+in `artifacts/threshold-tuning-fine2/report.json`; the independently executed
+end-to-end ensemble matches the cached prediction file byte-for-byte.

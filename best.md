@@ -271,3 +271,69 @@ BF16, fused AdamW, learning rate 5e-5, weight decay 0.01, warmup ratio 0.1, seed
 Epoch losses were 0.422152/0.104543, 0.069628/0.071119, and 0.038631/0.069212 (train/dev).
 Constrained dev decoding scored 0.8750 micro-F1 (ORG 0.8471, NAME 0.8963, GEO 0.8845), below the 0.8868 baseline,
 so this checkpoint is retained as an experiment and is not promoted.
+
+## 9. Current best: script-aware BIO threshold calibration
+
+The two-model ensemble remains unchanged, but the constrained decoder now
+applies separately tuned logit biases for Latin, Cyrillic, and mixed-script
+documents and for every `B-*`/`I-*` label. The calibrated result is **0.8921
+exact-span micro-F1** (precision 0.8948, recall 0.8895), improving the previous
+0.8868 best. Per-class F1 is ORG 0.8758, NAME 0.8992, and GEO 0.9020.
+
+The search is reproducible from cached logits with:
+
+```bash
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/base-facebook-xlm-roberta-xl-bf16-bs12-ga3-ebs36-lr5e-5/model \
+  --output artifacts/best-xl-dev-logits.pt \
+  --batch-size 32
+
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model \
+  --tokenizer artifacts/base-facebook-xlm-roberta-xl-bf16-bs12-ga3-ebs36-lr5e-5/model \
+  --output artifacts/best-large-xl-tokenizer-dev-logits.pt \
+  --batch-size 64
+
+python scripts/tune_cached_biases.py \
+  --input data/dev.jsonl \
+  --cache artifacts/best-xl-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --output artifacts/threshold-tuning-fine2/report.json \
+  --predictions artifacts/threshold-tuning-fine2/dev_predictions.jsonl \
+  --workers 12
+```
+
+The production-style end-to-end prediction command is:
+
+```bash
+python scripts/ensemble_predict.py \
+  --input data/dev.jsonl \
+  --output artifacts/ensemble-xl-large-threshold-tuned.jsonl \
+  --models \
+    artifacts/base-facebook-xlm-roberta-xl-bf16-bs12-ga3-ebs36-lr5e-5/model:1 \
+    artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.75 \
+  --batch-size 32 \
+  --constrained \
+  --script-label-bias \
+    latin:B-ORG:-0.425 latin:I-ORG:0.1 \
+    latin:B-NAME:-0.1 latin:I-NAME:0.375 \
+    latin:B-GEO:-0.075 latin:I-GEO:-0.15 \
+    cyrillic:B-ORG:0 cyrillic:I-ORG:0 \
+    cyrillic:B-NAME:-0.225 cyrillic:I-NAME:-0.1 \
+    cyrillic:B-GEO:0.4 cyrillic:I-GEO:0.675 \
+    mixed:B-ORG:-0.45 mixed:I-ORG:-0.275 \
+    mixed:B-NAME:0 mixed:I-NAME:0 \
+    mixed:B-GEO:0.1 mixed:I-GEO:0.125
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-xl-large-threshold-tuned.jsonl \
+  --output artifacts/ensemble-xl-large-threshold-tuned.metrics.json
+```
+
+End-to-end predictions match the cached tuned predictions byte-for-byte. All
+five deterministic hash-fold diagnostics improved, with fold deltas from
++0.00036 to +0.00771 micro-F1. The large model must be cached with the XL
+tokenizer because production ensemble inference tokenizes both components with
+the first model's tokenizer.

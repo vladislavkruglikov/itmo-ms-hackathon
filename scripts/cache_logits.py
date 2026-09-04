@@ -16,6 +16,10 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Cache per-token NER logits for decoder sweeps.")
     parser.add_argument("--input", type=Path, required=True)
     parser.add_argument("--model", required=True)
+    parser.add_argument(
+        "--tokenizer",
+        help="Tokenizer path/name; defaults to --model. Ensembles must share the production tokenizer.",
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--max-length", type=int, default=256)
@@ -24,7 +28,7 @@ def main() -> int:
     args = parser.parse_args()
     device = resolve_device(args.device)
     records = read_records(args.input, require_entities=False)
-    tokenizer = load_fast_tokenizer(args.model)
+    tokenizer = load_fast_tokenizer(args.tokenizer or args.model)
     validate_window(tokenizer, args.max_length, args.stride)
     windows = _build_windows(records, tokenizer, max_length=args.max_length, stride=args.stride)
     model = AutoModelForTokenClassification.from_pretrained(args.model).to(device).eval()

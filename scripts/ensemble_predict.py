@@ -61,6 +61,12 @@ def constrained_ids(logits: torch.Tensor, labels: dict[int, str]) -> list[int]:
     return result[::-1]
 
 
+def script(text: str) -> str:
+    cyrillic = any("А" <= char.upper() <= "Я" for char in text)
+    latin = any("a" <= char.lower() <= "z" for char in text)
+    return "mixed" if cyrillic and latin else "cyrillic" if cyrillic else "latin"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Weighted logit ensemble for exact-span NER.")
     parser.add_argument("--input", type=Path, required=True)
@@ -73,11 +79,24 @@ def main() -> int:
     parser.add_argument("--constrained", action="store_true")
     parser.add_argument("--label-bias", nargs="*", default=[], metavar="LABEL:BIAS",
                         help="Add a constant to selected label logits before decoding.")
+    parser.add_argument(
+        "--script-label-bias",
+        nargs="*",
+        default=[],
+        metavar="SCRIPT:LABEL:BIAS",
+        help="Add a label-logit bias only for latin, cyrillic, or mixed documents.",
+    )
     args = parser.parse_args()
     label_bias = {}
     for item in args.label_bias:
         name, value = item.rsplit(":", 1)
         label_bias[name] = float(value)
+    script_label_bias = {}
+    for item in args.script_label_bias:
+        script_name, name, value = item.split(":", 2)
+        if script_name not in {"latin", "cyrillic", "mixed"}:
+            raise ValueError(f"unknown script: {script_name}")
+        script_label_bias[(script_name, name)] = float(value)
     device = resolve_device(args.device)
     records = read_records(args.input, require_entities=False)
     model_specs = [item.rsplit(":", 1) if ":" in item else (item, "1") for item in args.models]
@@ -106,9 +125,11 @@ def main() -> int:
     for record, record_scores in zip(records, combined, strict=True):
         ordered = sorted(record_scores.items())
         logits = torch.stack([value / total_weight for _, value in ordered])
+        record_script = script(record["text"])
         for label_id, label in id2label.items():
             if label in label_bias:
                 logits[:, label_id] += label_bias[label]
+            logits[:, label_id] += script_label_bias.get((record_script, label), 0.0)
         ids = constrained_ids(logits, id2label) if args.constrained else [int(value.argmax()) for value in logits]
         tagged = [(start, end, id2label[label_id]) for (start, end), label_id in zip((key for key, _ in ordered), ids, strict=True)]
         predictions.append({"hash": record["hash"], "entities": decode_bio_tokens(tagged)})
