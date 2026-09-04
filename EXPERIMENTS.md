@@ -503,3 +503,26 @@ producing **0.900099 micro-F1** (precision 0.9103, recall 0.8901; TP 6852,
 FP 675, FN 846). Fold F1 is 0.895937/0.922176/0.891274/0.884039/0.910384;
 all five folds improve over the unfiltered 0.898098 model. End-to-end checkpoint
 inference is byte-identical to the cached-logit result.
+
+### Curated data-mix comparison (`data/train_0409`)
+
+All four mixes were trained with the same controlled recipe: XLM-R XL,
+BS8/GA4, LR 5.5e-5, three epochs, seed 42, max length/stride 256/64, BF16, and
+fused AdamW. Each checkpoint was evaluated standalone and as a weighted model
+in the established ensemble before moving to the next mix.
+
+| Data mix | Rows | Best dev loss | Standalone F1 | Best ensemble F1 |
+|---|---:|---:|---:|---:|
+| `train_cyr_replace50` | 13,000 | 0.067437 | 0.877304 | 0.897775 |
+| `train_cyr_replace50_ner_xlsx` | 14,244 | 0.067134 | 0.873793 | 0.897500 |
+| `train_cyr_full` | 19,304 | 0.060689 | 0.877773 | 0.897775 |
+| `train_cyr_full_ner_xlsx` | 20,548 | **0.058725** | **0.886832** | **0.902244** |
+
+The replace50 variants remove useful Latin originals and underperform. Full
+append substantially lowers token loss, but only the full+NER-XLSX mix improves
+exact-span F1. For the winner, replacing LR6 at weight 1.5, globally refining
+BIO biases, and selecting low-precision three-model support masks produces
+0.902244 F1 (precision 0.9197, recall 0.8854; TP 6816, FP 595, FN 882). An
+exhaustive leave-one-fold-out selection of the candidate masks scores 0.900389,
+still above the former 0.900099 best. The other mixes' full weights were removed
+after their summaries, cached logits, predictions, and metrics were retained.
