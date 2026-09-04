@@ -526,3 +526,18 @@ BIO biases, and selecting low-precision three-model support masks produces
 exhaustive leave-one-fold-out selection of the candidate masks scores 0.900389,
 still above the former 0.900099 best. The other mixes' full weights were removed
 after their summaries, cached logits, predictions, and metrics were retained.
+
+#### Script-specific validation
+
+The Cyrillic augmentation did not improve the minority-script metric by itself.
+The original LR5.5 standalone model scored 0.818742 Cyrillic F1, while the four
+new mixes scored 0.808118, 0.804726, 0.796330, and 0.815773 respectively. The
+0.902244 new ensemble also scored 0.849105 Cyrillic F1, slightly below the
+preceding ensemble's 0.851548. Its aggregate gain instead came from Latin
+(0.909055 to 0.911738) and mixed text (0.896552 to 0.899052).
+
+For that reason the promoted output is script-gated: use the preceding LR6
+ensemble for Cyrillic and the new `cyr_full_ner_xlsx` ensemble for Latin/mixed.
+This preserves Cyrillic F1 at 0.851548 and improves aggregate F1 to **0.902433**
+(precision 0.9187, recall 0.8867; TP 6826, FP 604, FN 872). The deterministic
+merge is implemented by `scripts/merge_predictions_by_script.py`.

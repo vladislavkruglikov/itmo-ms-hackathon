@@ -469,9 +469,11 @@ checkpoint is epoch 2 with dev loss 0.058725 and constrained F1 0.886832.
 
 Replacing the LR6 diversity model with this checkpoint at weight 1.5, retuning
 script-aware BIO biases, retaining first-two-model support, and rejecting
-low-precision three-model support masks yields **0.902244 exact-span micro-F1**
-(precision 0.9197, recall 0.8854; TP 6816, FP 595, FN 882). Per-class F1 is
-ORG 0.8871, NAME 0.9135, and GEO 0.9073. Leave-one-hash-fold-out mask selection
+low-precision three-model support masks yields 0.902244 exact-span micro-F1.
+Using the preceding LR6 ensemble only for Cyrillic documents and this new
+ensemble for Latin/mixed documents raises the current best to **0.902433
+micro-F1** (precision 0.9187, recall 0.8867; TP 6826, FP 604, FN 872).
+Per-class F1 is ORG 0.8876, NAME 0.9147, and GEO 0.9063. Leave-one-hash-fold-out mask selection
 scores 0.900389 in aggregate, above the preceding 0.900099 production result.
 
 Train and cache the winning data-mix checkpoint with:
@@ -546,4 +548,21 @@ python scripts/evaluate.py \
   --gold data/dev.jsonl \
   --predictions artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
   --output artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.metrics.json
+```
+
+Finally, preserve the stronger Cyrillic predictions from the preceding LR6
+ensemble while using the new data-mix ensemble for Latin and mixed documents:
+
+```bash
+python scripts/merge_predictions_by_script.py \
+  --input data/dev.jsonl \
+  --latin artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --cyrillic artifacts/ensemble-bs8-lr5p5-largew775-lr6w25-mask-filter.jsonl \
+  --mixed artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-old-latin-mixed-new.jsonl
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-script-gated-cyr-old-latin-mixed-new.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-old-latin-mixed-new.metrics.json
 ```
