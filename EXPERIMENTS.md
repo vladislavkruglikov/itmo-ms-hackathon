@@ -411,3 +411,25 @@ gave micro-F1 0.89213/0.89183/0.89190/0.89177/0.89150/0.89118/0.89093/0.89022/
 gave 0.89147/0.89103/0.88971/0.88876. A final global BIO-bias retune at weight
 0.025 reached 0.89248 before support and 0.8936 after support, still below the
 0.8938 best. The seed-17 model is therefore rejected.
+
+### XL batch-size 8
+
+The promoted XL was retrained on the original `data/train.jsonl` with seed 42,
+micro-batch 8, gradient accumulation 4 (effective batch 32), LR 5e-5, three
+epochs, BF16, and fused AdamW. Dev losses were 0.100671, 0.070692, and
+**0.066256**, improving the BS12/GA3 XL loss of 0.06758. Training took 1014.6 s.
+
+Constrained standalone micro-F1 is **0.87860**. The uncalibrated BS8+large
+ensemble reaches 0.88729. Full script-aware calibration, global refinement,
+and the established support filter produce the new best:
+
+| Run | Precision | Recall | Micro-F1 | TP | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| BS8 + large, calibrated + support | 0.8997 | 0.8924 | **0.896048** | 6870 | 766 | 828 |
+
+Per-class F1 is 0.8784 ORG, 0.9071 NAME, and 0.9038 GEO. SHA-256 fold F1 is
+0.891019/0.915358/0.888828/0.878143/0.909989; all folds remain above the
+original 0.8868 decoder's corresponding folds. A large-model weight sweep at
+0.45/0.55/0.65/0.75/0.85/0.95/1.05 scored 0.89251/0.89346/0.89447/**0.89605**/
+0.89491/0.89334/0.89394, retaining weight 0.75. End-to-end checkpoint inference
+matches the cached and post-filtered prediction file byte-for-byte.

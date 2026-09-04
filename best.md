@@ -274,55 +274,60 @@ so this checkpoint is retained as an experiment and is not promoted.
 
 ## 9. Current best: calibrated BIO decoding with model-support filtering
 
-The two-model ensemble remains unchanged, but the constrained decoder now
+The two-model architecture remains unchanged, but the promoted XL checkpoint
 applies separately tuned logit biases for Latin, Cyrillic, and mixed-script
 documents and for every `B-*`/`I-*` label. A final conservative filter removes
 ensemble spans that neither component model predicts independently (except
-mixed-script GEO). The result is **0.8938 exact-span micro-F1** (precision
-0.8996, recall 0.8882), improving the previous 0.8868 best. Per-class F1 is
-ORG 0.8798, NAME 0.9000, and GEO 0.9022.
+mixed-script GEO). Retraining XL with micro-batch 8 and gradient accumulation 4
+raises the result to **0.8960 exact-span micro-F1** (precision 0.8997, recall
+0.8924). Per-class F1 is ORG 0.8784, NAME 0.9071, and GEO 0.9038.
+
+Train the promoted XL checkpoint with:
+
+```bash
+python -m baseline.train \
+  --train data/train.jsonl --dev data/dev.jsonl \
+  --output-dir artifacts/xl-bs8-ga4-ebs32-lr5e-5 \
+  --model-name facebook/xlm-roberta-xl \
+  --epochs 3 --batch-size 8 --gradient-accumulation-steps 4 \
+  --learning-rate 5e-5 --weight-decay 0.01 --warmup-ratio 0.1 \
+  --max-length 256 --stride 64 --seed 42 --device cuda \
+  --bf16 --fused-adamw --num-workers 2 --prefetch-factor 1 \
+  --persistent-workers
+```
 
 The search is reproducible from cached logits with:
 
 ```bash
 python scripts/cache_logits.py \
   --input data/dev.jsonl \
-  --model artifacts/base-facebook-xlm-roberta-xl-bf16-bs12-ga3-ebs36-lr5e-5/model \
-  --output artifacts/best-xl-dev-logits.pt \
+  --model artifacts/xl-bs8-ga4-ebs32-lr5e-5/model \
+  --output artifacts/xl-bs8-dev-logits.pt \
   --batch-size 32
 
 python scripts/cache_logits.py \
   --input data/dev.jsonl \
   --model artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model \
-  --tokenizer artifacts/base-facebook-xlm-roberta-xl-bf16-bs12-ga3-ebs36-lr5e-5/model \
+  --tokenizer artifacts/xl-bs8-ga4-ebs32-lr5e-5/model \
   --output artifacts/best-large-xl-tokenizer-dev-logits.pt \
   --batch-size 64
 
 python scripts/tune_cached_biases.py \
   --input data/dev.jsonl \
-  --cache artifacts/best-xl-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
-  --output artifacts/threshold-tuning-fine2/report.json \
-  --predictions artifacts/threshold-tuning-fine2/dev_predictions.jsonl \
+  --cache artifacts/xl-bs8-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --output artifacts/bs8-threshold-full/report.json \
+  --predictions artifacts/bs8-threshold-full/dev_predictions.jsonl \
   --workers 12
 
 python scripts/tune_cached_biases.py \
   --input data/dev.jsonl \
-  --cache artifacts/best-xl-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
-  --initial-report artifacts/threshold-tuning-fine2/report.json --skip-coarse \
-  --objective global --fine-rounds 2 --fine-radius 0.1 --fine-step 0.05 \
-  --output artifacts/threshold-tuning-global-refine/report.json \
-  --predictions artifacts/threshold-tuning-global-refine/dev_predictions.jsonl \
+  --cache artifacts/xl-bs8-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --initial-report artifacts/bs8-threshold-full/report.json --skip-coarse \
+  --objective global --fine-rounds 2 --fine-radius 0.1 --fine-step 0.025 \
+  --output artifacts/bs8-threshold-global/report.json \
+  --predictions artifacts/bs8-threshold-global/dev_predictions.jsonl \
   --workers 12
 
-python scripts/tune_cached_biases.py \
-  --input data/dev.jsonl \
-  --cache artifacts/best-xl-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
-  --initial-report artifacts/threshold-tuning-global-refine/report.json --skip-coarse \
-  --objective global \
-  --fine-rounds 1 --fine-radius 0.05 --fine-step 0.025 \
-  --output artifacts/threshold-tuning-global-refine2/report.json \
-  --predictions artifacts/threshold-tuning-global-refine2/dev_predictions.jsonl \
-  --workers 12
 ```
 
 The production-style end-to-end prediction command is:
@@ -330,22 +335,22 @@ The production-style end-to-end prediction command is:
 ```bash
 python scripts/ensemble_predict.py \
   --input data/dev.jsonl \
-  --output artifacts/ensemble-xl-large-threshold-support.jsonl \
+  --output artifacts/ensemble-bs8-large-threshold-support.jsonl \
   --models \
-    artifacts/base-facebook-xlm-roberta-xl-bf16-bs12-ga3-ebs36-lr5e-5/model:1 \
+    artifacts/xl-bs8-ga4-ebs32-lr5e-5/model:1 \
     artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.75 \
   --batch-size 32 \
   --constrained \
   --script-label-bias \
-    latin:B-ORG:-0.525 latin:I-ORG:0.175 \
-    latin:B-NAME:-0.1 latin:I-NAME:0.375 \
-    latin:B-GEO:-0.075 latin:I-GEO:-0.15 \
-    cyrillic:B-ORG:0.025 cyrillic:I-ORG:0 \
-    cyrillic:B-NAME:-0.225 cyrillic:I-NAME:-0.1 \
-    cyrillic:B-GEO:0.4 cyrillic:I-GEO:0.675 \
-    mixed:B-ORG:-0.45 mixed:I-ORG:-0.275 \
-    mixed:B-NAME:0 mixed:I-NAME:0 \
-    mixed:B-GEO:0.1 mixed:I-GEO:0.125 \
+    latin:B-ORG:-0.65 latin:I-ORG:-0.325 \
+    latin:B-NAME:0.525 latin:I-NAME:0.725 \
+    latin:B-GEO:-0.1 latin:I-GEO:0.025 \
+    cyrillic:B-ORG:0.05 cyrillic:I-ORG:0.05 \
+    cyrillic:B-NAME:0.1 cyrillic:I-NAME:0.1 \
+    cyrillic:B-GEO:0.325 cyrillic:I-GEO:0.5 \
+    mixed:B-ORG:0 mixed:I-ORG:0 \
+    mixed:B-NAME:0.175 mixed:I-NAME:0.35 \
+    mixed:B-GEO:-0.525 mixed:I-GEO:-0.3 \
   --min-model-support \
     latin:ORG:1 latin:NAME:1 latin:GEO:1 \
     cyrillic:ORG:1 cyrillic:NAME:1 cyrillic:GEO:1 \
@@ -353,14 +358,15 @@ python scripts/ensemble_predict.py \
 
 python scripts/evaluate.py \
   --gold data/dev.jsonl \
-  --predictions artifacts/ensemble-xl-large-threshold-support.jsonl \
-  --output artifacts/ensemble-xl-large-threshold-support.metrics.json
+  --predictions artifacts/ensemble-bs8-large-threshold-support.jsonl \
+  --output artifacts/ensemble-bs8-large-threshold-support.metrics.json
 ```
 
-End-to-end predictions match the cached tuned predictions byte-for-byte. All
+End-to-end predictions match the independently post-filtered cached predictions
+byte-for-byte. All
 five deterministic SHA-256 hash-fold diagnostics improved over the original
-0.8868 decoder, with fold deltas from +0.0051 to +0.0091 micro-F1. Sweeping the
-large-model weight (0.45-1.05) retained 0.75 as best; adding the reviewed-data
+0.8868 decoder. Their F1 values are 0.8910, 0.9154, 0.8888, 0.8781, and 0.9100.
+Sweeping the large-model weight (0.45-1.05) retained 0.75 as best; adding the reviewed-data
 XL checkpoint also failed to improve the result. More aggressive support
 filtering reached 0.8951 on the full dev set but regressed some folds and was
 rejected as likely overfitting. Entity-margin calibration and leave-one-fold-out
