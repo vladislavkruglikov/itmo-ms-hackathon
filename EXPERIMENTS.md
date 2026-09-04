@@ -490,3 +490,16 @@ weight sweep at 0.15/0.175/0.20/0.225/0.25/0.275/0.30/0.325/0.35 scored
 0.8923; TP 6869, FP 731, FN 829). Fold F1 is
 0.894643/0.921495/0.888889/0.879249/0.909542. Support remains restricted to
 the first two, stronger components; LR6 affects only averaged logits.
+
+### Three-model support-mask filtering
+
+With LR6 present, exact component-agreement masks can split previously broad
+single-model groups. Refining the large weight from 0.75 to 0.775 first reached
+0.898098. Nine low-precision script/class/mask groups were then rejected:
+`cyrillic:ORG:010`, `cyrillic:NAME:010`, `latin:GEO:100`,
+`latin:NAME:100`, `latin:ORG:100`, `mixed:NAME:010`, `mixed:NAME:011`,
+`mixed:GEO:000`, and `mixed:GEO:100`. Together they remove 18 TP and 56 FP,
+producing **0.900099 micro-F1** (precision 0.9103, recall 0.8901; TP 6852,
+FP 675, FN 846). Fold F1 is 0.895937/0.922176/0.891274/0.884039/0.910384;
+all five folds improve over the unfiltered 0.898098 model. End-to-end checkpoint
+inference is byte-identical to the cached-logit result.

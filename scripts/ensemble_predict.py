@@ -100,6 +100,13 @@ def main() -> int:
         metavar="COUNT",
         help="Use only the first COUNT ensemble models when computing component support.",
     )
+    parser.add_argument(
+        "--reject-support-mask",
+        nargs="*",
+        default=[],
+        metavar="SCRIPT:LABEL:MASK",
+        help="Drop spans with an exact per-model support mask such as latin:GEO:100.",
+    )
     args = parser.parse_args()
     label_bias = {}
     for item in args.label_bias:
@@ -125,6 +132,14 @@ def main() -> int:
     model_specs = [item.rsplit(":", 1) if ":" in item else (item, "1") for item in args.models]
     if args.support_models is not None and not 1 <= args.support_models <= len(model_specs):
         raise ValueError("--support-models must be between 1 and the number of models")
+    reject_support_masks = set()
+    for item in args.reject_support_mask:
+        script_name, name, mask = item.split(":", 2)
+        if script_name not in {"latin", "cyrillic", "mixed"}:
+            raise ValueError(f"unknown script: {script_name}")
+        if len(mask) != len(model_specs) or set(mask) - {"0", "1"}:
+            raise ValueError("support masks must contain one 0/1 digit per model")
+        reject_support_masks.add((script_name, name, mask))
     tokenizer = load_fast_tokenizer(model_specs[0][0])
     validate_window(tokenizer, args.max_length, args.stride)
     windows = _build_windows(records, tokenizer, max_length=args.max_length, stride=args.stride)
@@ -138,8 +153,9 @@ def main() -> int:
         if id2label is None:
             id2label = {int(k): str(v) for k, v in model.config.id2label.items()}
         scores = predict_model(model, tokenizer, windows, len(records), args.batch_size, device)
-        if min_model_support and (
-            args.support_models is None or len(component_scores) < args.support_models
+        if reject_support_masks or (
+            min_model_support
+            and (args.support_models is None or len(component_scores) < args.support_models)
         ):
             component_scores.append(scores)
         for record_index, record_scores in enumerate(scores):
@@ -163,7 +179,7 @@ def main() -> int:
         ids = constrained_ids(logits, id2label) if args.constrained else [int(value.argmax()) for value in logits]
         tagged = [(start, end, id2label[label_id]) for (start, end), label_id in zip((key for key, _ in ordered), ids, strict=True)]
         entities = decode_bio_tokens(tagged)
-        if min_model_support:
+        if min_model_support or reject_support_masks:
             support_sets = []
             for scores in component_scores:
                 component_ordered = sorted(scores[len(predictions)].items())
@@ -183,15 +199,18 @@ def main() -> int:
                     (entity["label"], entity["start"], entity["end"])
                     for entity in decode_bio_tokens(component_tagged)
                 })
-            entities = [
-                entity
-                for entity in entities
-                if sum(
-                    (entity["label"], entity["start"], entity["end"]) in support
-                    for support in support_sets
-                )
-                >= min_model_support.get((record_script, entity["label"]), 0)
-            ]
+            support_limit = args.support_models or len(support_sets)
+            filtered = []
+            for entity in entities:
+                span = (entity["label"], entity["start"], entity["end"])
+                support_count = sum(span in support for support in support_sets[:support_limit])
+                mask = "".join("1" if span in support else "0" for support in support_sets)
+                if support_count < min_model_support.get((record_script, entity["label"]), 0):
+                    continue
+                if (record_script, entity["label"], mask) in reject_support_masks:
+                    continue
+                filtered.append(entity)
+            entities = filtered
         predictions.append({"hash": record["hash"], "entities": entities})
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", encoding="utf-8") as stream:
