@@ -1,6 +1,6 @@
 {
     "source": "scripts/translit_uz_latin_to_cyrillic.py",
-    "method": "deterministic lotin->kirill transliteration (no LLM)",
+    "method": "тексты полностью на латинском из train транслитерацией переведены на кириллицу",
     "generated_at": "2026-09-04T11:46:06.043136+00:00",
     "input_path": "data/train.jsonl",
     "output_path": "data/train_latin2cyrilic/train_latin2cyrillic_translit.jsonl",
