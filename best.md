@@ -271,3 +271,377 @@ BF16, fused AdamW, learning rate 5e-5, weight decay 0.01, warmup ratio 0.1, seed
 Epoch losses were 0.422152/0.104543, 0.069628/0.071119, and 0.038631/0.069212 (train/dev).
 Constrained dev decoding scored 0.8750 micro-F1 (ORG 0.8471, NAME 0.8963, GEO 0.8845), below the 0.8868 baseline,
 so this checkpoint is retained as an experiment and is not promoted.
+
+## 9. Previous best: calibrated BIO decoding with model-support filtering
+
+The two-model architecture remains unchanged, but the promoted XL checkpoint
+applies separately tuned logit biases for Latin, Cyrillic, and mixed-script
+documents and for every `B-*`/`I-*` label. A final conservative filter removes
+ensemble spans that neither component model predicts independently (except
+mixed-script GEO). Retraining XL with micro-batch 8 and gradient accumulation 4
+raises the result to **0.8970 exact-span micro-F1** (precision 0.9028, recall
+0.8913). Per-class F1 is ORG 0.8831, NAME 0.9035, and GEO 0.9049.
+
+Train the promoted XL checkpoint with:
+
+```bash
+python -m baseline.train \
+  --train data/train.jsonl --dev data/dev.jsonl \
+  --output-dir artifacts/xl-bs8-ga4-ebs32-lr5p5e-5 \
+  --model-name facebook/xlm-roberta-xl \
+  --epochs 3 --batch-size 8 --gradient-accumulation-steps 4 \
+  --learning-rate 5.5e-5 --weight-decay 0.01 --warmup-ratio 0.1 \
+  --max-length 256 --stride 64 --seed 42 --device cuda \
+  --bf16 --fused-adamw --num-workers 2 --prefetch-factor 1 \
+  --persistent-workers
+```
+
+The search is reproducible from cached logits with:
+
+```bash
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model \
+  --output artifacts/xl-bs8-lr5p5e-5-dev-logits.pt \
+  --batch-size 32
+
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model \
+  --tokenizer artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model \
+  --output artifacts/best-large-xl-tokenizer-dev-logits.pt \
+  --batch-size 64
+
+python scripts/tune_cached_biases.py \
+  --input data/dev.jsonl \
+  --cache artifacts/xl-bs8-lr5p5e-5-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --output artifacts/bs8-lr5p5-threshold/report.json \
+  --predictions artifacts/bs8-lr5p5-threshold/dev_predictions.jsonl \
+  --workers 12
+
+python scripts/tune_cached_biases.py \
+  --input data/dev.jsonl \
+  --cache artifacts/xl-bs8-lr5p5e-5-dev-logits.pt:1 artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+  --initial-report artifacts/bs8-lr5p5-threshold/report.json --skip-coarse \
+  --objective global --fine-rounds 2 --fine-radius 0.1 --fine-step 0.025 \
+  --output artifacts/bs8-lr5p5-global/report.json \
+  --predictions artifacts/bs8-lr5p5-global/dev_predictions.jsonl \
+  --workers 12
+
+```
+
+The production-style end-to-end prediction command is:
+
+```bash
+python scripts/ensemble_predict.py \
+  --input data/dev.jsonl \
+  --output artifacts/ensemble-bs8-lr5p5-large-threshold-support.jsonl \
+  --models \
+    artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model:1 \
+    artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.75 \
+  --batch-size 32 \
+  --constrained \
+  --script-label-bias \
+    latin:B-ORG:-0.625 latin:I-ORG:0.025 \
+    latin:B-NAME:0.15 latin:I-NAME:0.6 \
+    latin:B-GEO:-0.2 latin:I-GEO:0.15 \
+    cyrillic:B-ORG:-0.3 cyrillic:I-ORG:-0.3 \
+    cyrillic:B-NAME:-0.3 cyrillic:I-NAME:-0.25 \
+    cyrillic:B-GEO:0.425 cyrillic:I-GEO:0.6 \
+    mixed:B-ORG:-0.625 mixed:I-ORG:-0.35 \
+    mixed:B-NAME:-0.6 mixed:I-NAME:-0.175 \
+    mixed:B-GEO:0.05 mixed:I-GEO:0.15 \
+  --min-model-support \
+    latin:ORG:1 latin:NAME:1 latin:GEO:1 \
+    cyrillic:ORG:1 cyrillic:NAME:1 cyrillic:GEO:1 \
+    mixed:ORG:1 mixed:NAME:1
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-bs8-lr5p5-large-threshold-support.jsonl \
+  --output artifacts/ensemble-bs8-lr5p5-large-threshold-support.metrics.json
+```
+
+End-to-end predictions match the independently post-filtered cached predictions
+byte-for-byte. All
+five deterministic SHA-256 hash-fold diagnostics improved over the original
+0.8868 decoder. Their F1 values are 0.8898, 0.9204, 0.8872, 0.8816, and 0.9093.
+Sweeping the large-model weight (0.45-1.05) retained 0.75 as best; adding the reviewed-data
+XL checkpoint also failed to improve the result. More aggressive support
+filtering reached 0.8951 on the full dev set but regressed some folds and was
+rejected as likely overfitting. Entity-margin calibration and leave-one-fold-out
+learned disagreement rules also failed to transfer. A newly trained seed-17 XL
+(same best hyperparameters, final dev loss 0.06937) reduced F1 for every tested
+positive and negative ensemble weight; retuning its best candidate reached only
+0.8936 after support filtering. BS4/GA8 was also tested: dev loss 0.06797,
+standalone F1 0.87689, and its best third-model weight reached only 0.89572.
+The large model must be cached with the XL
+tokenizer because production ensemble inference tokenizes both components with
+the first model's tokenizer.
+
+## 10. Previous best: LR-diverse BS8 ensemble
+
+Training a second BS8/GA4 XL checkpoint at learning rate 6e-5 and adding it to
+the LR5.5e-5 + large ensemble at weight 0.25, then filtering low-quality exact
+three-model support patterns, improves the exact-span dev score to **0.900099
+micro-F1** (precision 0.9103, recall 0.8901; TP 6852, FP 675, FN 846).
+Per-class F1 is ORG 0.8853, NAME 0.9071, and GEO 0.9085. The five SHA-256 fold
+F1 values are 0.895937/0.922176/0.891274/0.884039/0.910384; every fold improves
+over both the original decoder and the preceding 0.898026 candidate.
+
+Train the additional checkpoint with the same command as above, changing only:
+
+```bash
+--output-dir artifacts/xl-bs8-ga4-ebs32-lr6e-5 --learning-rate 6e-5
+```
+
+Cache it and reproduce the calibrated search with:
+
+```bash
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/xl-bs8-ga4-ebs32-lr6e-5/model \
+  --output artifacts/xl-bs8-lr6e-5-dev-logits.pt --batch-size 32
+
+python scripts/tune_cached_biases.py \
+  --input data/dev.jsonl \
+  --cache artifacts/xl-bs8-lr5p5e-5-dev-logits.pt:1 \
+          artifacts/best-large-xl-tokenizer-dev-logits.pt:0.775 \
+          artifacts/xl-bs8-lr6e-5-dev-logits.pt:0.25 \
+  --initial-report artifacts/bs8-lr5p5-large-lr6w25-tuned/report.json \
+  --skip-coarse --objective global \
+  --fine-rounds 1 --fine-radius 0.025 --fine-step 0.025 \
+  --workers 16 \
+  --output artifacts/bs8-lr5p5-largew775-lr6w25-tuned/report.json \
+  --predictions artifacts/bs8-lr5p5-largew775-lr6w25-tuned/dev_predictions.jsonl
+```
+
+The complete production command is:
+
+```bash
+python scripts/ensemble_predict.py \
+  --input data/dev.jsonl \
+  --output artifacts/ensemble-bs8-lr5p5-largew775-lr6w25-mask-filter.jsonl \
+  --models \
+    artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model:1 \
+    artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.775 \
+    artifacts/xl-bs8-ga4-ebs32-lr6e-5/model:0.25 \
+  --batch-size 32 --constrained \
+  --script-label-bias \
+    latin:B-ORG:-0.65 latin:I-ORG:0.025 \
+    latin:B-NAME:0.1 latin:I-NAME:0.6 \
+    latin:B-GEO:-0.175 latin:I-GEO:0.15 \
+    cyrillic:B-ORG:-0.3 cyrillic:I-ORG:-0.325 \
+    cyrillic:B-NAME:-0.3 cyrillic:I-NAME:-0.25 \
+    cyrillic:B-GEO:0.425 cyrillic:I-GEO:0.65 \
+    mixed:B-ORG:-0.75 mixed:I-ORG:-0.375 \
+    mixed:B-NAME:-0.6 mixed:I-NAME:-0.175 \
+    mixed:B-GEO:0.025 mixed:I-GEO:0.15 \
+  --support-models 2 \
+  --min-model-support \
+    latin:ORG:1 latin:NAME:1 latin:GEO:1 \
+    cyrillic:ORG:1 cyrillic:NAME:1 cyrillic:GEO:1 \
+    mixed:ORG:1 mixed:NAME:1 \
+  --reject-support-mask \
+    cyrillic:ORG:010 cyrillic:NAME:010 \
+    latin:GEO:100 latin:NAME:100 latin:ORG:100 \
+    mixed:NAME:010 mixed:NAME:011 mixed:GEO:000 mixed:GEO:100
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-bs8-lr5p5-largew775-lr6w25-mask-filter.jsonl \
+  --output artifacts/ensemble-bs8-lr5p5-largew775-lr6w25-mask-filter.metrics.json
+```
+
+`--support-models 2` deliberately computes support from the promoted LR5.5 XL
+and large checkpoints only; the lower-quality LR6 model contributes diversity
+to ensemble logits but cannot independently admit a span. The three digits in
+each rejected support mask correspond in order to LR5.5 XL, large, and LR6 XL.
+The end-to-end output was verified byte-for-byte against cached-logit decoding.
+
+## 11. Previous best: curated Cyrillic-full + NER-XLSX mix
+
+The best `data/train_0409` mix is
+`data/train_0409/train_cyr_full_ner_xlsx.jsonl`: the original 13,000 rows,
+6,304 appended deterministic Cyrillic transliterations, and 1,244 deduplicated
+Cyrillic-transliterated open-news NER rows (20,548 total). Its best standalone
+checkpoint is epoch 2 with dev loss 0.058725 and constrained F1 0.886832.
+
+Replacing the LR6 diversity model with this checkpoint at weight 1.5, retuning
+script-aware BIO biases, retaining first-two-model support, and rejecting
+low-precision three-model support masks yields 0.902244 exact-span micro-F1.
+Using the preceding LR6 ensemble only for Cyrillic documents and this new
+ensemble for Latin/mixed documents raises the current best to **0.902433
+micro-F1** (precision 0.9187, recall 0.8867; TP 6826, FP 604, FN 872).
+Per-class F1 is ORG 0.8876, NAME 0.9147, and GEO 0.9063. Leave-one-hash-fold-out mask selection
+scores 0.900389 in aggregate, above the preceding 0.900099 production result.
+
+Train and cache the winning data-mix checkpoint with:
+
+```bash
+python -m baseline.train \
+  --train data/train_0409/train_cyr_full_ner_xlsx.jsonl \
+  --dev data/dev.jsonl \
+  --output-dir artifacts/xl-bs8-ga4-lr5p5e-5-cyr-full-ner-xlsx \
+  --model-name facebook/xlm-roberta-xl \
+  --epochs 3 --batch-size 8 --gradient-accumulation-steps 4 \
+  --learning-rate 5.5e-5 --weight-decay 0.01 --warmup-ratio 0.1 \
+  --max-length 256 --stride 64 --seed 42 --device cuda \
+  --bf16 --fused-adamw --num-workers 2 --prefetch-factor 1 \
+  --persistent-workers
+
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/xl-bs8-ga4-lr5p5e-5-cyr-full-ner-xlsx/model \
+  --output artifacts/cyr-full-ner-xlsx-dev-logits.pt --batch-size 32
+```
+
+Reproduce final calibration with:
+
+```bash
+python scripts/tune_cached_biases.py \
+  --input data/dev.jsonl \
+  --cache artifacts/xl-bs8-lr5p5e-5-dev-logits.pt:1 \
+          artifacts/best-large-xl-tokenizer-dev-logits.pt:0.775 \
+          artifacts/cyr-full-ner-xlsx-dev-logits.pt:1.5 \
+  --initial-report artifacts/bs8-lr5p5-largew775-lr6w25-tuned/report.json \
+  --skip-coarse --objective global \
+  --fine-rounds 2 --fine-radius 0.05 --fine-step 0.025 --workers 16 \
+  --output artifacts/cyr-full-ner-xlsx-w1p5-tuned/report.json \
+  --predictions artifacts/cyr-full-ner-xlsx-w1p5-tuned/dev_predictions.jsonl
+```
+
+The production prediction command is:
+
+```bash
+python scripts/ensemble_predict.py \
+  --input data/dev.jsonl \
+  --output artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --models \
+    artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model:1 \
+    artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.775 \
+    artifacts/xl-bs8-ga4-lr5p5e-5-cyr-full-ner-xlsx/model:1.5 \
+  --batch-size 32 --constrained \
+  --script-label-bias \
+    latin:B-ORG:-0.7 latin:I-ORG:0 \
+    latin:B-NAME:0.125 latin:I-NAME:0.625 \
+    latin:B-GEO:-0.175 latin:I-GEO:0.15 \
+    cyrillic:B-ORG:-0.3 cyrillic:I-ORG:-0.325 \
+    cyrillic:B-NAME:-0.3 cyrillic:I-NAME:-0.225 \
+    cyrillic:B-GEO:0.475 cyrillic:I-GEO:0.675 \
+    mixed:B-ORG:-0.7 mixed:I-ORG:-0.325 \
+    mixed:B-NAME:-0.6 mixed:I-NAME:-0.225 \
+    mixed:B-GEO:0.025 mixed:I-GEO:0.15 \
+  --support-models 2 \
+  --min-model-support \
+    latin:ORG:1 latin:NAME:1 latin:GEO:1 \
+    cyrillic:ORG:1 cyrillic:NAME:1 cyrillic:GEO:1 \
+    mixed:ORG:1 mixed:NAME:1 \
+  --reject-support-mask \
+    cyrillic:GEO:110 cyrillic:NAME:011 cyrillic:NAME:100 \
+    cyrillic:ORG:010 cyrillic:ORG:100 \
+    latin:GEO:010 latin:GEO:100 latin:ORG:100 \
+    mixed:GEO:000 mixed:GEO:100 mixed:NAME:010 mixed:NAME:110 \
+    mixed:ORG:010 mixed:ORG:100
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --output artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.metrics.json
+```
+
+Finally, preserve the stronger Cyrillic predictions from the preceding LR6
+ensemble while using the new data-mix ensemble for Latin and mixed documents:
+
+```bash
+python scripts/merge_predictions_by_script.py \
+  --input data/dev.jsonl \
+  --latin artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --cyrillic artifacts/ensemble-bs8-lr5p5-largew775-lr6w25-mask-filter.jsonl \
+  --mixed artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-old-latin-mixed-new.jsonl
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-script-gated-cyr-old-latin-mixed-new.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-old-latin-mixed-new.metrics.json
+```
+
+## 12. Current best: NERUS-assisted Cyrillic support
+
+Appending all 2,000 natural Russian NERUS rows to the winning curated mix
+improves standalone Cyrillic F1 from 0.815773 to 0.832439 (recall 0.8024 to
+0.8461), although direct logit ensembling remains worse than the established
+Cyrillic model. Using the NERUS-trained model only as a fourth component-support
+signal raises Cyrillic F1 from 0.851548 to **0.857875**. Combining that Cyrillic
+output with the previous Latin/mixed output produces the current best
+**0.903157 exact-span micro-F1** (precision 0.9208, recall 0.8862; TP 6822,
+FP 587, FN 876). Per-class F1 is ORG 0.8880, NAME 0.9158, and GEO 0.9071.
+
+Build and train the NERUS-augmented mix with:
+
+```bash
+python scripts/combine_datasets.py \
+  --input data/train_0409/train_cyr_full_ner_xlsx.jsonl \
+  --input data/open_datasets/nerus_ru_ner_converted.jsonl \
+  --output data/train_0409/train_cyr_full_ner_xlsx_nerus.jsonl \
+  --manifest data/train_0409/train_cyr_full_ner_xlsx_nerus.manifest.json
+
+python -m baseline.train \
+  --train data/train_0409/train_cyr_full_ner_xlsx_nerus.jsonl \
+  --dev data/dev.jsonl \
+  --output-dir artifacts/xl-bs8-ga4-lr5p5e-5-cyr-full-ner-xlsx-nerus \
+  --model-name facebook/xlm-roberta-xl \
+  --epochs 3 --batch-size 8 --gradient-accumulation-steps 4 \
+  --learning-rate 5.5e-5 --weight-decay 0.01 --warmup-ratio 0.1 \
+  --max-length 256 --stride 64 --seed 42 --device cuda \
+  --bf16 --fused-adamw --num-workers 2 --prefetch-factor 1 \
+  --persistent-workers
+
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/xl-bs8-ga4-lr5p5e-5-cyr-full-ner-xlsx-nerus/model \
+  --output artifacts/cyr-full-ner-xlsx-nerus-dev-logits.pt --batch-size 32
+
+python scripts/decode_cached.py \
+  --input data/dev.jsonl \
+  --cache artifacts/cyr-full-ner-xlsx-nerus-dev-logits.pt \
+  --output artifacts/cyr-full-ner-xlsx-nerus-standalone.jsonl --constrained
+```
+
+Starting from the previous LR6 ensemble output, apply the fourth-model support
+filter and merge it with the stronger Latin/mixed output:
+
+```bash
+python scripts/filter_support_masks.py \
+  --input data/dev.jsonl \
+  --predictions artifacts/ensemble-bs8-lr5p5-largew775-lr6w25-mask-filter.jsonl \
+  --components \
+    artifacts/bs8-lr5p5-standalone.jsonl \
+    artifacts/support-analysis/large.jsonl \
+    artifacts/bs8-lr6-standalone.jsonl \
+    artifacts/cyr-full-ner-xlsx-nerus-standalone.jsonl \
+  --reject \
+    cyrillic:GEO:0110 cyrillic:GEO:1000 cyrillic:GEO:1110 \
+    cyrillic:NAME:1000 cyrillic:NAME:1010 \
+    cyrillic:ORG:0110 cyrillic:ORG:1100 \
+  --output artifacts/ensemble-old-cyr-nerus-support-filter.jsonl
+
+python scripts/merge_predictions_by_script.py \
+  --input data/dev.jsonl \
+  --latin artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --cyrillic artifacts/ensemble-old-cyr-nerus-support-filter.jsonl \
+  --mixed artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.jsonl
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.metrics.json
+```
+
+The NERUS checkpoint selects epoch 2: dev loss is 0.074217/0.056650/0.060017
+for epochs 1/2/3. Direct addition to the old ensemble was tested at weights
+0.05/0.10/0.20/0.30/0.50/0.75/1.00 and never exceeded 0.8486 Cyrillic F1.
+Leave-one-fold-out selection of the seven support masks scores 0.900283 versus
+0.900099 before NERUS, supporting a small but transferable gain.

@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-09-04T19:52:33.005604+00:00",
+  "source": "scripts/combine_datasets.py",
+  "method": "ordered concatenation with exact-row hash deduplication",
+  "inputs": [
+    {
+      "path": "data/train_0409/train_cyr_full_ner_xlsx.jsonl",
+      "records": 20548
+    },
+    {
+      "path": "data/open_datasets/nerus_ru_ner_converted.jsonl",
+      "records": 2000
+    }
+  ],
+  "duplicates_skipped": 0,
+  "records_out": 22548,
+  "entities_by_label": {
+    "GEO": 33681,
+    "NAME": 32687,
+    "ORG": 34616
+  }
+}

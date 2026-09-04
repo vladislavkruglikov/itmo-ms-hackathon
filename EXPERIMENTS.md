@@ -361,3 +361,203 @@ The manually reviewed dataset was trained for one epoch after fixing nested
 span validation and freeing rejected generated checkpoints for disk space. It
 reached train/dev loss 0.369857/0.149388; its constrained ensemble scored
 0.8858, below the 0.8868 baseline, and was rejected for production.
+
+## Script-aware threshold calibration
+
+The existing XL + XLM-R-large ensemble was calibrated without retraining.
+`scripts/tune_cached_biases.py` performs coordinate search over separate BIO
+logit biases for Latin, Cyrillic, and mixed-script documents. It first searches
+a joint class bias and then performs two fine passes over `B-*` and `I-*`
+independently. Cached logits reproduce the original constrained best exactly
+when both components use the production XL tokenizer.
+
+| Run | Precision | Recall | Micro-F1 | TP | FP | FN | Result |
+|---|---:|---:|---:|---:|---:|---:|---|
+| constrained baseline | 0.8875 | 0.8862 | 0.8868 | 6822 | 865 | 876 | Previous best |
+| script-aware BIO thresholds | 0.8948 | 0.8895 | **0.8921** | 6847 | 805 | 851 | New best |
+| refined thresholds + component support | 0.8996 | 0.8882 | **0.8938** | 6837 | 763 | 861 | Current best |
+
+The current per-class F1 is 0.8798 ORG, 0.9000 NAME, and 0.9022 GEO. It drops
+spans unsupported by either component for all script/class pairs except mixed
+GEO. Against the original decoder, every deterministic SHA-256 hash fold
+improved: +0.005693, +0.009051, +0.008720, +0.005984, and +0.005107 F1.
+The refined threshold report is in
+`artifacts/threshold-tuning-global-refine2/report.json`; production output is
+`artifacts/ensemble-xl-large-threshold-support.jsonl`.
+
+Additional searches did not beat this robust choice. Ensemble weights 0.45 to
+1.05 retained 0.75 as best, and a third reviewed-data XL checkpoint at weights
+0.05 to 0.40 peaked below the current result. Fine-grained single-model filters
+can reach 0.8951 on full dev, but regress relative to 0.8938 on some folds and
+were rejected as likely dev overfitting.
+
+### Further calibration and seed-diversity checks
+
+Entity-level minimum/mean logit-margin filtering was tested by script, class,
+and component support. Although full-dev thresholds could improve individual
+groups, leave-one-hash-fold-out effects changed sign, so confidence filtering
+was rejected. Learning discrete XL-only/large-only filtering rules on four
+folds and applying them to the held-out fold produced aggregate micro-F1
+0.8930, below the fixed conservative support rule at 0.8938.
+
+A second `facebook/xlm-roberta-xl` was trained from the original pretrained
+model on `data/train.jsonl` with seed 17 and otherwise the best configuration:
+3 epochs, BS12, gradient accumulation 3, LR 5e-5, weight decay 0.01, warmup
+0.1, max length/stride 256/64, BF16, and fused AdamW. Epoch dev losses were
+0.108498, 0.074330, and 0.069367, versus 0.06758 for the seed-42 XL. Adding its
+cached logits at positive weights 0.025/0.05/0.075/0.10/0.15/0.20/0.30/0.40/0.50
+gave micro-F1 0.89213/0.89183/0.89190/0.89177/0.89150/0.89118/0.89093/0.89022/
+0.89070 before support filtering. Negative weights -0.025/-0.05/-0.10/-0.20
+gave 0.89147/0.89103/0.88971/0.88876. A final global BIO-bias retune at weight
+0.025 reached 0.89248 before support and 0.8936 after support, still below the
+0.8938 best. The seed-17 model is therefore rejected.
+
+### XL batch-size 8
+
+The promoted XL was retrained on the original `data/train.jsonl` with seed 42,
+micro-batch 8, gradient accumulation 4 (effective batch 32), LR 5e-5, three
+epochs, BF16, and fused AdamW. Dev losses were 0.100671, 0.070692, and
+**0.066256**, improving the BS12/GA3 XL loss of 0.06758. Training took 1014.6 s.
+
+Constrained standalone micro-F1 is **0.87860**. The uncalibrated BS8+large
+ensemble reaches 0.88729. Full script-aware calibration, global refinement,
+and the established support filter produce the new best:
+
+| Run | Precision | Recall | Micro-F1 | TP | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| BS8 + large, calibrated + support | 0.8997 | 0.8924 | **0.896048** | 6870 | 766 | 828 |
+
+Per-class F1 is 0.8784 ORG, 0.9071 NAME, and 0.9038 GEO. SHA-256 fold F1 is
+0.891019/0.915358/0.888828/0.878143/0.909989; all folds remain above the
+original 0.8868 decoder's corresponding folds. A large-model weight sweep at
+0.45/0.55/0.65/0.75/0.85/0.95/1.05 scored 0.89251/0.89346/0.89447/**0.89605**/
+0.89491/0.89334/0.89394, retaining weight 0.75. End-to-end checkpoint inference
+matches the cached and post-filtered prediction file byte-for-byte.
+
+### XL batch-size 4
+
+The next controlled run used BS4/GA8 (effective batch 32) with the same original
+training data, seed 42, LR 5e-5, and three epochs. The first attempt reached
+epoch 2 but failed while replacing the 14-GB checkpoint because safetensors
+temporarily required space for both old and new files. After removing only
+weights from documented rejected runs, the clean retry completed. Final dev
+loss was **0.067968**, worse than BS8's 0.066256. Standalone constrained F1 was
+0.87689 and the uncalibrated BS4+large ensemble scored 0.88653, also below BS8.
+
+Using BS4 as a third model in the calibrated BS8+large pipeline at weights
+0.025/0.05/0.10/0.15/0.20/0.30 produced micro-F1
+0.89572/0.89558/0.89524/0.89524/0.89528/0.89536. Since every value is below
+0.896048, BS4 was rejected and no production complexity was added.
+
+### BS8 learning-rate refinement
+
+Keeping BS8/GA4, seed 42, and all other settings fixed, LR 4.5e-5 finished with
+dev loss 0.069336, standalone F1 0.87308, and raw ensemble F1 0.88739. Full
+calibration plus the fixed support rule reached 0.8956. Full-dev support tuning
+could reach 0.896061, but leave-one-fold-out evaluation fell to 0.89507, so the
+run was rejected as overfit.
+
+LR 5.5e-5 improved dev loss to **0.063452**, standalone F1 to **0.88239**, and
+raw ensemble F1 to 0.88775. Full script-aware calibration, global refinement,
+and the conservative support rule produce the new best:
+
+| Run | Precision | Recall | Micro-F1 | TP | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| BS8 LR5.5e-5 + large, calibrated + support | 0.9028 | 0.8913 | **0.896980** | 6861 | 739 | 837 |
+
+Per-class F1 is 0.8831 ORG, 0.9035 NAME, and 0.9049 GEO. SHA-256 fold F1 is
+0.889837/0.920439/0.887247/0.881630/0.909284; all remain above the original
+decoder's corresponding folds. A local large-weight sweep at
+0.65/0.70/0.75/0.80/0.85 scored 0.89534/0.89592/**0.89698**/0.89554/0.89455,
+retaining 0.75. End-to-end inference matches cached post-filtered predictions
+byte-for-byte.
+
+### BS8 LR6e-5 and learning-rate diversity
+
+The BS8/GA4 LR6e-5 checkpoint finished at dev loss 0.063555. Its constrained
+standalone F1 was 0.88497 and its raw two-model ensemble with large was 0.88880;
+full calibration plus the fixed support rule reached 0.8961, so it did not
+replace LR5.5e-5 by itself.
+
+Adding LR6 as a third logit model to LR5.5 + large improved results. Before a
+new bias search, LR6 weights 0.025/0.05/0.10/0.15/0.20/0.30 scored
+0.896921/0.896660/0.897124/0.897255/0.897386/0.897210 after the established
+support filter. Joint fine calibration at weight 0.20 reached 0.897778. A local
+weight sweep at 0.15/0.175/0.20/0.225/0.25/0.275/0.30/0.325/0.35 scored
+0.897386/0.897719/0.897778/0.897836/**0.897908**/0.897530/0.897210/0.897079/
+0.897066 with those biases. One final radius-0.025 calibration pass at weight
+0.25 produced the promoted **0.898026** micro-F1 (precision 0.9038, recall
+0.8923; TP 6869, FP 731, FN 829). Fold F1 is
+0.894643/0.921495/0.888889/0.879249/0.909542. Support remains restricted to
+the first two, stronger components; LR6 affects only averaged logits.
+
+### Three-model support-mask filtering
+
+With LR6 present, exact component-agreement masks can split previously broad
+single-model groups. Refining the large weight from 0.75 to 0.775 first reached
+0.898098. Nine low-precision script/class/mask groups were then rejected:
+`cyrillic:ORG:010`, `cyrillic:NAME:010`, `latin:GEO:100`,
+`latin:NAME:100`, `latin:ORG:100`, `mixed:NAME:010`, `mixed:NAME:011`,
+`mixed:GEO:000`, and `mixed:GEO:100`. Together they remove 18 TP and 56 FP,
+producing **0.900099 micro-F1** (precision 0.9103, recall 0.8901; TP 6852,
+FP 675, FN 846). Fold F1 is 0.895937/0.922176/0.891274/0.884039/0.910384;
+all five folds improve over the unfiltered 0.898098 model. End-to-end checkpoint
+inference is byte-identical to the cached-logit result.
+
+### Curated data-mix comparison (`data/train_0409`)
+
+All four mixes were trained with the same controlled recipe: XLM-R XL,
+BS8/GA4, LR 5.5e-5, three epochs, seed 42, max length/stride 256/64, BF16, and
+fused AdamW. Each checkpoint was evaluated standalone and as a weighted model
+in the established ensemble before moving to the next mix.
+
+| Data mix | Rows | Best dev loss | Standalone F1 | Best ensemble F1 |
+|---|---:|---:|---:|---:|
+| `train_cyr_replace50` | 13,000 | 0.067437 | 0.877304 | 0.897775 |
+| `train_cyr_replace50_ner_xlsx` | 14,244 | 0.067134 | 0.873793 | 0.897500 |
+| `train_cyr_full` | 19,304 | 0.060689 | 0.877773 | 0.897775 |
+| `train_cyr_full_ner_xlsx` | 20,548 | **0.058725** | **0.886832** | **0.902244** |
+
+The replace50 variants remove useful Latin originals and underperform. Full
+append substantially lowers token loss, but only the full+NER-XLSX mix improves
+exact-span F1. For the winner, replacing LR6 at weight 1.5, globally refining
+BIO biases, and selecting low-precision three-model support masks produces
+0.902244 F1 (precision 0.9197, recall 0.8854; TP 6816, FP 595, FN 882). An
+exhaustive leave-one-fold-out selection of the candidate masks scores 0.900389,
+still above the former 0.900099 best. The other mixes' full weights were removed
+after their summaries, cached logits, predictions, and metrics were retained.
+
+#### Script-specific validation
+
+The Cyrillic augmentation did not improve the minority-script metric by itself.
+The original LR5.5 standalone model scored 0.818742 Cyrillic F1, while the four
+new mixes scored 0.808118, 0.804726, 0.796330, and 0.815773 respectively. The
+0.902244 new ensemble also scored 0.849105 Cyrillic F1, slightly below the
+preceding ensemble's 0.851548. Its aggregate gain instead came from Latin
+(0.909055 to 0.911738) and mixed text (0.896552 to 0.899052).
+
+For that reason the promoted output is script-gated: use the preceding LR6
+ensemble for Cyrillic and the new `cyr_full_ner_xlsx` ensemble for Latin/mixed.
+This preserves Cyrillic F1 at 0.851548 and improves aggregate F1 to **0.902433**
+(precision 0.9187, recall 0.8867; TP 6826, FP 604, FN 872). The deterministic
+merge is implemented by `scripts/merge_predictions_by_script.py`.
+
+### Natural Russian NERUS augmentation
+
+`data/open_datasets/nerus_ru_ner_converted.jsonl` (2,000 rows, 4,227 entities)
+was appended to `train_cyr_full_ner_xlsx` without duplicates, producing the
+22,548-row `train_cyr_full_ner_xlsx_nerus` mix. Under the same BS8/GA4 LR5.5e-5
+recipe, dev loss was 0.074217/0.056650/0.060017; epoch 2 was retained.
+Standalone overall F1 is 0.888752. Crucially, standalone Cyrillic F1 improves
+from 0.815773 without NERUS to **0.832439** with NERUS, driven by recall rising
+from 0.8024 to 0.8461.
+
+Directly adding NERUS logits to the old Cyrillic ensemble at weights
+0.05/0.10/0.20/0.30/0.50/0.75/1.00 peaked at only 0.848598 Cyrillic F1, below
+0.851548. Using the model as a support signal is better: seven low-precision
+four-model masks raise Cyrillic F1 to **0.857875** (precision 0.9091, recall
+0.8121). Script-gating this result with the winning Latin/mixed predictions
+raises overall F1 from 0.902433 to **0.903157** (precision 0.9208, recall
+0.8862; TP 6822, FP 587, FN 876). Leave-one-fold-out mask selection gives
+0.900283 versus 0.900099 before NERUS, so the support gain is not purely a
+full-dev artifact.

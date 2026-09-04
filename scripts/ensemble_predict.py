@@ -61,6 +61,12 @@ def constrained_ids(logits: torch.Tensor, labels: dict[int, str]) -> list[int]:
     return result[::-1]
 
 
+def script(text: str) -> str:
+    cyrillic = any("А" <= char.upper() <= "Я" for char in text)
+    latin = any("a" <= char.lower() <= "z" for char in text)
+    return "mixed" if cyrillic and latin else "cyrillic" if cyrillic else "latin"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Weighted logit ensemble for exact-span NER.")
     parser.add_argument("--input", type=Path, required=True)
@@ -73,26 +79,85 @@ def main() -> int:
     parser.add_argument("--constrained", action="store_true")
     parser.add_argument("--label-bias", nargs="*", default=[], metavar="LABEL:BIAS",
                         help="Add a constant to selected label logits before decoding.")
+    parser.add_argument(
+        "--script-label-bias",
+        nargs="*",
+        default=[],
+        metavar="SCRIPT:LABEL:BIAS",
+        help="Add a label-logit bias only for latin, cyrillic, or mixed documents.",
+    )
+    parser.add_argument(
+        "--min-model-support",
+        nargs="*",
+        default=[],
+        metavar="SCRIPT:LABEL:COUNT",
+        help="Drop decoded spans not independently produced by at least COUNT component models.",
+    )
+    parser.add_argument(
+        "--support-models",
+        type=int,
+        default=None,
+        metavar="COUNT",
+        help="Use only the first COUNT ensemble models when computing component support.",
+    )
+    parser.add_argument(
+        "--reject-support-mask",
+        nargs="*",
+        default=[],
+        metavar="SCRIPT:LABEL:MASK",
+        help="Drop spans with an exact per-model support mask such as latin:GEO:100.",
+    )
     args = parser.parse_args()
     label_bias = {}
     for item in args.label_bias:
         name, value = item.rsplit(":", 1)
         label_bias[name] = float(value)
+    script_label_bias = {}
+    for item in args.script_label_bias:
+        script_name, name, value = item.split(":", 2)
+        if script_name not in {"latin", "cyrillic", "mixed"}:
+            raise ValueError(f"unknown script: {script_name}")
+        script_label_bias[(script_name, name)] = float(value)
+    min_model_support = {}
+    for item in args.min_model_support:
+        script_name, name, value = item.split(":", 2)
+        if script_name not in {"latin", "cyrillic", "mixed"}:
+            raise ValueError(f"unknown script: {script_name}")
+        count = int(value)
+        if count < 0:
+            raise ValueError("model support must be non-negative")
+        min_model_support[(script_name, name)] = count
     device = resolve_device(args.device)
     records = read_records(args.input, require_entities=False)
     model_specs = [item.rsplit(":", 1) if ":" in item else (item, "1") for item in args.models]
+    if args.support_models is not None and not 1 <= args.support_models <= len(model_specs):
+        raise ValueError("--support-models must be between 1 and the number of models")
+    reject_support_masks = set()
+    for item in args.reject_support_mask:
+        script_name, name, mask = item.split(":", 2)
+        if script_name not in {"latin", "cyrillic", "mixed"}:
+            raise ValueError(f"unknown script: {script_name}")
+        if len(mask) != len(model_specs) or set(mask) - {"0", "1"}:
+            raise ValueError("support masks must contain one 0/1 digit per model")
+        reject_support_masks.add((script_name, name, mask))
     tokenizer = load_fast_tokenizer(model_specs[0][0])
     validate_window(tokenizer, args.max_length, args.stride)
     windows = _build_windows(records, tokenizer, max_length=args.max_length, stride=args.stride)
     combined = [{} for _ in records]
     total_weight = 0.0
     id2label = None
+    component_scores = []
     for model_path, weight_text in model_specs:
         weight = float(weight_text)
         model = AutoModelForTokenClassification.from_pretrained(model_path).to(device)
         if id2label is None:
             id2label = {int(k): str(v) for k, v in model.config.id2label.items()}
         scores = predict_model(model, tokenizer, windows, len(records), args.batch_size, device)
+        if reject_support_masks or (
+            min_model_support
+            and (args.support_models is None or len(component_scores) < args.support_models)
+        ):
+            component_scores.append(scores)
         for record_index, record_scores in enumerate(scores):
             for key, (value, count) in record_scores.items():
                 value = value / count
@@ -106,12 +171,47 @@ def main() -> int:
     for record, record_scores in zip(records, combined, strict=True):
         ordered = sorted(record_scores.items())
         logits = torch.stack([value / total_weight for _, value in ordered])
+        record_script = script(record["text"])
         for label_id, label in id2label.items():
             if label in label_bias:
                 logits[:, label_id] += label_bias[label]
+            logits[:, label_id] += script_label_bias.get((record_script, label), 0.0)
         ids = constrained_ids(logits, id2label) if args.constrained else [int(value.argmax()) for value in logits]
         tagged = [(start, end, id2label[label_id]) for (start, end), label_id in zip((key for key, _ in ordered), ids, strict=True)]
-        predictions.append({"hash": record["hash"], "entities": decode_bio_tokens(tagged)})
+        entities = decode_bio_tokens(tagged)
+        if min_model_support or reject_support_masks:
+            support_sets = []
+            for scores in component_scores:
+                component_ordered = sorted(scores[len(predictions)].items())
+                component_logits = torch.stack([value / count for _, (value, count) in component_ordered])
+                component_ids = (
+                    constrained_ids(component_logits, id2label)
+                    if args.constrained
+                    else [int(value.argmax()) for value in component_logits]
+                )
+                component_tagged = [
+                    (start, end, id2label[label_id])
+                    for (start, end), label_id in zip(
+                        (key for key, _ in component_ordered), component_ids, strict=True
+                    )
+                ]
+                support_sets.append({
+                    (entity["label"], entity["start"], entity["end"])
+                    for entity in decode_bio_tokens(component_tagged)
+                })
+            support_limit = args.support_models or len(support_sets)
+            filtered = []
+            for entity in entities:
+                span = (entity["label"], entity["start"], entity["end"])
+                support_count = sum(span in support for support in support_sets[:support_limit])
+                mask = "".join("1" if span in support else "0" for support in support_sets)
+                if support_count < min_model_support.get((record_script, entity["label"]), 0):
+                    continue
+                if (record_script, entity["label"], mask) in reject_support_masks:
+                    continue
+                filtered.append(entity)
+            entities = filtered
+        predictions.append({"hash": record["hash"], "entities": entities})
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("w", encoding="utf-8") as stream:
         for prediction in predictions:

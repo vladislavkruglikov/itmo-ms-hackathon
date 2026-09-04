@@ -14,28 +14,33 @@ from baseline.common import decode_bio_tokens, read_records
 def viterbi(logits: torch.Tensor, labels: dict[int, str]) -> list[int]:
     n, classes = logits.shape
     neg_inf = -1e9
-    dp = torch.full((n, classes), neg_inf)
+    transition = torch.full((classes, classes), neg_inf)
+    for previous, previous_tag in labels.items():
+        for current, tag in labels.items():
+            if not tag.startswith("I-") or previous_tag in {"B-" + tag[2:], tag}:
+                transition[previous, current] = 0.0
+
+    dp = logits[0].clone()
     back = torch.zeros((n, classes), dtype=torch.long)
-    dp[0] = logits[0]
+    for label_id, tag in labels.items():
+        if tag.startswith("I-"):
+            dp[label_id] = neg_inf
     for pos in range(1, n):
-        for current in range(classes):
-            tag = labels[current]
-            allowed = []
-            for previous in range(classes):
-                previous_tag = labels[previous]
-                valid = not tag.startswith("I-") or previous_tag in {"B-" + tag[2:], tag}
-                if valid:
-                    allowed.append(previous)
-            values = dp[pos - 1, allowed]
-            best = int(values.argmax())
-            back[pos, current] = allowed[best]
-            dp[pos, current] = values[best] + logits[pos, current]
-    current = int(dp[-1].argmax())
+        values, previous = (dp[:, None] + transition).max(dim=0)
+        back[pos] = previous
+        dp = values + logits[pos]
+    current = int(dp.argmax())
     result = [current]
     for pos in range(n - 1, 0, -1):
         current = int(back[pos, current])
         result.append(current)
     return result[::-1]
+
+
+def script(text: str) -> str:
+    cyrillic = any("А" <= char.upper() <= "Я" for char in text)
+    latin = any("a" <= char.lower() <= "z" for char in text)
+    return "mixed" if cyrillic and latin else "cyrillic" if cyrillic else "latin"
 
 
 def main() -> int:
@@ -44,7 +49,24 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--cache", nargs="+", required=True, help="CACHE[:WEIGHT]")
     parser.add_argument("--constrained", action="store_true")
+    parser.add_argument("--label-bias", nargs="*", default=[], metavar="LABEL:BIAS")
+    parser.add_argument(
+        "--script-label-bias",
+        nargs="*",
+        default=[],
+        metavar="SCRIPT:LABEL:BIAS",
+    )
     args = parser.parse_args()
+    label_bias = {}
+    for spec in args.label_bias:
+        label, value = spec.rsplit(":", 1)
+        label_bias[label] = float(value)
+    script_label_bias = {}
+    for spec in args.script_label_bias:
+        script_name, label, value = spec.split(":", 2)
+        if script_name not in {"latin", "cyrillic", "mixed"}:
+            raise ValueError(f"unknown script: {script_name}")
+        script_label_bias[(script_name, label)] = float(value)
     records = read_records(args.input, require_entities=False)
     combined = [{} for _ in records]
     id2label = None
@@ -64,6 +86,10 @@ def main() -> int:
     for record, row in zip(records, combined, strict=True):
         ordered = sorted(row.items())
         logits = torch.stack([value / total for _, value in ordered])
+        record_script = script(record["text"])
+        for label_id, label in id2label.items():
+            logits[:, label_id] += label_bias.get(label, 0.0)
+            logits[:, label_id] += script_label_bias.get((record_script, label), 0.0)
         ids = viterbi(logits, id2label) if args.constrained else [int(value.argmax()) for value in logits]
         tagged = [(start, end, id2label[label_id]) for (start, end), label_id in zip((key for key, _ in ordered), ids, strict=True)]
         predictions.append({"hash": record["hash"], "entities": decode_bio_tokens(tagged)})
