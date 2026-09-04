@@ -1,0 +1,35 @@
+{
+  "source": "scripts/combine_jsonl.py",
+  "method": "concatenation of train_cyr_replace50 with the cyrillic-transliterated corpus_ner_xlsx news-only open dataset",
+  "generated_at": "2026-09-04T19:25:00+00:00",
+  "inputs": [
+    {
+      "path": "data/train_0409/train_cyr_replace50.jsonl",
+      "records_in": 13000
+    },
+    {
+      "path": "data/open_datasets/corpus_ner_xlsx_news_only.cyrillic_translit.jsonl",
+      "records_in": 1296
+    }
+  ],
+  "records_in_total": 14296,
+  "skipped_dup": 52,
+  "records_out": 14244,
+  "entities_by_label_out": {
+    "GEO": 22279,
+    "ORG": 24244,
+    "NAME": 22107
+  },
+  "script_distribution_before": {
+    "cyrillic": 5191,
+    "mixed": 3120,
+    "latin": 4688,
+    "none": 1
+  },
+  "script_distribution_after": {
+    "cyrillic": 6435,
+    "mixed": 3120,
+    "latin": 4688,
+    "none": 1
+  }
+}
