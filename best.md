@@ -272,7 +272,7 @@ Epoch losses were 0.422152/0.104543, 0.069628/0.071119, and 0.038631/0.069212 (t
 Constrained dev decoding scored 0.8750 micro-F1 (ORG 0.8471, NAME 0.8963, GEO 0.8845), below the 0.8868 baseline,
 so this checkpoint is retained as an experiment and is not promoted.
 
-## 9. Current best: calibrated BIO decoding with model-support filtering
+## 9. Previous best: calibrated BIO decoding with model-support filtering
 
 The two-model architecture remains unchanged, but the promoted XL checkpoint
 applies separately tuned logit biases for Latin, Cyrillic, and mixed-script
@@ -378,3 +378,75 @@ standalone F1 0.87689, and its best third-model weight reached only 0.89572.
 The large model must be cached with the XL
 tokenizer because production ensemble inference tokenizes both components with
 the first model's tokenizer.
+
+## 10. Current best: LR-diverse BS8 ensemble
+
+Training a second BS8/GA4 XL checkpoint at learning rate 6e-5 and adding it to
+the LR5.5e-5 + large ensemble at weight 0.25 improves the exact-span dev score
+to **0.898026 micro-F1** (precision 0.9038, recall 0.8923; TP 6869, FP 731,
+FN 829). Per-class F1 is ORG 0.8838, NAME 0.9054, and GEO 0.9055. The five
+SHA-256 fold F1 values are 0.894643/0.921495/0.888889/0.879249/0.909542.
+
+Train the additional checkpoint with the same command as above, changing only:
+
+```bash
+--output-dir artifacts/xl-bs8-ga4-ebs32-lr6e-5 --learning-rate 6e-5
+```
+
+Cache it and reproduce the calibrated search with:
+
+```bash
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/xl-bs8-ga4-ebs32-lr6e-5/model \
+  --output artifacts/xl-bs8-lr6e-5-dev-logits.pt --batch-size 32
+
+python scripts/tune_cached_biases.py \
+  --input data/dev.jsonl \
+  --cache artifacts/xl-bs8-lr5p5e-5-dev-logits.pt:1 \
+          artifacts/best-large-xl-tokenizer-dev-logits.pt:0.75 \
+          artifacts/xl-bs8-lr6e-5-dev-logits.pt:0.25 \
+  --initial-report artifacts/bs8-lr5p5-large-lr6w20-tuned/report.json \
+  --skip-coarse --objective global \
+  --fine-rounds 1 --fine-radius 0.025 --fine-step 0.025 \
+  --workers 16 \
+  --output artifacts/bs8-lr5p5-large-lr6w25-tuned/report.json \
+  --predictions artifacts/bs8-lr5p5-large-lr6w25-tuned/dev_predictions.jsonl
+```
+
+The complete production command is:
+
+```bash
+python scripts/ensemble_predict.py \
+  --input data/dev.jsonl \
+  --output artifacts/ensemble-bs8-lr5p5-large-lr6w25-support.jsonl \
+  --models \
+    artifacts/xl-bs8-ga4-ebs32-lr5p5e-5/model:1 \
+    artifacts/recover-facebookAI-xlm-roberta-large-bf16-bs192-lr2e-4-w2p1/model:0.75 \
+    artifacts/xl-bs8-ga4-ebs32-lr6e-5/model:0.25 \
+  --batch-size 32 --constrained \
+  --script-label-bias \
+    latin:B-ORG:-0.65 latin:I-ORG:0.025 \
+    latin:B-NAME:0.1 latin:I-NAME:0.6 \
+    latin:B-GEO:-0.175 latin:I-GEO:0.15 \
+    cyrillic:B-ORG:-0.3 cyrillic:I-ORG:-0.325 \
+    cyrillic:B-NAME:-0.3 cyrillic:I-NAME:-0.25 \
+    cyrillic:B-GEO:0.425 cyrillic:I-GEO:0.65 \
+    mixed:B-ORG:-0.725 mixed:I-ORG:-0.375 \
+    mixed:B-NAME:-0.6 mixed:I-NAME:-0.175 \
+    mixed:B-GEO:0.025 mixed:I-GEO:0.15 \
+  --support-models 2 \
+  --min-model-support \
+    latin:ORG:1 latin:NAME:1 latin:GEO:1 \
+    cyrillic:ORG:1 cyrillic:NAME:1 cyrillic:GEO:1 \
+    mixed:ORG:1 mixed:NAME:1
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-bs8-lr5p5-large-lr6w25-support.jsonl \
+  --output artifacts/ensemble-bs8-lr5p5-large-lr6w25-support.metrics.json
+```
+
+`--support-models 2` deliberately computes support from the promoted LR5.5 XL
+and large checkpoints only; the lower-quality LR6 model contributes diversity
+to ensemble logits but cannot independently admit a span.

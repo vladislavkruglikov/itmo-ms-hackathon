@@ -471,3 +471,22 @@ decoder's corresponding folds. A local large-weight sweep at
 0.65/0.70/0.75/0.80/0.85 scored 0.89534/0.89592/**0.89698**/0.89554/0.89455,
 retaining 0.75. End-to-end inference matches cached post-filtered predictions
 byte-for-byte.
+
+### BS8 LR6e-5 and learning-rate diversity
+
+The BS8/GA4 LR6e-5 checkpoint finished at dev loss 0.063555. Its constrained
+standalone F1 was 0.88497 and its raw two-model ensemble with large was 0.88880;
+full calibration plus the fixed support rule reached 0.8961, so it did not
+replace LR5.5e-5 by itself.
+
+Adding LR6 as a third logit model to LR5.5 + large improved results. Before a
+new bias search, LR6 weights 0.025/0.05/0.10/0.15/0.20/0.30 scored
+0.896921/0.896660/0.897124/0.897255/0.897386/0.897210 after the established
+support filter. Joint fine calibration at weight 0.20 reached 0.897778. A local
+weight sweep at 0.15/0.175/0.20/0.225/0.25/0.275/0.30/0.325/0.35 scored
+0.897386/0.897719/0.897778/0.897836/**0.897908**/0.897530/0.897210/0.897079/
+0.897066 with those biases. One final radius-0.025 calibration pass at weight
+0.25 produced the promoted **0.898026** micro-F1 (precision 0.9038, recall
+0.8923; TP 6869, FP 731, FN 829). Fold F1 is
+0.894643/0.921495/0.888889/0.879249/0.909542. Support remains restricted to
+the first two, stronger components; LR6 affects only averaged logits.

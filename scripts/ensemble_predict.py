@@ -93,6 +93,13 @@ def main() -> int:
         metavar="SCRIPT:LABEL:COUNT",
         help="Drop decoded spans not independently produced by at least COUNT component models.",
     )
+    parser.add_argument(
+        "--support-models",
+        type=int,
+        default=None,
+        metavar="COUNT",
+        help="Use only the first COUNT ensemble models when computing component support.",
+    )
     args = parser.parse_args()
     label_bias = {}
     for item in args.label_bias:
@@ -116,6 +123,8 @@ def main() -> int:
     device = resolve_device(args.device)
     records = read_records(args.input, require_entities=False)
     model_specs = [item.rsplit(":", 1) if ":" in item else (item, "1") for item in args.models]
+    if args.support_models is not None and not 1 <= args.support_models <= len(model_specs):
+        raise ValueError("--support-models must be between 1 and the number of models")
     tokenizer = load_fast_tokenizer(model_specs[0][0])
     validate_window(tokenizer, args.max_length, args.stride)
     windows = _build_windows(records, tokenizer, max_length=args.max_length, stride=args.stride)
@@ -129,7 +138,9 @@ def main() -> int:
         if id2label is None:
             id2label = {int(k): str(v) for k, v in model.config.id2label.items()}
         scores = predict_model(model, tokenizer, windows, len(records), args.batch_size, device)
-        if min_model_support:
+        if min_model_support and (
+            args.support_models is None or len(component_scores) < args.support_models
+        ):
             component_scores.append(scores)
         for record_index, record_scores in enumerate(scores):
             for key, (value, count) in record_scores.items():
