@@ -541,3 +541,23 @@ ensemble for Cyrillic and the new `cyr_full_ner_xlsx` ensemble for Latin/mixed.
 This preserves Cyrillic F1 at 0.851548 and improves aggregate F1 to **0.902433**
 (precision 0.9187, recall 0.8867; TP 6826, FP 604, FN 872). The deterministic
 merge is implemented by `scripts/merge_predictions_by_script.py`.
+
+### Natural Russian NERUS augmentation
+
+`data/open_datasets/nerus_ru_ner_converted.jsonl` (2,000 rows, 4,227 entities)
+was appended to `train_cyr_full_ner_xlsx` without duplicates, producing the
+22,548-row `train_cyr_full_ner_xlsx_nerus` mix. Under the same BS8/GA4 LR5.5e-5
+recipe, dev loss was 0.074217/0.056650/0.060017; epoch 2 was retained.
+Standalone overall F1 is 0.888752. Crucially, standalone Cyrillic F1 improves
+from 0.815773 without NERUS to **0.832439** with NERUS, driven by recall rising
+from 0.8024 to 0.8461.
+
+Directly adding NERUS logits to the old Cyrillic ensemble at weights
+0.05/0.10/0.20/0.30/0.50/0.75/1.00 peaked at only 0.848598 Cyrillic F1, below
+0.851548. Using the model as a support signal is better: seven low-precision
+four-model masks raise Cyrillic F1 to **0.857875** (precision 0.9091, recall
+0.8121). Script-gating this result with the winning Latin/mixed predictions
+raises overall F1 from 0.902433 to **0.903157** (precision 0.9208, recall
+0.8862; TP 6822, FP 587, FN 876). Leave-one-fold-out mask selection gives
+0.900283 versus 0.900099 before NERUS, so the support gain is not purely a
+full-dev artifact.

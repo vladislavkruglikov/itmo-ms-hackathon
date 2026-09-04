@@ -459,7 +459,7 @@ to ensemble logits but cannot independently admit a span. The three digits in
 each rejected support mask correspond in order to LR5.5 XL, large, and LR6 XL.
 The end-to-end output was verified byte-for-byte against cached-logit decoding.
 
-## 11. Current best: curated Cyrillic-full + NER-XLSX mix
+## 11. Previous best: curated Cyrillic-full + NER-XLSX mix
 
 The best `data/train_0409` mix is
 `data/train_0409/train_cyr_full_ner_xlsx.jsonl`: the original 13,000 rows,
@@ -566,3 +566,82 @@ python scripts/evaluate.py \
   --predictions artifacts/ensemble-script-gated-cyr-old-latin-mixed-new.jsonl \
   --output artifacts/ensemble-script-gated-cyr-old-latin-mixed-new.metrics.json
 ```
+
+## 12. Current best: NERUS-assisted Cyrillic support
+
+Appending all 2,000 natural Russian NERUS rows to the winning curated mix
+improves standalone Cyrillic F1 from 0.815773 to 0.832439 (recall 0.8024 to
+0.8461), although direct logit ensembling remains worse than the established
+Cyrillic model. Using the NERUS-trained model only as a fourth component-support
+signal raises Cyrillic F1 from 0.851548 to **0.857875**. Combining that Cyrillic
+output with the previous Latin/mixed output produces the current best
+**0.903157 exact-span micro-F1** (precision 0.9208, recall 0.8862; TP 6822,
+FP 587, FN 876). Per-class F1 is ORG 0.8880, NAME 0.9158, and GEO 0.9071.
+
+Build and train the NERUS-augmented mix with:
+
+```bash
+python scripts/combine_datasets.py \
+  --input data/train_0409/train_cyr_full_ner_xlsx.jsonl \
+  --input data/open_datasets/nerus_ru_ner_converted.jsonl \
+  --output data/train_0409/train_cyr_full_ner_xlsx_nerus.jsonl \
+  --manifest data/train_0409/train_cyr_full_ner_xlsx_nerus.manifest.json
+
+python -m baseline.train \
+  --train data/train_0409/train_cyr_full_ner_xlsx_nerus.jsonl \
+  --dev data/dev.jsonl \
+  --output-dir artifacts/xl-bs8-ga4-lr5p5e-5-cyr-full-ner-xlsx-nerus \
+  --model-name facebook/xlm-roberta-xl \
+  --epochs 3 --batch-size 8 --gradient-accumulation-steps 4 \
+  --learning-rate 5.5e-5 --weight-decay 0.01 --warmup-ratio 0.1 \
+  --max-length 256 --stride 64 --seed 42 --device cuda \
+  --bf16 --fused-adamw --num-workers 2 --prefetch-factor 1 \
+  --persistent-workers
+
+python scripts/cache_logits.py \
+  --input data/dev.jsonl \
+  --model artifacts/xl-bs8-ga4-lr5p5e-5-cyr-full-ner-xlsx-nerus/model \
+  --output artifacts/cyr-full-ner-xlsx-nerus-dev-logits.pt --batch-size 32
+
+python scripts/decode_cached.py \
+  --input data/dev.jsonl \
+  --cache artifacts/cyr-full-ner-xlsx-nerus-dev-logits.pt \
+  --output artifacts/cyr-full-ner-xlsx-nerus-standalone.jsonl --constrained
+```
+
+Starting from the previous LR6 ensemble output, apply the fourth-model support
+filter and merge it with the stronger Latin/mixed output:
+
+```bash
+python scripts/filter_support_masks.py \
+  --input data/dev.jsonl \
+  --predictions artifacts/ensemble-bs8-lr5p5-largew775-lr6w25-mask-filter.jsonl \
+  --components \
+    artifacts/bs8-lr5p5-standalone.jsonl \
+    artifacts/support-analysis/large.jsonl \
+    artifacts/bs8-lr6-standalone.jsonl \
+    artifacts/cyr-full-ner-xlsx-nerus-standalone.jsonl \
+  --reject \
+    cyrillic:GEO:0110 cyrillic:GEO:1000 cyrillic:GEO:1110 \
+    cyrillic:NAME:1000 cyrillic:NAME:1010 \
+    cyrillic:ORG:0110 cyrillic:ORG:1100 \
+  --output artifacts/ensemble-old-cyr-nerus-support-filter.jsonl
+
+python scripts/merge_predictions_by_script.py \
+  --input data/dev.jsonl \
+  --latin artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --cyrillic artifacts/ensemble-old-cyr-nerus-support-filter.jsonl \
+  --mixed artifacts/ensemble-cyr-full-ner-xlsx-w1p5-mask-filter.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.jsonl
+
+python scripts/evaluate.py \
+  --gold data/dev.jsonl \
+  --predictions artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.jsonl \
+  --output artifacts/ensemble-script-gated-cyr-nerus-filter-latin-mixed-new.metrics.json
+```
+
+The NERUS checkpoint selects epoch 2: dev loss is 0.074217/0.056650/0.060017
+for epochs 1/2/3. Direct addition to the old ensemble was tested at weights
+0.05/0.10/0.20/0.30/0.50/0.75/1.00 and never exceeded 0.8486 Cyrillic F1.
+Leave-one-fold-out selection of the seven support masks scores 0.900283 versus
+0.900099 before NERUS, supporting a small but transferable gain.
