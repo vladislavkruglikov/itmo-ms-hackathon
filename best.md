@@ -373,6 +373,8 @@ rejected as likely overfitting. Entity-margin calibration and leave-one-fold-out
 learned disagreement rules also failed to transfer. A newly trained seed-17 XL
 (same best hyperparameters, final dev loss 0.06937) reduced F1 for every tested
 positive and negative ensemble weight; retuning its best candidate reached only
-0.8936 after support filtering. The large model must be cached with the XL
+0.8936 after support filtering. BS4/GA8 was also tested: dev loss 0.06797,
+standalone F1 0.87689, and its best third-model weight reached only 0.89572.
+The large model must be cached with the XL
 tokenizer because production ensemble inference tokenizes both components with
 the first model's tokenizer.

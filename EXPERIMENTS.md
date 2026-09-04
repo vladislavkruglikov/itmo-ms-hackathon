@@ -433,3 +433,18 @@ original 0.8868 decoder's corresponding folds. A large-model weight sweep at
 0.45/0.55/0.65/0.75/0.85/0.95/1.05 scored 0.89251/0.89346/0.89447/**0.89605**/
 0.89491/0.89334/0.89394, retaining weight 0.75. End-to-end checkpoint inference
 matches the cached and post-filtered prediction file byte-for-byte.
+
+### XL batch-size 4
+
+The next controlled run used BS4/GA8 (effective batch 32) with the same original
+training data, seed 42, LR 5e-5, and three epochs. The first attempt reached
+epoch 2 but failed while replacing the 14-GB checkpoint because safetensors
+temporarily required space for both old and new files. After removing only
+weights from documented rejected runs, the clean retry completed. Final dev
+loss was **0.067968**, worse than BS8's 0.066256. Standalone constrained F1 was
+0.87689 and the uncalibrated BS4+large ensemble scored 0.88653, also below BS8.
+
+Using BS4 as a third model in the calibrated BS8+large pipeline at weights
+0.025/0.05/0.10/0.15/0.20/0.30 produced micro-F1
+0.89572/0.89558/0.89524/0.89524/0.89528/0.89536. Since every value is below
+0.896048, BS4 was rejected and no production complexity was added.
